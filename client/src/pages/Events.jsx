@@ -1,0 +1,123 @@
+import { useState, useEffect } from 'react';
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import axios from 'axios';
+import { motion } from 'framer-motion';
+
+const Events = () => {
+    const [events, setEvents] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchEvents = async () => {
+            try {
+                const response = await axios.get('/api/events');
+                // FullCalendar expects { title, date } — map MongoDB _id to id
+                setEvents(response.data.map(ev => ({
+                    id: ev._id,
+                    title: ev.title,
+                    date: ev.date,
+                    extendedProps: {
+                        description: ev.description,
+                        location: ev.location,
+                    }
+                })));
+            } catch (error) {
+                console.error('Failed to fetch events', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchEvents();
+    }, []);
+
+    const [selectedEvent, setSelectedEvent] = useState(null);
+
+    const handleEventClick = ({ event }) => {
+        setSelectedEvent({
+            title: event.title,
+            date: event.startStr,
+            description: event.extendedProps.description,
+            location: event.extendedProps.location,
+        });
+    };
+
+    const variants = { hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0, transition: { duration: 0.7 } } };
+
+    return (
+        <section className="section-padding min-h-screen pt-24" style={{ background: '#0d0d0d' }}>
+            <motion.div
+                className="max-w-screen-xl mx-auto"
+                initial="hidden"
+                animate="visible"
+                variants={variants}
+            >
+                <h1 style={{ color: '#FCD12A', fontFamily: 'Poppins, sans-serif', fontSize: 'clamp(2rem, 4vw, 3rem)', marginBottom: '8px' }}>
+                    Upcoming Events
+                </h1>
+                <p style={{ color: '#9ca3af', marginBottom: '36px' }}>Stay up to date with all Youth Spark gatherings and sessions.</p>
+
+                {loading ? (
+                    <div style={{ color: '#6b7280', textAlign: 'center', padding: '60px' }}>Loading events…</div>
+                ) : (
+                    <div className="flex flex-col lg:flex-row gap-8">
+                        {/* Calendar */}
+                        <div className="w-full lg:w-2/3 rounded-xl p-4" style={{ background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.08)' }}>
+                            <FullCalendar
+                                plugins={[dayGridPlugin]}
+                                initialView="dayGridMonth"
+                                events={events}
+                                eventClick={handleEventClick}
+                                headerToolbar={{ left: 'prev,next today', center: 'title', right: 'dayGridMonth,dayGridWeek' }}
+                                eventColor="#FCD12A"
+                                eventTextColor="#0A0A0A"
+                                height="auto"
+                            />
+                        </div>
+
+                        {/* Sidebar */}
+                        <div className="w-full lg:w-1/3 flex flex-col gap-4">
+                            {/* Selected event detail */}
+                            {selectedEvent ? (
+                                <div className="rounded-xl p-6" style={{ background: '#1a1a1a', border: '1px solid #FCD12A50' }}>
+                                    <h3 style={{ color: '#FCD12A', fontSize: '18px', fontWeight: 700, marginBottom: '10px' }}>{selectedEvent.title}</h3>
+                                    <p style={{ color: '#d1d5db', fontSize: '13px', marginBottom: '6px' }}>📅 {selectedEvent.date}</p>
+                                    {selectedEvent.location && <p style={{ color: '#d1d5db', fontSize: '13px', marginBottom: '6px' }}>📍 {selectedEvent.location}</p>}
+                                    {selectedEvent.description && <p style={{ color: '#9ca3af', fontSize: '13px', lineHeight: 1.6, marginTop: '10px' }}>{selectedEvent.description}</p>}
+                                    <button onClick={() => setSelectedEvent(null)} style={{ marginTop: '14px', fontSize: '12px', color: '#6b7280', background: 'none', border: 'none', cursor: 'pointer' }}>✕ Close</button>
+                                </div>
+                            ) : (
+                                <div className="rounded-xl p-6" style={{ background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.08)', color: '#6b7280', fontSize: '14px' }}>
+                                    <p style={{ fontSize: '24px', marginBottom: '8px' }}>👆</p>
+                                    Click on any event in the calendar to see its details.
+                                </div>
+                            )}
+
+                            {/* Upcoming list */}
+                            <div className="rounded-xl p-5" style={{ background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.08)', flex: 1 }}>
+                                <h3 style={{ color: 'white', fontWeight: 600, marginBottom: '14px', fontSize: '15px' }}>All Events</h3>
+                                {events.length === 0 ? (
+                                    <p style={{ color: '#4b5563', fontSize: '14px' }}>No upcoming events.</p>
+                                ) : (
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                                        {events.map(ev => (
+                                            <div key={ev.id} onClick={() => setSelectedEvent({ title: ev.title, date: ev.date, description: ev.extendedProps.description, location: ev.extendedProps.location })}
+                                                style={{ padding: '12px', borderRadius: '8px', background: 'rgba(252,209,42,0.05)', border: '1px solid rgba(252,209,42,0.12)', cursor: 'pointer', transition: 'all 0.2s' }}
+                                                onMouseEnter={e => e.currentTarget.style.background = 'rgba(252,209,42,0.1)'}
+                                                onMouseLeave={e => e.currentTarget.style.background = 'rgba(252,209,42,0.05)'}>
+                                                <p style={{ fontWeight: 600, color: 'white', fontSize: '14px', margin: 0 }}>{ev.title}</p>
+                                                <p style={{ color: '#FCD12A', fontSize: '12px', margin: '4px 0 0' }}>{ev.date} {ev.extendedProps.location ? `· ${ev.extendedProps.location}` : ''}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                )}
+            </motion.div>
+        </section>
+    );
+};
+
+export default Events;

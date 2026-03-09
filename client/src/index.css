@@ -1,0 +1,255 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* CSS reset and base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-bg: #0A0A0A;
+    --accent-col: #FCD12A;
+    --text-col: #BFBFBF;
+    --card-bg: #1F1F1F;
+    --hover-acc: #4D4D4D;
+    --hover-btn: #DAA520;
+    --font-head: 'Poppins', sans-serif;
+    --font-body: 'Roboto', sans-serif;
+    --error-col: #FF0000;
+    --success-col: #00FF00;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--primary-bg);
+    color: var(--text-col);
+    line-height: 1.6;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+h1,
+h2,
+h3,
+h4,
+.logo-text {
+    font-family: var(--font-head);
+    color: var(--accent-col);
+    line-height: 1.2;
+}
+
+h1 {
+    font-size: clamp(3rem, 8vw, 5rem);
+    text-transform: uppercase;
+}
+
+h2 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.3s;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    display: block;
+    object-fit: cover;
+}
+
+.section-padding {
+    padding: 5% 10%;
+}
+
+.btn {
+    display: inline-block;
+    background-color: var(--accent-col);
+    color: #fff;
+    padding: 12px 24px;
+    font-family: var(--font-head);
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: background 0.3s;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn:hover {
+    background-color: var(--hover-btn);
+}
+
+/* Layout Grids */
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.grid-4 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+/* Cards */
+.card {
+    background-color: var(--card-bg);
+    padding: 30px;
+    border-radius: 10px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    height: 100%;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* Lists */
+.icon-list {
+    list-style: none;
+}
+
+.icon-list li {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+.icon-list svg {
+    width: 30px;
+    height: 30px;
+    fill: var(--accent-col);
+    flex-shrink: 0;
+}
+
+.custom-bullet-list {
+    list-style: none;
+}
+
+.custom-bullet-list li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 10px;
+}
+
+.custom-bullet-list li::before {
+    content: '•';
+    color: var(--accent-col);
+    position: absolute;
+    left: 0;
+    font-size: 1.5em;
+    line-height: 1;
+}
+
+/* Animations */
+.fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* World Map & Kenya Highlight */
+.world-map-svg {
+    width: 100%;
+    max-width: 600px;
+    margin: 40px auto;
+    display: block;
+    filter: drop-shadow(0 0 10px rgba(252, 209, 42, 0.1));
+}
+
+.world-map-svg path {
+    fill: #222;
+    transition: all 0.4s ease;
+    cursor: pointer;
+    stroke: #333;
+    stroke-width: 0.5px;
+}
+
+.world-map-svg path:hover {
+    fill: #333;
+    stroke: var(--accent-col);
+}
+
+.world-map-svg .active-region {
+    fill: rgba(252, 209, 42, 0.15) !important;
+    stroke: var(--accent-col);
+    stroke-width: 1.5px;
+}
+
+.africa-pulse {
+    animation: africa-glow 4s infinite ease-in-out;
+}
+
+@keyframes africa-glow {
+
+    0%,
+    100% {
+        stroke-opacity: 0.3;
+        stroke-width: 0.5px;
+    }
+
+    50% {
+        stroke-opacity: 1;
+        stroke-width: 1.5px;
+    }
+}
+
+.kenya-shape-pulse {
+    animation: kenya-glow 2s infinite ease-in-out;
+}
+
+@keyframes kenya-glow {
+
+    0%,
+    100% {
+        filter: drop-shadow(0 0 2px var(--accent-col));
+        stroke-width: 1px;
+    }
+
+    50% {
+        filter: drop-shadow(0 0 10px var(--accent-col));
+        stroke-width: 2px;
+    }
+}
+
+/* Responsive */
+@media(max-width: 1024px) {
+    .grid-2 {
+        grid-template-columns: 1fr;
+    }
+
+    h1 {
+        font-size: 3rem;
+    }
+}

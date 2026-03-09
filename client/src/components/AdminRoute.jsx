@@ -1,0 +1,8 @@
+import { Navigate } from 'react-router-dom';
+
+const AdminRoute = ({ children }) => {
+    const token = localStorage.getItem('ys_admin_token');
+    return token ? children : <Navigate to="/admin" replace />;
+};
+
+export default AdminRoute;
