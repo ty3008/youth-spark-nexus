@@ -1,24 +1,55 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const path = require('path');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 
 // Models
 const Event = require('./models/Event');
 const Contact = require('./models/Contact');
 const Registration = require('./models/Registration');
 
-dotenv.config();
+// Load environment variables from server/.env specifically
+dotenv.config({ path: path.join(__dirname, '.env') });
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret';
+const JWT_SECRET = process.env.JWT_SECRET;
+
+if (!JWT_SECRET) {
+    console.error('❌ JWT_SECRET is not set. Refusing to start for security reasons.');
+    process.exit(1);
+}
 
 // --- Middleware ---
-app.use(cors());
+app.use(helmet());
+
+const allowedOrigins = [
+    'http://localhost:5173',
+    'https://youthspark-org.org',
+].filter(Boolean);
+
+app.use(cors({
+    origin(origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            return callback(null, true);
+        }
+        return callback(new Error('Not allowed by CORS'));
+    },
+}));
+
 app.use(express.json());
+
+const loginLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 20,
+    standardHeaders: true,
+    legacyHeaders: false,
+});
 
 // --- MongoDB Connection ---
 const connectDB = async () => {
@@ -114,23 +145,31 @@ app.post('/api/registrations', async (req, res) => {
 // =============================================
 
 // --- Admin Login ---
-app.post('/api/admin/login', async (req, res) => {
+app.post('/api/admin/login', loginLimiter, async (req, res) => {
     const { username, password } = req.body;
 
     const adminUsername = process.env.ADMIN_USERNAME;
-    const adminPassword = process.env.ADMIN_PASSWORD;
+    const adminPasswordHash = process.env.ADMIN_PASSWORD_HASH;
 
     if (!username || !password) {
         return res.status(400).json({ success: false, message: 'Username and password are required.' });
     }
 
-    // Validate credentials
-    if (username !== adminUsername || password !== adminPassword) {
+    if (!adminUsername || !adminPasswordHash) {
+        return res.status(500).json({ success: false, message: 'Admin credentials are not configured.' });
+    }
+
+    if (username !== adminUsername) {
         return res.status(401).json({ success: false, message: 'Invalid credentials.' });
     }
 
-    // Issue JWT (valid for 8 hours)
-    const token = jwt.sign({ username, role: 'admin' }, JWT_SECRET, { expiresIn: '8h' });
+    const passwordMatches = await bcrypt.compare(password, adminPasswordHash);
+    if (!passwordMatches) {
+        return res.status(401).json({ success: false, message: 'Invalid credentials.' });
+    }
+
+    // Issue JWT (valid for 2 hours)
+    const token = jwt.sign({ username, role: 'admin' }, JWT_SECRET, { expiresIn: '2h' });
 
     return res.json({ success: true, token });
 });

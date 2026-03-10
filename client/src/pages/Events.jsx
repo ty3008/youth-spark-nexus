@@ -5,6 +5,9 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import axios from 'axios';
 import { motion } from 'framer-motion';
+import { apiUrl } from '../lib/api';
+
+const GOOGLE_FORM_URL = 'https://forms.gle/g62AnhQpsnD3YGvG6';
 
 const Events = () => {
     const [events, setEvents] = useState([]);
@@ -15,7 +18,7 @@ const Events = () => {
     useEffect(() => {
         const fetchEvents = async () => {
             try {
-                const response = await axios.get('/api/events');
+                const response = await axios.get(apiUrl('/events'));
                 // FullCalendar expects { title, date } — map MongoDB _id to id
                 setEvents(response.data.map(ev => ({
                     id: ev._id,
@@ -47,19 +50,22 @@ const Events = () => {
         setRegForm(prev => ({ ...prev, eventId: event.id }));
     };
 
-    const handleRegistration = async (e) => {
+    const handleRegistration = (e) => {
         e.preventDefault();
         if (!regForm.eventId || !regForm.name || !regForm.email) {
             setRegStatus({ type: 'error', msg: 'Please fill all fields and select an event.' });
             return;
         }
-        try {
-            await axios.post('/api/registrations', regForm);
-            setRegStatus({ type: 'success', msg: 'Successfully registered!' });
-            setRegForm({ name: '', email: '', eventId: '' });
-        } catch (err) {
-            setRegStatus({ type: 'error', msg: 'Registration failed. Please try again.' });
-        }
+
+        // Open Google Form in a new tab and prefill what we can via query params
+        const url = new URL(GOOGLE_FORM_URL);
+        window.open(url.toString(), '_blank', 'noopener,noreferrer');
+
+        setRegStatus({
+            type: 'success',
+            msg: 'You are being redirected to a secure Google Form to complete your registration.',
+        });
+        setRegForm({ name: '', email: '', eventId: '' });
     };
 
     const variants = { hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0, transition: { duration: 0.7 } } };
@@ -182,7 +188,7 @@ const Events = () => {
                             {events.map(ev => <option key={ev.id} value={ev.id}>{ev.title}</option>)}
                         </select>
                         <button type="submit" className="w-full py-3 bg-[#FCD12A] text-[#0A0A0A] font-bold rounded-lg hover:bg-[#ebc127] transition-colors">
-                            Complete Registration
+                            Continue to Secure Google Form
                         </button>
                     </form>
                     <p className="text-xs text-[#555] mt-4 text-center">By registering, you agree to receive communications regarding this event.</p>

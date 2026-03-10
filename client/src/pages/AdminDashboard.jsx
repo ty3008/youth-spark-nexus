@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { apiUrl } from '../lib/api';
 import Papa from 'papaparse';
 
 const EMPTY_EVENT = { title: '', date: '', description: '', location: '' };
@@ -27,14 +28,14 @@ const AdminDashboard = () => {
 
     const fetchEvents = useCallback(async () => {
         try {
-            const res = await axios.get('/api/events');
+            const res = await axios.get(apiUrl('/events'));
             setEvents(res.data);
         } catch { showAlert('error', 'Could not load events.'); }
     }, []);
 
     const fetchContacts = useCallback(async () => {
         try {
-            const res = await axios.get('/api/admin/contacts', authHeader);
+            const res = await axios.get(apiUrl('/admin/contacts'), authHeader);
             setContacts(res.data);
         } catch { showAlert('error', 'Could not load contacts.'); }
     }, [token]);
@@ -58,10 +59,10 @@ const AdminDashboard = () => {
         e.preventDefault();
         try {
             if (editingId) {
-                await axios.put(`/api/events/${editingId}`, form, authHeader);
+                await axios.put(apiUrl(`/events/${editingId}`), form, authHeader);
                 showAlert('success', 'Event updated successfully!');
             } else {
-                await axios.post('/api/events', form, authHeader);
+                await axios.post(apiUrl('/events'), form, authHeader);
                 showAlert('success', 'Event created successfully!');
             }
             setForm(EMPTY_EVENT);
@@ -83,7 +84,7 @@ const AdminDashboard = () => {
     const handleDelete = async (id) => {
         if (!window.confirm('Delete this event permanently?')) return;
         try {
-            await axios.delete(`/api/events/${id}`, authHeader);
+            await axios.delete(apiUrl(`/events/${id}`), authHeader);
             showAlert('success', 'Event deleted.');
             fetchEvents();
         } catch { showAlert('error', 'Could not delete event.'); }
