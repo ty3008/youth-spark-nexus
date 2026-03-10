@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import axios from 'axios';
@@ -7,6 +9,8 @@ import { motion } from 'framer-motion';
 const Events = () => {
     const [events, setEvents] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [regForm, setRegForm] = useState({ name: '', email: '', eventId: '' });
+    const [regStatus, setRegStatus] = useState({ type: '', msg: '' });
 
     useEffect(() => {
         const fetchEvents = async () => {
@@ -40,12 +44,37 @@ const Events = () => {
             description: event.extendedProps.description,
             location: event.extendedProps.location,
         });
+        setRegForm(prev => ({ ...prev, eventId: event.id }));
+    };
+
+    const handleRegistration = async (e) => {
+        e.preventDefault();
+        if (!regForm.eventId || !regForm.name || !regForm.email) {
+            setRegStatus({ type: 'error', msg: 'Please fill all fields and select an event.' });
+            return;
+        }
+        try {
+            await axios.post('/api/registrations', regForm);
+            setRegStatus({ type: 'success', msg: 'Successfully registered!' });
+            setRegForm({ name: '', email: '', eventId: '' });
+        } catch (err) {
+            setRegStatus({ type: 'error', msg: 'Registration failed. Please try again.' });
+        }
     };
 
     const variants = { hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0, transition: { duration: 0.7 } } };
 
     return (
         <section className="section-padding min-h-screen pt-24" style={{ background: '#0d0d0d' }}>
+            {/* Breadcrumb Navigation */}
+            <div className="max-w-screen-xl mx-auto px-4 py-4">
+                <nav className="flex items-center gap-2 text-sm text-gray-400">
+                    <RouterLink to="/" className="hover:text-[#FCD12A] transition-colors">Home</RouterLink>
+                    <span>/</span>
+                    <span className="text-[#FCD12A]">Events</span>
+                </nav>
+            </div>
+
             <motion.div
                 className="max-w-screen-xl mx-auto"
                 initial="hidden"
@@ -115,8 +144,51 @@ const Events = () => {
                         </div>
                     </div>
                 )}
+
+
+                {/* Registration Form */}
+                <div className="mt-16 p-8 rounded-2xl bg-[#1a1a1a] border border-white/5 max-w-2xl mx-auto">
+                    <h2 className="text-2xl text-[#FCD12A] mb-6 text-center">Register for an Event</h2>
+                    {regStatus.msg && (
+                        <div className={`mb-4 p-3 rounded text-sm text-center ${regStatus.type === 'success' ? 'bg-green-500/10 text-green-500 border border-green-500/20' : 'bg-red-500/10 text-red-500 border border-red-500/20'}`}>
+                            {regStatus.msg}
+                        </div>
+                    )}
+                    <form onSubmit={handleRegistration} className="space-y-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <input
+                                placeholder="Full Name"
+                                className="block w-full p-3 bg-[#0d0d0d] border border-white/10 rounded-lg text-white"
+                                value={regForm.name}
+                                onChange={e => setRegForm({ ...regForm, name: e.target.value })}
+                                required
+                            />
+                            <input
+                                placeholder="Email Address"
+                                type="email"
+                                className="block w-full p-3 bg-[#0d0d0d] border border-white/10 rounded-lg text-white"
+                                value={regForm.email}
+                                onChange={e => setRegForm({ ...regForm, email: e.target.value })}
+                                required
+                            />
+                        </div>
+                        <select
+                            className="block w-full p-3 bg-[#0d0d0d] border border-white/10 rounded-lg text-white"
+                            value={regForm.eventId}
+                            onChange={e => setRegForm({ ...regForm, eventId: e.target.value })}
+                            required
+                        >
+                            <option value="">Select Event</option>
+                            {events.map(ev => <option key={ev.id} value={ev.id}>{ev.title}</option>)}
+                        </select>
+                        <button type="submit" className="w-full py-3 bg-[#FCD12A] text-[#0A0A0A] font-bold rounded-lg hover:bg-[#ebc127] transition-colors">
+                            Complete Registration
+                        </button>
+                    </form>
+                    <p className="text-xs text-[#555] mt-4 text-center">By registering, you agree to receive communications regarding this event.</p>
+                </div>
             </motion.div>
-        </section>
+        </section >
     );
 };
 

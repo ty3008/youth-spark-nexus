@@ -1,0 +1,45 @@
+/* Mobile Hamburger Nav */
+.hamburger {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background: #0A0A0A;
+        padding: 20px;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .hamburger {
+        display: block;
+        cursor: pointer;
+    }
+
+    .hamburger div {
+        width: 25px;
+        height: 3px;
+        background: #BFBFBF;
+        margin: 5px;
+    }
+}
+
+/* Global Transitions */
+.card,
+.btn {
+    transition: all 0.3s ease;
+}
+
+/* Parallax Hero */
+.parallax {
+    position: relative;
+    overflow: hidden;
+}

@@ -1,0 +1,11 @@
+#!/bin/sh
+# Post-commit hook: push the current branch to origin automatically.
+# Note: This runs locally. If you prefer manual pushes, remove or disable this hook.
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+echo "Post-commit: pushing ${BRANCH} to origin..."
+git push origin "${BRANCH}"
+EXIT_CODE=$?
+if [ $EXIT_CODE -ne 0 ]; then
+  echo "Warning: automatic push failed with exit code ${EXIT_CODE}."
+  exit $EXIT_CODE
+fi

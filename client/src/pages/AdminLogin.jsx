@@ -76,6 +76,11 @@ const AdminLogin = () => {
                             />
                         </div>
 
+                        <div className="flex items-center mt-2">
+                            <input type="checkbox" id="remember" className="mr-2 accent-[#FCD12A]" />
+                            <label htmlFor="remember" className="text-sm" style={{ color: '#aaa' }}>Remember me</label>
+                        </div>
+
                         <button
                             type="submit"
                             disabled={loading}

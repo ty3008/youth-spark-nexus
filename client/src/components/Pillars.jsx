@@ -1,7 +1,5 @@
 import { motion } from 'framer-motion';
-import pillarSpeaker from '../assets/images/pillar-speaker.png';
-import pillarAudience from '../assets/images/pillar-audience.png';
-import pillarPanel from '../assets/images/pillar-panel.png';
+
 
 const Pillars = () => {
     const variants = { hidden: { opacity: 0, y: 50 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8 } } };
@@ -37,9 +35,9 @@ const Pillars = () => {
 
                 {/* Right: Stacked Images */}
                 <div className="w-full md:w-1/2 grid grid-rows-3 gap-4">
-                    <img src={pillarSpeaker} alt="Speaker at Youth Spark event" className="w-full h-48 md:h-56 object-cover rounded-lg shadow-md hover:scale-[1.02] transition-transform" loading="lazy" />
-                    <img src={pillarAudience} alt="Audience at leadership summit" className="w-full h-48 md:h-56 object-cover rounded-lg shadow-md hover:scale-[1.02] transition-transform" loading="lazy" />
-                    <img src={pillarPanel} alt="Panel discussion with youth leaders" className="w-full h-48 md:h-56 object-cover rounded-lg shadow-md hover:scale-[1.02] transition-transform" loading="lazy" />
+                    <img src="/pillar.jpg" alt="Pillar 1" className="w-full h-48 md:h-56 object-cover rounded-lg shadow-md hover:scale-[1.02] transition-transform" loading="lazy" />
+                    <img src="/pillar 2.jpg" alt="Pillar 2" className="w-full h-48 md:h-56 object-cover rounded-lg shadow-md hover:scale-[1.02] transition-transform" loading="lazy" />
+                    <img src="/YSS 2025.jpg" alt="YSS 2025" className="w-full h-48 md:h-56 object-cover rounded-lg shadow-md hover:scale-[1.02] transition-transform" loading="lazy" />
                 </div>
             </motion.div>
         </section>

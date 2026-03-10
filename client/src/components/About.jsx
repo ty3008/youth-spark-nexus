@@ -14,7 +14,7 @@ const About = () => {
             >
                 {/* Full-width image like in the slide */}
                 <img
-                    src="/about-skyline.png"
+                    src="/WHO WE ARE.jpg"
                     alt="Group of youth raising hands over city skyline"
                     loading="lazy"
                     className="w-full h-64 md:h-80 object-cover rounded-xl shadow-lg mb-8"
@@ -25,11 +25,15 @@ const About = () => {
 
                 {/* Two-column layout for text, matching the slide */}
                 <div className="flex flex-col md:flex-row gap-8">
-                    {/* Left Column: Who We Are */}
-                    <div className="w-full md:w-1/2">
+                    {/* Left Column: Who We Are and Founders */}
+                    <div className="w-full md:w-1/2 flex flex-col gap-4">
                         <h3 className="text-xl md:text-2xl text-[#FCD12A] mb-4">About Youth Spark</h3>
                         <p className="mb-4">A transformative movement growing value-driven leaders across Kenya and Africa.</p>
                         <p>Focus on all 7 mountains of influence, culture, and ministry.</p>
+                        {/* Founders Section - now directly below About Youth Spark */}
+                        <h3 className="text-2xl text-[#FCD12A] font-bold mt-4 mb-2">The Founders</h3>
+                        <p className="text-lg mb-2">Founded by Kevin Kimani and Daphne Kimani, a loving, powerful, and God-fearing couple dedicated to empowering the next generation through faith and leadership.</p>
+                        <img src="/fouders.jpg" alt="Kevin Kimani and Daphne Kimani" className="w-full max-w-xs rounded-xl shadow-lg" loading="lazy" />
                     </div>
 
                     {/* Right Column: Vision and Mission */}

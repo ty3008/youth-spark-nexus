@@ -6,9 +6,7 @@ const Impact = () => {
     const [slideIndex, setSlideIndex] = useState(0);
 
     const slides = [
-        { src: 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', alt: 'Youth Summit Event' },
-        { src: 'https://images.unsplash.com/photo-1515187029135-18ee286d815b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', alt: 'Interactive Discussion' },
-        { src: 'https://images.unsplash.com/photo-1528605248644-14dd04022da1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', alt: 'Mentorship Session' }
+        { src: '/Impact (2).jpg', alt: 'Impact 2' }
     ];
 
     const nextSlide = () => setSlideIndex((prev) => (prev + 1) % slides.length);

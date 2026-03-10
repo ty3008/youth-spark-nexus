@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Papa from 'papaparse';
 
 const EMPTY_EVENT = { title: '', date: '', description: '', location: '' };
 
@@ -16,7 +17,8 @@ const AdminDashboard = () => {
     const [form, setForm] = useState(EMPTY_EVENT);
     const [editingId, setEditingId] = useState(null);
     const [showForm, setShowForm] = useState(false);
-    const [alert, setAlert] = useState(null); // { type: 'success'|'error', msg }
+    const [alert, setAlert] = useState(null);
+    const [search, setSearch] = useState('');
 
     const showAlert = (type, msg) => {
         setAlert({ type, msg });
@@ -93,6 +95,26 @@ const AdminDashboard = () => {
         setShowForm(false);
     };
 
+    const handleExport = (data, filename) => {
+        const csv = Papa.unparse(data);
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        a.click();
+    };
+
+    const filteredEvents = events.filter(ev =>
+        ev.title.toLowerCase().includes(search.toLowerCase()) ||
+        ev.description?.toLowerCase().includes(search.toLowerCase())
+    );
+    const filteredContacts = contacts.filter(c =>
+        c.name.toLowerCase().includes(search.toLowerCase()) ||
+        c.email.toLowerCase().includes(search.toLowerCase()) ||
+        c.message.toLowerCase().includes(search.toLowerCase())
+    );
+
     // ---- Styles ----
     const card = { background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px' };
     const inputStyle = { background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '8px', padding: '10px 14px', color: 'white', width: '100%', outline: 'none' };
@@ -126,13 +148,25 @@ const AdminDashboard = () => {
                     </div>
                 )}
 
-                {/* Tabs */}
-                <div style={{ display: 'flex', gap: '4px', marginBottom: '28px', background: 'rgba(255,255,255,0.04)', padding: '4px', borderRadius: '10px', width: 'fit-content' }}>
-                    {['events', 'contacts'].map((t) => (
-                        <button key={t} onClick={() => setTab(t)} style={{ padding: '8px 20px', borderRadius: '7px', border: 'none', cursor: 'pointer', fontWeight: 600, fontSize: '14px', textTransform: 'capitalize', transition: 'all 0.2s', background: tab === t ? '#FCD12A' : 'transparent', color: tab === t ? '#0A0A0A' : '#9ca3af' }}>
-                            {t === 'events' ? `📅 Events (${events.length})` : `📬 Contacts (${contacts.length})`}
-                        </button>
-                    ))}
+                {/* Tabs & Search Header */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '28px', flexWrap: 'wrap', gap: '16px' }}>
+                    <div style={{ display: 'flex', gap: '4px', background: 'rgba(255,255,255,0.04)', padding: '4px', borderRadius: '10px' }}>
+                        {['events', 'contacts'].map((t) => (
+                            <button key={t} onClick={() => { setTab(t); setSearch(''); }} style={{ padding: '8px 20px', borderRadius: '7px', border: 'none', cursor: 'pointer', fontWeight: 600, fontSize: '14px', textTransform: 'capitalize', transition: 'all 0.2s', background: tab === t ? '#FCD12A' : 'transparent', color: tab === t ? '#0A0A0A' : '#9ca3af' }}>
+                                {t === 'events' ? `📅 Events (${events.length})` : `📬 Contacts (${contacts.length})`}
+                            </button>
+                        ))}
+                    </div>
+
+                    <div style={{ flex: 1, maxWidth: '400px' }}>
+                        <input
+                            type="text"
+                            placeholder={`Search ${tab}...`}
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                            style={inputStyle}
+                        />
+                    </div>
                 </div>
 
                 {loading ? (
@@ -148,11 +182,16 @@ const AdminDashboard = () => {
                                         <h1 style={{ fontSize: '22px', fontWeight: 700, color: 'white', margin: 0 }}>Events Management</h1>
                                         <p style={{ color: '#6b7280', fontSize: '14px', marginTop: '4px' }}>All events shown on the public calendar</p>
                                     </div>
-                                    {!showForm && (
-                                        <button onClick={() => setShowForm(true)} style={{ background: '#FCD12A', color: '#0A0A0A', border: 'none', borderRadius: '8px', padding: '10px 20px', fontWeight: 700, fontSize: '14px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                                            + Add Event
+                                    <div style={{ display: 'flex', gap: '10px' }}>
+                                        {!showForm && (
+                                            <button onClick={() => setShowForm(true)} style={{ background: '#FCD12A', color: '#0A0A0A', border: 'none', borderRadius: '8px', padding: '10px 20px', fontWeight: 700, fontSize: '14px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                                + Add Event
+                                            </button>
+                                        )}
+                                        <button onClick={() => handleExport(filteredEvents, 'events.csv')} style={{ background: 'rgba(255,255,255,0.1)', color: 'white', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', padding: '10px 20px', fontWeight: 700, fontSize: '14px', cursor: 'pointer' }}>
+                                            Export CSV
                                         </button>
-                                    )}
+                                    </div>
                                 </div>
 
                                 {/* Event Form */}
@@ -191,10 +230,10 @@ const AdminDashboard = () => {
                                 )}
 
                                 {/* Events Table */}
-                                {events.length === 0 ? (
+                                {filteredEvents.length === 0 ? (
                                     <div style={{ ...card, padding: '60px', textAlign: 'center', color: '#4b5563' }}>
                                         <p style={{ fontSize: '32px', marginBottom: '8px' }}>📅</p>
-                                        <p>No events yet. Add your first event above.</p>
+                                        <p>{search ? 'No matching events found.' : 'No events yet. Add your first event above.'}</p>
                                     </div>
                                 ) : (
                                     <div style={{ ...card, overflow: 'hidden' }}>
@@ -207,7 +246,7 @@ const AdminDashboard = () => {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {events.map((ev) => (
+                                                {filteredEvents.map((ev) => (
                                                     <tr key={ev._id} style={{ borderBottom: '1px solid rgba(255,255,255,0.04)', transition: 'background 0.2s' }}
                                                         onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.03)'}
                                                         onMouseLeave={e => e.currentTarget.style.background = 'transparent'}>
@@ -235,19 +274,24 @@ const AdminDashboard = () => {
                         {/* ===== CONTACTS TAB ===== */}
                         {tab === 'contacts' && (
                             <div>
-                                <div style={{ marginBottom: '20px' }}>
-                                    <h1 style={{ fontSize: '22px', fontWeight: 700, color: 'white', margin: 0 }}>Contact Submissions</h1>
-                                    <p style={{ color: '#6b7280', fontSize: '14px', marginTop: '4px' }}>All messages received from the Join Us form</p>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+                                    <div>
+                                        <h1 style={{ fontSize: '22px', fontWeight: 700, color: 'white', margin: 0 }}>Contact Submissions</h1>
+                                        <p style={{ color: '#6b7280', fontSize: '14px', marginTop: '4px' }}>All messages received from the Join Us form</p>
+                                    </div>
+                                    <button onClick={() => handleExport(filteredContacts, 'contacts.csv')} style={{ background: 'rgba(255,255,255,0.1)', color: 'white', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', padding: '10px 20px', fontWeight: 700, fontSize: '14px', cursor: 'pointer' }}>
+                                        Export CSV
+                                    </button>
                                 </div>
 
-                                {contacts.length === 0 ? (
+                                {filteredContacts.length === 0 ? (
                                     <div style={{ ...card, padding: '60px', textAlign: 'center', color: '#4b5563' }}>
                                         <p style={{ fontSize: '32px', marginBottom: '8px' }}>📬</p>
-                                        <p>No contact submissions yet.</p>
+                                        <p>{search ? 'No matching contacts found.' : 'No contact submissions yet.'}</p>
                                     </div>
                                 ) : (
                                     <div style={{ display: 'grid', gap: '14px' }}>
-                                        {contacts.map((c) => (
+                                        {filteredContacts.map((c) => (
                                             <div key={c._id} style={{ ...card, padding: '20px' }}>
                                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px' }}>
                                                     <div>

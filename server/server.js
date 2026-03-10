@@ -8,6 +8,7 @@ const bcrypt = require('bcryptjs');
 // Models
 const Event = require('./models/Event');
 const Contact = require('./models/Contact');
+const Registration = require('./models/Registration');
 
 dotenv.config();
 
@@ -89,6 +90,22 @@ app.post('/api/contact', async (req, res) => {
         return res.status(200).json({ success: true, message: 'Message received successfully! We will get back to you.' });
     } catch (err) {
         return res.status(500).json({ success: false, message: 'Failed to save your message.' });
+    }
+});
+
+// --- Event Registration (public) ---
+app.post('/api/registrations', async (req, res) => {
+    const { eventId, name, email } = req.body;
+
+    if (!eventId || !name || !email) {
+        return res.status(400).json({ success: false, message: 'Please provide eventId, name, and email.' });
+    }
+
+    try {
+        await Registration.create({ eventId, name, email });
+        return res.status(200).json({ success: true, message: 'Successfully registered for the event!' });
+    } catch (err) {
+        return res.status(500).json({ success: false, message: 'Failed to register for the event.' });
     }
 });
 
@@ -174,6 +191,16 @@ app.get('/api/admin/contacts', verifyToken, async (req, res) => {
         res.json(contacts);
     } catch (err) {
         res.status(500).json({ success: false, message: 'Failed to retrieve contacts.' });
+    }
+});
+
+// --- Get all registrations (admin only) ---
+app.get('/api/admin/registrations', verifyToken, async (req, res) => {
+    try {
+        const registrations = await Registration.find().populate('eventId', 'title').sort({ createdAt: -1 });
+        res.json(registrations);
+    } catch (err) {
+        res.status(500).json({ success: false, message: 'Failed to retrieve registrations.' });
     }
 });
 

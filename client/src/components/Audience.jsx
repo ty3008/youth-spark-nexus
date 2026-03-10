@@ -80,16 +80,19 @@ const Audience = () => {
                             <p className="text-center text-sm text-[#888] mt-2 italic">Nairobi, Kenya — Heart of the Spark</p>
                         </div>
                         <div>
-                            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&w=600&q=80" alt="Students studying" className="w-full h-80 object-cover rounded-xl" loading="lazy" />
+                            <img src="/Founders with PLO.jpg" alt="Founders with PLO" className="w-full h-80 object-cover rounded-xl" loading="lazy" />
                         </div>
                         <div>
-                            <img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?ixlib=rb-4.0.3&w=600&q=80" alt="Graduates networking" className="w-full h-80 object-cover rounded-xl" loading="lazy" />
+                            <img src="/Hangout 3.jpg" alt="Hangout 3" className="w-full h-80 object-cover rounded-xl" loading="lazy" />
                         </div>
                         <div>
-                            <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&w=600&q=80" alt="Group of influencers" className="w-full h-80 object-cover rounded-xl" loading="lazy" />
+                            <img src="/Nexus 3.jpg" alt="Nexus 3" className="w-full h-80 object-cover rounded-xl" loading="lazy" />
                         </div>
                         <div>
-                            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&w=600&q=80" alt="Creative meeting" className="w-full h-80 object-cover rounded-xl" loading="lazy" />
+                            <img src="/NXT 1.webp" alt="NXT 1" className="w-full h-80 object-cover rounded-xl" loading="lazy" />
+                        </div>
+                        <div>
+                            <img src="/Nexus 2.jpg" alt="Nexus 2" className="w-full h-80 object-cover rounded-xl" loading="lazy" />
                         </div>
                     </Slider>
                 </div>
