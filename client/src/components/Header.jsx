@@ -26,7 +26,7 @@ const Header = () => {
     return (
         <header className={isScrolled ? 'scrolled' : ''}>
             <RouterLink to="/" className="logo" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
-                <img src="/logo.png" alt="Youth Spark Nexus" style={{ height: '140px', width: 'auto' }} />
+                <img src="/logo.png" alt="Youth Spark Nexus" className="header-logo" />
             </RouterLink>
 
             <nav id="navbar">
