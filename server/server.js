@@ -31,11 +31,15 @@ app.use(helmet());
 const allowedOrigins = [
     'http://localhost:5173',
     'https://youthspark-org.org',
+    'https://youth-spark-nexus.vercel.app',
 ].filter(Boolean);
+
+// Allow Vercel preview deployments (*.vercel.app)
+const isVercelPreview = (origin) => typeof origin === 'string' && /^https:\/\/[a-z0-9-]+\.vercel\.app$/i.test(origin);
 
 app.use(cors({
     origin(origin, callback) {
-        if (!origin || allowedOrigins.includes(origin)) {
+        if (!origin || allowedOrigins.includes(origin) || isVercelPreview(origin)) {
             return callback(null, true);
         }
         return callback(new Error('Not allowed by CORS'));
