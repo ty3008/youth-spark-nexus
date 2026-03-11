@@ -31,7 +31,7 @@ header.scrolled {
     object-fit: contain;
     
     /* Add these two lines below: */
-    transform: scale(1.4); /* 1.4 makes it 140% of its original size. Adjust as needed! */
+    transform: scale(1.8); /* 1.4 makes it 140% of its original size. Adjust as needed! */
     transform-origin: left center; /* This forces it to grow to the right so it doesn't get cut off on the left edge */
 }
 
