@@ -8,11 +8,15 @@ const registrationSchema = new mongoose.Schema({
     },
     name: {
         type: String,
-        required: true
+        required: true,
+        trim: true,
+        maxlength: 120
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        trim: true,
+        maxlength: 254
     },
     createdAt: {
         type: Date,

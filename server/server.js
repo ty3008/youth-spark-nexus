@@ -30,7 +30,8 @@ app.use(helmet());
 
 const allowedOrigins = [
     'http://localhost:5173',
-    'https://youthspark-org.org',
+    'https://youthsparksummit.org',
+    'https://www.youthsparksummit.org',
     'https://youth-spark-nexus.vercel.app',
 ].filter(Boolean);
 
@@ -46,7 +47,17 @@ app.use(cors({
     },
 }));
 
-app.use(express.json());
+// Limit request body size to mitigate payload attacks
+app.use(express.json({ limit: '10kb' }));
+
+// General API rate limit (per IP)
+const apiLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 200,
+    standardHeaders: true,
+    legacyHeaders: false,
+});
+app.use('/api/', apiLimiter);
 
 const loginLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
@@ -54,6 +65,18 @@ const loginLimiter = rateLimit({
     standardHeaders: true,
     legacyHeaders: false,
 });
+
+const contactLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 10,
+    standardHeaders: true,
+    legacyHeaders: false,
+});
+
+// Simple validation helpers
+const isValidEmail = (s) => typeof s === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s.trim()) && s.length <= 254;
+const isValidObjectId = (id) => id && mongoose.Types.ObjectId.isValid(id) && String(new mongoose.Types.ObjectId(id)) === String(id);
+const trimStr = (s, max) => (typeof s === 'string' ? s.trim().slice(0, max) : '');
 
 // --- MongoDB Connection ---
 const connectDB = async () => {
@@ -112,16 +135,22 @@ app.get('/api/events', async (req, res) => {
 });
 
 // --- Contact Form Submission (public) ---
-app.post('/api/contact', async (req, res) => {
-    const { name, email, message } = req.body;
+app.post('/api/contact', contactLimiter, async (req, res) => {
+    const raw = req.body || {};
+    const name = trimStr(raw.name, 120);
+    const email = trimStr(raw.email, 254);
+    const message = trimStr(raw.message, 2000);
 
     if (!name || !email || !message) {
         return res.status(400).json({ success: false, message: 'Please provide name, email, and message.' });
     }
+    if (!isValidEmail(email)) {
+        return res.status(400).json({ success: false, message: 'Please provide a valid email address.' });
+    }
 
     try {
         await Contact.create({ name, email, message });
-        console.log(`[Contact Form] ${name} (${email}): ${message}`);
+        console.log(`[Contact Form] submission from ${email}`);
         return res.status(200).json({ success: true, message: 'Message received successfully! We will get back to you.' });
     } catch (err) {
         return res.status(500).json({ success: false, message: 'Failed to save your message.' });
@@ -130,10 +159,19 @@ app.post('/api/contact', async (req, res) => {
 
 // --- Event Registration (public) ---
 app.post('/api/registrations', async (req, res) => {
-    const { eventId, name, email } = req.body;
+    const raw = req.body || {};
+    const eventId = raw.eventId;
+    const name = trimStr(raw.name, 120);
+    const email = trimStr(raw.email, 254);
 
     if (!eventId || !name || !email) {
         return res.status(400).json({ success: false, message: 'Please provide eventId, name, and email.' });
+    }
+    if (!isValidObjectId(eventId)) {
+        return res.status(400).json({ success: false, message: 'Invalid event.' });
+    }
+    if (!isValidEmail(email)) {
+        return res.status(400).json({ success: false, message: 'Please provide a valid email address.' });
     }
 
     try {
@@ -184,7 +222,11 @@ app.post('/api/admin/login', loginLimiter, async (req, res) => {
 
 // --- Create new event ---
 app.post('/api/events', verifyToken, async (req, res) => {
-    const { title, date, description, location } = req.body;
+    const raw = req.body || {};
+    const title = trimStr(raw.title, 200);
+    const date = trimStr(raw.date, 20);
+    const description = trimStr(raw.description, 2000);
+    const location = trimStr(raw.location, 200);
 
     if (!title || !date) {
         return res.status(400).json({ success: false, message: 'Title and date are required.' });
@@ -200,7 +242,14 @@ app.post('/api/events', verifyToken, async (req, res) => {
 
 // --- Update event ---
 app.put('/api/events/:id', verifyToken, async (req, res) => {
-    const { title, date, description, location } = req.body;
+    if (!isValidObjectId(req.params.id)) {
+        return res.status(400).json({ success: false, message: 'Invalid event ID.' });
+    }
+    const raw = req.body || {};
+    const title = trimStr(raw.title, 200);
+    const date = trimStr(raw.date, 20);
+    const description = trimStr(raw.description, 2000);
+    const location = trimStr(raw.location, 200);
 
     try {
         const event = await Event.findByIdAndUpdate(
@@ -218,6 +267,9 @@ app.put('/api/events/:id', verifyToken, async (req, res) => {
 
 // --- Delete event ---
 app.delete('/api/events/:id', verifyToken, async (req, res) => {
+    if (!isValidObjectId(req.params.id)) {
+        return res.status(400).json({ success: false, message: 'Invalid event ID.' });
+    }
     try {
         const event = await Event.findByIdAndDelete(req.params.id);
         if (!event) return res.status(404).json({ success: false, message: 'Event not found.' });
