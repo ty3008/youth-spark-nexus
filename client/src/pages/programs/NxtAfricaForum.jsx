@@ -1,10 +1,8 @@
 import { Helmet } from 'react-helmet';
-import Slider from 'react-slick';
 import ImageGrid from '../../components/ImageGrid';
 
 const NxtAfricaForum = () => {
     const slides = ['/NXT Poster.webp','/NXT 5.webp','/NXT 2.webp','/NXT 1.webp','/NXT4.webp','/NXT 3.webp','/NXT 6.webp','/NXT 7.webp','/NXT 8.webp'];
-    const settings = { dots: true, infinite: true, speed: 500, slidesToShow: 1, slidesToScroll: 1, arrows: true };
 
     return (
         <div className="page-top-spacing">

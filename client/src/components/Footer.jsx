@@ -1,4 +1,4 @@
-﻿import './Footer.css';
+import './Footer.css';
 import { Link as RouterLink } from 'react-router-dom';
 
 const Footer = () => {
@@ -7,10 +7,10 @@ const Footer = () => {
     return (
         <footer className="bg-[#1F1F1F] p-4 text-center mt-auto">
             {/* Footer Navigation Links */}
-            <div className="flex justify-center gap-8 mb-6 flex-wrap text-sm">
-                <RouterLink to="/who-we-serve" className="text-[#BFBFBF] hover:text-[#FCD12A] transition-colors">Our Community</RouterLink>
-                <RouterLink to="/partnerships" className="text-[#BFBFBF] hover:text-[#FCD12A] transition-colors">Partner With Us</RouterLink>
-                <RouterLink to="/pillars" className="text-[#BFBFBF] hover:text-[#FCD12A] transition-colors">Our Approach</RouterLink>
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-10 mb-6 flex-wrap text-base">
+                <RouterLink to="/who-we-serve" className="text-[#BFBFBF] hover:text-[#FCD12A] transition-colors min-h-[48px] inline-flex items-center justify-center px-3 py-2 rounded-md">Our Community</RouterLink>
+                <RouterLink to="/partnerships" className="text-[#BFBFBF] hover:text-[#FCD12A] transition-colors min-h-[48px] inline-flex items-center justify-center px-3 py-2 rounded-md">Partner With Us</RouterLink>
+                <RouterLink to="/pillars" className="text-[#BFBFBF] hover:text-[#FCD12A] transition-colors min-h-[48px] inline-flex items-center justify-center px-3 py-2 rounded-md">Our Approach</RouterLink>
             </div>
 
             {/* Contact and Copyright */}

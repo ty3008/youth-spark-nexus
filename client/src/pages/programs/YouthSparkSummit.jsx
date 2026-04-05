@@ -1,10 +1,8 @@
 import { Helmet } from 'react-helmet';
-import Slider from 'react-slick';
 import ImageGrid from '../../components/ImageGrid';
 
 const YouthSparkSummit = () => {
     const slides = ['/YSS 2025 Poster.jpg','/YSS 2025.jpg','/YSS 3.jpg','/YSS 4.jpg','/YSS 5.jpg','/YSS 6.jpg','/YSS 7.jpg','/YSS 8.jpg','/YSS 9.jpg','/YSS 10.jpg'];
-    const settings = { dots: true, infinite: true, speed: 500, slidesToShow: 1, slidesToScroll: 1, arrows: true };
 
     return (
         <div className="page-top-spacing">

@@ -1,4 +1,4 @@
-﻿@tailwind base;
+@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -292,6 +292,50 @@ img {
     }
 
     .card {
-        padding: 20px;
+        padding: 1.5rem;
+        font-size: 1rem;
+    }
+
+    .icon-list li {
+        font-size: 1rem;
+    }
+}
+
+/* Slick: clearer dots & arrows on touch screens */
+@media (max-width: 768px) {
+
+    .slick-dots {
+        bottom: -2.25rem;
+    }
+
+    .slick-dots li button:before {
+        font-size: 9px;
+        opacity: 0.5;
+    }
+
+    .slick-dots li.slick-active button:before {
+        opacity: 1;
+        color: var(--accent-col);
+    }
+
+    .slick-prev,
+    .slick-next {
+        width: 40px;
+        height: 40px;
+        z-index: 2;
+    }
+
+    .slick-prev:before,
+    .slick-next:before {
+        font-size: 28px;
+        opacity: 0.95;
+    }
+
+    .home-core-focus-slider .slick-prev {
+        left: 4px;
+    }
+
+    .home-core-focus-slider .slick-next {
+        right: 4px;
     }
 }

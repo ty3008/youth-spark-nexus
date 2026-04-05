@@ -21,10 +21,15 @@ const ImageGrid = ({ images = [] }) => {
 
     return (
         <div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
                 {images.map((src, i) => (
-                    <button key={i} onClick={() => open(i)} className="overflow-hidden rounded-lg block focus:outline-none">
-                        <img src={src} alt={`img-${i}`} className="w-full h-36 md:h-40 object-cover hover:scale-105 transition-transform" />
+                    <button
+                        key={i}
+                        type="button"
+                        onClick={() => open(i)}
+                        className="overflow-hidden rounded-lg block focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FCD12A] aspect-[4/3] min-h-[120px]"
+                    >
+                        <img src={src} alt={`Gallery ${i + 1}`} className="w-full h-full object-cover hover:scale-105 transition-transform" />
                     </button>
                 ))}
             </div>

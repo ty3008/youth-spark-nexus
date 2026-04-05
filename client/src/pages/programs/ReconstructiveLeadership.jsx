@@ -1,10 +1,8 @@
 import { Helmet } from 'react-helmet';
-import Slider from 'react-slick';
 import ImageGrid from '../../components/ImageGrid';
 
 const ReconstructiveLeadership = () => {
     const slides = ['/Hangout1.jpg','/Hangout 2.jpg','/Hangout 3.jpg'];
-    const settings = { dots: true, infinite: true, speed: 500, slidesToShow: 1, slidesToScroll: 1, arrows: true };
 
     return (
         <div className="page-top-spacing">

@@ -29,14 +29,14 @@ const ProgramsPage = () => {
                             <div className="w-12 h-12 rounded-full bg-[#FCD12A] text-black flex items-center justify-center font-bold flex-shrink-0">1</div>
                             <div>
                                 <h3 className="text-white text-xl">Foundational Training</h3>
-                                <p className="text-sm text-[#808080]">Core modules on identity, kingdom principles, and spiritual growth.</p>
+                                <p className="text-base text-[#808080]">Core modules on identity, kingdom principles, and spiritual growth.</p>
                             </div>
                         </div>
                         <div className="flex gap-6 items-center">
                             <div className="w-12 h-12 rounded-full bg-[#1F1F1F] text-[#FCD12A] border border-[#FCD12A] flex items-center justify-center font-bold flex-shrink-0">2</div>
                             <div>
                                 <h3 className="text-white text-xl">Advanced Leadership</h3>
-                                <p className="text-sm text-[#808080]">Strategic thinking, management, and influence across the 7 mountains.</p>
+                                <p className="text-base text-[#808080]">Strategic thinking, management, and influence across the 7 mountains.</p>
                             </div>
                         </div>
                     </div>

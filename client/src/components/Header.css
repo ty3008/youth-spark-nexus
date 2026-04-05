@@ -1,4 +1,4 @@
-﻿header {
+.site-header {
     position: fixed;
     top: 0;
     left: 0;
@@ -11,15 +11,23 @@
     padding: 8px max(5%, env(safe-area-inset-right, 0px)) 8px max(5%, env(safe-area-inset-left, 0px));
     padding-top: max(8px, env(safe-area-inset-top, 0px));
     min-height: 66px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: block;
     transition: all 0.3s ease;
 }
 
-header.scrolled {
+.site-header.scrolled {
     padding: 2px max(5%, env(safe-area-inset-right, 0px)) 2px max(5%, env(safe-area-inset-left, 0px));
     padding-top: max(2px, env(safe-area-inset-top, 0px));
+}
+
+.site-header__bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 0.5rem;
+    position: relative;
+    z-index: 2;
 }
 
 .logo {
@@ -40,43 +48,49 @@ header.scrolled {
     transform-origin: left center;
 }
 
-nav {
+/* Desktop navigation (769px and up) */
+.header-nav-desktop {
+    display: none;
     flex: 1;
-    display: flex;
     justify-content: center;
+    align-items: center;
 }
 
-nav ul {
+.header-nav-list {
     display: flex;
     gap: 30px;
     list-style: none;
     align-items: center;
     justify-content: center;
     font-size: 0.95rem;
+    margin: 0;
+    padding: 0;
 }
 
-nav ul a,
-nav ul .btn {
+.header-nav-list a,
+.header-nav-list .btn {
     min-height: 44px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 }
 
-nav a:hover {
+.header-nav-list a:hover {
     color: var(--accent-col);
 }
 
-nav a.btn {
+.header-nav-list a.btn {
     color: #fff;
 }
 
+/* Mobile: hamburger + panel (max 768px) */
 .menu-toggle {
-    display: none;
+    display: flex;
     font-size: 1.75rem;
     line-height: 1;
-    min-width: 44px;
-    min-height: 44px;
+    min-width: 48px;
+    min-height: 48px;
     padding: 0;
     cursor: pointer;
     color: var(--accent-col);
@@ -87,58 +101,95 @@ nav a.btn {
     justify-content: center;
 }
 
-.menu-toggle:focus {
+.menu-toggle:focus-visible {
     outline: 2px solid var(--accent-col);
+    outline-offset: 2px;
 }
 
-@media(max-width: 1024px) {
-    nav {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        width: 100%;
-    }
+.header-mobile-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background: rgba(0, 0, 0, 0.6);
+    border: none;
+    padding: 0;
+    margin: 0;
+}
 
-    nav ul {
-        display: none;
-        flex-direction: column;
-        gap: 0;
-        padding: 12px 16px max(20px, env(safe-area-inset-bottom, 0px));
-        text-align: center;
-        background-color: rgba(10, 10, 10, 0.98);
-        border-top: 1px solid rgba(252, 209, 42, 0.2);
-        max-height: min(75vh, 520px);
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-    }
+.header-mobile-panel {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 3;
+    max-height: min(75vh, 520px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    background-color: rgba(10, 10, 10, 0.98);
+    border-top: 1px solid rgba(252, 209, 42, 0.35);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+}
 
-    nav ul li {
-        width: 100%;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    }
+.header-mobile-panel.is-open {
+    display: block;
+}
 
-    nav ul li:last-child {
-        border-bottom: none;
-    }
+.header-mobile-list {
+    list-style: none;
+    margin: 0;
+    padding: 12px 16px max(20px, env(safe-area-inset-bottom, 0px));
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    text-align: center;
+}
 
-    nav ul a,
-    nav ul .btn {
-        width: 100%;
-        padding: 14px 12px;
-        min-height: 48px;
-    }
+.header-mobile-list li {
+    width: 100%;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
 
-    nav ul.show {
+.header-mobile-list li:last-child {
+    border-bottom: none;
+}
+
+.header-mobile-list a,
+.header-mobile-list .btn {
+    width: 100%;
+    padding: 14px 12px;
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.header-mobile-list a:hover {
+    color: var(--accent-col);
+}
+
+.header-mobile-list a.btn {
+    color: #fff;
+    margin-top: 4px;
+}
+
+@media (min-width: 769px) {
+    .header-nav-desktop {
         display: flex;
     }
 
     .menu-toggle {
-        display: flex;
+        display: none !important;
     }
 
-    header {
-        flex-wrap: wrap;
+    .header-mobile-backdrop {
+        display: none !important;
+    }
+
+    .header-mobile-panel {
+        display: none !important;
     }
 }
 
@@ -148,7 +199,7 @@ nav a.btn {
         height: 44px;
     }
 
-    header {
+    .site-header {
         min-height: 56px;
         padding: 6px max(4%, env(safe-area-inset-right, 0px)) 6px max(4%, env(safe-area-inset-left, 0px));
         padding-top: max(6px, env(safe-area-inset-top, 0px));

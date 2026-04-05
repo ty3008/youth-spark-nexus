@@ -1,10 +1,8 @@
 import { Helmet } from 'react-helmet';
-import Slider from 'react-slick';
 import ImageGrid from '../../components/ImageGrid';
 
 const YouthSparkNexus = () => {
     const slides = ['/Nexus 3.jpg','/Nexus 2.jpg','/Nexus.jpg','/Nexus 4.webp','/Nexus 5.webp','/Nexus 6.jpg','/Nexus 7.jpg','/Nexus 8.jpg','/Nexus 9.jpg','/Nexus 10.jpg'];
-    const settings = { dots: true, infinite: true, speed: 500, slidesToShow: 1, slidesToScroll: 1, arrows: true };
 
     return (
         <div className="page-top-spacing">

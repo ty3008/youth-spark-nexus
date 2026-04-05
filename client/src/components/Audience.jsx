@@ -2,10 +2,14 @@ import { motion } from 'framer-motion';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { getStandardSliderSettings } from '../constants/slickSettings';
 
 const Audience = () => {
     const variants = { hidden: { opacity: 0, y: 50 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8 } } };
-    const sliderSettings = { dots: true, infinite: true, speed: 500, slidesToShow: 1, slidesToScroll: 1, autoplay: true, arrows: false };
+    const sliderSettings = getStandardSliderSettings({
+        autoplay: true,
+        autoplaySpeed: 5000,
+    });
 
     return (
         <section id="audience" className="section-padding bg-[#0d0d0d]">
@@ -73,26 +77,26 @@ const Audience = () => {
                         </svg>
                     </div>
                 </div>
-                <div className="w-full lg:w-1/2 overflow-hidden px-4 md:px-0">
+                <div className="w-full lg:w-1/2 overflow-hidden px-4 md:px-0 audience-photo-slider">
                     <Slider {...sliderSettings}>
                         <div>
-                            <img src="/kenya-vision.png" alt="Nairobi Skyline - Heart of the Spark" className="w-full h-80 object-cover rounded-xl" loading="lazy" />
-                            <p className="text-center text-sm text-[#888] mt-2 italic">Nairobi, Kenya — Heart of the Spark</p>
+                            <img src="/kenya-vision.png" alt="Nairobi Skyline - Heart of the Spark" className="w-full min-h-[220px] h-56 sm:h-80 object-cover rounded-xl" loading="lazy" />
+                            <p className="text-center text-base text-[#888] mt-2 italic">Nairobi, Kenya — Heart of the Spark</p>
                         </div>
                         <div>
-                            <img src="/Founders with PLO.jpg" alt="Founders with PLO" className="w-full h-80 object-cover rounded-xl" loading="lazy" />
+                            <img src="/Founders with PLO.jpg" alt="Founders with PLO" className="w-full min-h-[220px] h-56 sm:h-80 object-cover rounded-xl" loading="lazy" />
                         </div>
                         <div>
-                            <img src="/Hangout 3.jpg" alt="Hangout 3" className="w-full h-80 object-cover rounded-xl" loading="lazy" />
+                            <img src="/Hangout 3.jpg" alt="Hangout 3" className="w-full min-h-[220px] h-56 sm:h-80 object-cover rounded-xl" loading="lazy" />
                         </div>
                         <div>
-                            <img src="/Nexus 3.jpg" alt="Nexus 3" className="w-full h-80 object-cover rounded-xl" loading="lazy" />
+                            <img src="/Nexus 3.jpg" alt="Nexus 3" className="w-full min-h-[220px] h-56 sm:h-80 object-cover rounded-xl" loading="lazy" />
                         </div>
                         <div>
-                            <img src="/NXT 1.webp" alt="NXT 1" className="w-full h-80 object-cover rounded-xl" loading="lazy" />
+                            <img src="/NXT 1.webp" alt="NXT 1" className="w-full min-h-[220px] h-56 sm:h-80 object-cover rounded-xl" loading="lazy" />
                         </div>
                         <div>
-                            <img src="/Nexus 2.jpg" alt="Nexus 2" className="w-full h-80 object-cover rounded-xl" loading="lazy" />
+                            <img src="/Nexus 2.jpg" alt="Nexus 2" className="w-full min-h-[220px] h-56 sm:h-80 object-cover rounded-xl" loading="lazy" />
                         </div>
                     </Slider>
                 </div>
