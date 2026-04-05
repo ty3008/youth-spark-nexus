@@ -77,7 +77,7 @@ const Programs = () => {
                             <div className="md:hidden w-full rounded-xl overflow-hidden border border-white/10 aspect-[16/10] shrink-0">
                                 <img
                                     src={program.images[0]}
-                                    alt=""
+                                    alt={`${program.name} preview`}
                                     className="w-full h-full object-cover"
                                     loading="lazy"
                                 />
