@@ -1,4 +1,4 @@
-import './Footer.css';
+﻿import './Footer.css';
 import { Link as RouterLink } from 'react-router-dom';
 
 const Footer = () => {
@@ -14,7 +14,7 @@ const Footer = () => {
             </div>
 
             {/* Contact and Copyright */}
-            <p className="text-[#BFBFBF]">&copy; {year} Youth Spark Nexus | Contact: <a href="mailto:youthsparksummit@gmail.com" className="hover:text-[#FCD12A]">youthsparksummit@gmail.com</a> | +254 711 425 593</p>
+            <p className="text-[#BFBFBF] text-sm sm:text-base px-3 sm:px-4 leading-relaxed max-w-3xl mx-auto break-words text-balance">&copy; {year} Youth Spark Nexus | Contact: <a href="mailto:youthsparksummit@gmail.com" className="hover:text-[#FCD12A]">youthsparksummit@gmail.com</a> | +254 711 425 593</p>
             
             {/* Social Media Links */}
             <div className="flex justify-center space-x-4 mt-4">
@@ -29,3 +29,4 @@ const Footer = () => {
 };
 
 export default Footer;
+

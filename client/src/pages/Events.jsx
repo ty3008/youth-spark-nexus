@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import FullCalendar from '@fullcalendar/react';
@@ -93,11 +93,11 @@ const Events = () => {
                 <p style={{ color: '#9ca3af', marginBottom: '36px' }}>Stay up to date with all Youth Spark gatherings and sessions.</p>
 
                 {loading ? (
-                    <div style={{ color: '#6b7280', textAlign: 'center', padding: '60px' }}>Loading events…</div>
+                    <div style={{ color: '#6b7280', textAlign: 'center', padding: '60px' }}>Loading events...</div>
                 ) : (
                     <div className="flex flex-col lg:flex-row gap-8">
                         {/* Calendar */}
-                        <div className="w-full lg:w-2/3 rounded-xl p-4" style={{ background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.08)' }}>
+                        <div className="w-full lg:w-2/3 rounded-xl p-2 sm:p-4 overflow-x-auto -mx-1 sm:mx-0 touch-pan-x" style={{ background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.08)' }}>
                             <FullCalendar
                                 plugins={[dayGridPlugin]}
                                 initialView="dayGridMonth"
@@ -116,14 +116,14 @@ const Events = () => {
                             {selectedEvent ? (
                                 <div className="rounded-xl p-6" style={{ background: '#1a1a1a', border: '1px solid #FCD12A50' }}>
                                     <h3 style={{ color: '#FCD12A', fontSize: '18px', fontWeight: 700, marginBottom: '10px' }}>{selectedEvent.title}</h3>
-                                    <p style={{ color: '#d1d5db', fontSize: '13px', marginBottom: '6px' }}>📅 {selectedEvent.date}</p>
-                                    {selectedEvent.location && <p style={{ color: '#d1d5db', fontSize: '13px', marginBottom: '6px' }}>📍 {selectedEvent.location}</p>}
+                                    <p style={{ color: '#d1d5db', fontSize: '13px', marginBottom: '6px' }}>Date: {selectedEvent.date}</p>
+                                    {selectedEvent.location && <p style={{ color: '#d1d5db', fontSize: '13px', marginBottom: '6px' }}>Location: {selectedEvent.location}</p>}
                                     {selectedEvent.description && <p style={{ color: '#9ca3af', fontSize: '13px', lineHeight: 1.6, marginTop: '10px' }}>{selectedEvent.description}</p>}
-                                    <button onClick={() => setSelectedEvent(null)} style={{ marginTop: '14px', fontSize: '12px', color: '#6b7280', background: 'none', border: 'none', cursor: 'pointer' }}>✕ Close</button>
+                                    <button type="button" onClick={() => setSelectedEvent(null)} style={{ marginTop: '14px', fontSize: '12px', color: '#6b7280', background: 'none', border: 'none', cursor: 'pointer' }}>Close</button>
                                 </div>
                             ) : (
                                 <div className="rounded-xl p-6" style={{ background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.08)', color: '#6b7280', fontSize: '14px' }}>
-                                    <p style={{ fontSize: '24px', marginBottom: '8px' }}>👆</p>
+                                    <p style={{ fontSize: '24px', marginBottom: '8px' }} aria-hidden>↑</p>
                                     Click on any event in the calendar to see its details.
                                 </div>
                             )}
@@ -141,7 +141,7 @@ const Events = () => {
                                                 onMouseEnter={e => e.currentTarget.style.background = 'rgba(252,209,42,0.1)'}
                                                 onMouseLeave={e => e.currentTarget.style.background = 'rgba(252,209,42,0.05)'}>
                                                 <p style={{ fontWeight: 600, color: 'white', fontSize: '14px', margin: 0 }}>{ev.title}</p>
-                                                <p style={{ color: '#FCD12A', fontSize: '12px', margin: '4px 0 0' }}>{ev.date} {ev.extendedProps.location ? `· ${ev.extendedProps.location}` : ''}</p>
+                                                <p style={{ color: '#FCD12A', fontSize: '12px', margin: '4px 0 0' }}>{ev.date} {ev.extendedProps.location ? ` · ${ev.extendedProps.location}` : ''}</p>
                                             </div>
                                         ))}
                                     </div>
@@ -153,7 +153,7 @@ const Events = () => {
 
 
                 {/* Registration Form */}
-                <div className="mt-16 p-8 rounded-2xl bg-[#1a1a1a] border border-white/5 max-w-2xl mx-auto">
+                <div className="mt-12 sm:mt-16 px-4 py-6 sm:p-8 rounded-2xl bg-[#1a1a1a] border border-white/5 max-w-2xl mx-auto">
                     <h2 className="text-2xl text-[#FCD12A] mb-6 text-center">Register for an Event</h2>
                     {regStatus.msg && (
                         <div className={`mb-4 p-3 rounded text-sm text-center ${regStatus.type === 'success' ? 'bg-green-500/10 text-green-500 border border-green-500/20' : 'bg-red-500/10 text-red-500 border border-red-500/20'}`}>
@@ -199,3 +199,5 @@ const Events = () => {
 };
 
 export default Events;
+
+

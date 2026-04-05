@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import './Header.css';
 
@@ -14,6 +14,10 @@ const Header = () => {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
+
+    useEffect(() => {
+        setIsMenuOpen(false);
+    }, [location.pathname]);
 
     const navLinks = [
        // { name: 'Home', path: '/' },
@@ -71,3 +75,4 @@ const Header = () => {
 };
 
 export default Header;
+

@@ -1,4 +1,4 @@
-
+﻿
 import { Link as RouterLink } from 'react-router-dom';
 import Slider from 'react-slick';
 import { motion } from 'framer-motion';
@@ -70,8 +70,8 @@ const Programs = () => {
                 viewport={{ once: true }}
                 variants={variants}
             >
-                <h2 className="text-4xl font-bold text-[#FCD12A] mb-4">Our Programs</h2>
-                <p className="mb-10 text-[#BFBFBF] text-lg max-w-2xl">Discover our Kingdom-centered programs designed to equip and empower young leaders across Africa.</p>
+                <h2 className="text-3xl sm:text-4xl font-bold text-[#FCD12A] mb-4">Our Programs</h2>
+                <p className="mb-10 text-[#BFBFBF] text-base sm:text-lg max-w-2xl">Discover our Kingdom-centered programs designed to equip and empower young leaders across Africa.</p>
                 <div className="flex flex-col gap-8">
                     {programs.map((program, idx) => (
                         <div key={program.name} className="bg-[#1F1F1F] rounded-xl shadow-lg p-4 flex flex-col md:flex-row gap-4 items-stretch">
@@ -85,7 +85,7 @@ const Programs = () => {
                                 </Slider>
                             </div>
                             <div className="w-full md:w-2/3 flex flex-col justify-center gap-3 p-2">
-                                <RouterLink to={program.link} className="text-2xl font-bold text-[#FCD12A] hover:underline hover:text-white transition-colors w-fit">{program.name}</RouterLink>
+                                <RouterLink to={program.link} className="text-xl sm:text-2xl font-bold text-[#FCD12A] hover:underline hover:text-white transition-colors w-fit min-h-[44px] inline-flex items-center">{program.name}</RouterLink>
                                 <p className="text-[#BFBFBF] text-base">{program.overview}</p>
                             </div>
                         </div>
@@ -97,3 +97,4 @@ const Programs = () => {
 };
 
 export default Programs;
+

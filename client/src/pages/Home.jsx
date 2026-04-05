@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+﻿import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Parallax } from 'react-parallax';
 import CountUp from 'react-countup';
@@ -31,17 +31,17 @@ const Home = () => {
                         variants={fadeUp}
                         className="text-center z-10 px-4"
                     >
-                        <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 uppercase tracking-tight">
+                        <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-white mb-6 uppercase tracking-tight px-1">
                             Ignite Your <span className="text-[#FCD12A]">Spark</span>
                         </h1>
-                        <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto">
+                        <p className="text-base sm:text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto px-1">
                             Equipping kingdom-minded youth to transform industries and shape global culture.
                         </p>
-                        <div className="flex gap-4 justify-center">
-                            <Link to="/about" className="px-8 py-3 bg-[#FCD12A] text-[#0A0A0A] font-bold rounded-lg hover:bg-[#ebc127] transition-all">
+                        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-stretch sm:items-center w-full max-w-md sm:max-w-none mx-auto">
+                            <Link to="/about" className="px-8 py-3 bg-[#FCD12A] text-[#0A0A0A] font-bold rounded-lg hover:bg-[#ebc127] transition-all text-center min-h-[48px] flex items-center justify-center">
                                 Discover More
                             </Link>
-                            <Link to="/events" className="px-8 py-3 border border-[#FCD12A] text-[#FCD12A] font-bold rounded-lg hover:bg-[#FCD12A]/10 transition-all">
+                            <Link to="/events" className="px-8 py-3 border border-[#FCD12A] text-[#FCD12A] font-bold rounded-lg hover:bg-[#FCD12A]/10 transition-all text-center min-h-[48px] flex items-center justify-center">
                                 Join Event
                             </Link>
                         </div>
@@ -81,13 +81,13 @@ const Home = () => {
                     <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
                         <h2 className="text-[#FCD12A] text-4xl font-bold mb-6 uppercase">Who We Are</h2>
                         <p className="text-gray-400 text-lg mb-8 leading-relaxed">
-                            Youth Spark Nexus is more than a platform—it's a transformative movement. We are dedicated to discipling nations through the Gospel of the Kingdom by equipping young leaders with practical skills and spiritual depth.
+                            Youth Spark Nexus is more than a platformâ€”it's a transformative movement. We are dedicated to discipling nations through the Gospel of the Kingdom by equipping young leaders with practical skills and spiritual depth.
                         </p>
                         <Link to="/about" className="text-[#FCD12A] font-bold underline underline-offset-8 hover:text-white transition-colors">
-                            Read the Full Story →
+                            Read the Full Story â†’
                         </Link>
                     </motion.div>
-                    <div className="rounded-2xl overflow-hidden shadow-2xl rotate-3 hover:rotate-0 transition-transform duration-700 aspect-video">
+                    <div className="rounded-2xl overflow-hidden shadow-2xl md:rotate-3 md:hover:rotate-0 transition-transform duration-700 aspect-video">
                         <img src="/WHO WE ARE.jpg" alt="Who We Are & Our Vision" className="w-full h-full object-cover" />
                     </div>
                 </div>
@@ -118,9 +118,9 @@ const Home = () => {
             {/* CTA Section */}
             <section id="join-us" className="py-24 bg-[#FCD12A]">
                 <div className="max-w-screen-xl mx-auto px-4 text-center">
-                    <h2 className="text-5xl font-black text-[#0A0A0A] mb-8 uppercase tracking-tighter">Ready to Spark Change?</h2>
-                    <p className="text-[#0A0A0A]/70 text-xl mb-10 max-w-xl mx-auto">Join a community of thousands across Africa shaping the future of leadership.</p>
-                    <Link to="/events" className="px-12 py-4 bg-[#0A0A0A] text-white font-bold rounded-xl shadow-2xl hover:scale-105 transition-all text-lg">
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#0A0A0A] mb-6 sm:mb-8 uppercase tracking-tighter px-2">Ready to Spark Change?</h2>
+                    <p className="text-[#0A0A0A]/70 text-base sm:text-xl mb-8 sm:mb-10 max-w-xl mx-auto px-2">Join a community of thousands across Africa shaping the future of leadership.</p>
+                    <Link to="/events" className="px-8 sm:px-12 py-4 bg-[#0A0A0A] text-white font-bold rounded-xl shadow-2xl hover:scale-105 transition-all text-base sm:text-lg inline-flex min-h-[48px] items-center justify-center">
                         Find Your Next Event
                     </Link>
                 </div>
@@ -130,3 +130,5 @@ const Home = () => {
 };
 
 export default Home;
+
+
