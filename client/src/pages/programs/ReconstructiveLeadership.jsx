@@ -7,7 +7,7 @@ const ReconstructiveLeadership = () => {
     const settings = { dots: true, infinite: true, speed: 500, slidesToShow: 1, slidesToScroll: 1, arrows: true };
 
     return (
-        <div className="pt-20">
+        <div className="page-top-spacing">
             <Helmet>
                 <title>Reconstructive Leadership | Youth Spark Nexus</title>
             </Helmet>

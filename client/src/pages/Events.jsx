@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import FullCalendar from '@fullcalendar/react';
@@ -71,9 +71,9 @@ const Events = () => {
     const variants = { hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0, transition: { duration: 0.7 } } };
 
     return (
-        <section className="section-padding min-h-screen pt-24" style={{ background: '#0d0d0d' }}>
+        <section className="min-h-screen page-top-spacing px-4 sm:px-[8%] md:px-[10%] pb-[8%]" style={{ background: '#0d0d0d' }}>
             {/* Breadcrumb Navigation */}
-            <div className="max-w-screen-xl mx-auto px-4 py-4">
+            <div className="max-w-screen-xl mx-auto px-4 pt-1 pb-2 sm:pt-2 sm:pb-3">
                 <nav className="flex items-center gap-2 text-sm text-gray-400">
                     <RouterLink to="/" className="hover:text-[#FCD12A] transition-colors">Home</RouterLink>
                     <span>/</span>

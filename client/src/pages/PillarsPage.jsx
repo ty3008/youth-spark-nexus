@@ -4,14 +4,14 @@ import Pillars from '../components/Pillars';
 
 const PillarsPage = () => {
     return (
-        <div className="pt-20">
+        <div className="page-top-spacing">
             <Helmet>
                 <title>Our Pillars | Youth Spark Nexus</title>
                 <meta name="description" content="Explore the four pillars of Youth Spark Nexus: Faith, Leadership, Influence, and Community." />
             </Helmet>
             
             {/* Breadcrumb Navigation */}
-            <div className="max-w-screen-xl mx-auto px-4 py-4">
+            <div className="max-w-screen-xl mx-auto px-4 pt-1 pb-2 sm:pt-2 sm:pb-3">
                 <nav className="flex items-center gap-2 text-sm text-gray-400">
                     <RouterLink to="/" className="hover:text-[#FCD12A] transition-colors">Home</RouterLink>
                     <span>/</span>

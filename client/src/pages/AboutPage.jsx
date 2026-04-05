@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 
 const AboutPage = () => {
     return (
-        <div className="pt-20">
+        <div className="page-top-spacing">
             <Helmet>
                 <title>About Us | Youth Spark Nexus</title>
                 <meta name="description" content="Learn more about Youth Spark Nexus, our vision to disciple nations and our mission to empower young leaders." />

@@ -4,14 +4,14 @@ import Programs from '../components/Programs';
 
 const ProgramsPage = () => {
     return (
-        <div className="pt-20">
+        <div className="page-top-spacing">
             <Helmet>
                 <title>Programs | Youth Spark Nexus</title>
                 <meta name="description" content="Our structured programs for leadership development, skill acquisition, and kingdom-centered training." />
             </Helmet>
             
             {/* Breadcrumb Navigation */}
-            <div className="max-w-screen-xl mx-auto px-4 py-4">
+            <div className="max-w-screen-xl mx-auto px-4 pt-1 pb-2 sm:pt-2 sm:pb-3">
                 <nav className="flex items-center gap-2 text-sm text-gray-400">
                     <RouterLink to="/" className="hover:text-[#FCD12A] transition-colors">Home</RouterLink>
                     <span>/</span>
