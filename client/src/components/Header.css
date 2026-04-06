@@ -44,7 +44,8 @@
     width: auto;
     max-width: 100%;
     object-fit: contain;
-    transform: scale(1.35);
+    /* Increase visual size without affecting header height (transform doesn't impact layout box) */
+    transform: scale(1.8);
     transform-origin: left center;
 }
 
@@ -87,7 +88,8 @@
 /* Mobile: hamburger + panel (max 768px) */
 .menu-toggle {
     display: flex;
-    font-size: 1.75rem;
+    /* Slightly larger glyph while keeping tap target the same */
+    font-size: 2.25rem;
     line-height: 1;
     min-width: 48px;
     min-height: 48px;
@@ -195,7 +197,8 @@
 
 @media (max-width: 768px) {
     .header-logo {
-        transform: none;
+        /* Make logo feel ~30–40% larger on small screens while keeping header height unchanged */
+        transform: scale(1.3);
         height: 44px;
     }
 

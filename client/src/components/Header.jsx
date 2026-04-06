@@ -44,33 +44,44 @@ const Header = () => {
 
     const closeMenu = () => setIsMenuOpen(false);
 
-    const renderNavItems = (variant) => (
-        <>
-            {navLinks.map((link) => (
-                <li key={`${variant}-${link.path}`}>
-                    <RouterLink to={link.path} onClick={closeMenu}>
-                        {link.name}
-                    </RouterLink>
+    const renderNavItems = (variant) => {
+        const isDesktop = variant === 'desktop';
+
+        return (
+            <>
+                {navLinks
+                    .filter((link) => !(isDesktop && link.name === 'Events'))
+                    .map((link) => (
+                        <li key={`${variant}-${link.path}`}>
+                            <RouterLink to={link.path} onClick={closeMenu}>
+                                {link.name}
+                            </RouterLink>
+                        </li>
+                    ))}
+
+                {/* Partner / Support lives only in the mobile menu to reduce desktop clutter */}
+                {!isDesktop && (
+                    <li>
+                        <RouterLink to="/partnerships" onClick={closeMenu}>
+                            Partner / Support
+                        </RouterLink>
+                    </li>
+                )}
+
+                <li>
+                    <a
+                        href="https://chat.whatsapp.com/IVLWWZyO2GT6ONfjCgOw7K?mode=gi_t"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn"
+                        onClick={closeMenu}
+                    >
+                        Join Us
+                    </a>
                 </li>
-            ))}
-            <li>
-                <RouterLink to="/partnerships" onClick={closeMenu}>
-                    Partner / Support
-                </RouterLink>
-            </li>
-            <li>
-                <a
-                    href="https://chat.whatsapp.com/IVLWWZyO2GT6ONfjCgOw7K?mode=gi_t"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn"
-                    onClick={closeMenu}
-                >
-                    Join Us
-                </a>
-            </li>
-        </>
-    );
+            </>
+        );
+    };
 
     return (
         <header className={`site-header ${isScrolled ? 'scrolled' : ''}`}>
