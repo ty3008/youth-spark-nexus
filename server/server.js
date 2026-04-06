@@ -79,26 +79,50 @@ const isValidObjectId = (id) => id && mongoose.Types.ObjectId.isValid(id) && Str
 const trimStr = (s, max) => (typeof s === 'string' ? s.trim().slice(0, max) : '');
 
 // --- MongoDB Connection ---
+const DB_RETRY_MS = 30_000;
+let isConnectingDb = false;
+
+const ensureDbConnected = (res) => {
+    if (mongoose.connection.readyState === 1) return true;
+    return res.status(503).json({
+        success: false,
+        message: 'Database is temporarily unavailable. Please try again in a moment.',
+    });
+};
+
+const seedInitialEvents = async () => {
+    const count = await Event.countDocuments();
+    if (count === 0) {
+        await Event.insertMany([
+            { title: 'Youth Spark Summit', date: '2026-03-14', description: 'Annual event in Nairobi CBD.', location: 'Nairobi CBD' },
+            { title: 'Youth Spark Nexus Session', date: '2026-04-10', description: 'Monthly networking and leadership session.', location: 'Nairobi' },
+        ]);
+        console.log('🌱 Seeded initial events');
+    }
+};
+
 const connectDB = async () => {
+    if (isConnectingDb || mongoose.connection.readyState === 1) return;
+    isConnectingDb = true;
     try {
         await mongoose.connect(process.env.MONGO_URI);
         console.log('✅ Connected to MongoDB');
-        // Seed initial events if none exist
-        const count = await Event.countDocuments();
-        if (count === 0) {
-            await Event.insertMany([
-                { title: 'Youth Spark Summit', date: '2026-03-14', description: 'Annual event in Nairobi CBD.', location: 'Nairobi CBD' },
-                { title: 'Youth Spark Nexus Session', date: '2026-04-10', description: 'Monthly networking and leadership session.', location: 'Nairobi' },
-            ]);
-            console.log('🌱 Seeded initial events');
-        }
+        await seedInitialEvents();
     } catch (err) {
         console.error('❌ MongoDB connection error:', err.message);
         console.error('👉 Please update MONGO_URI in server/.env with your MongoDB Atlas connection string.');
         console.error('   Example: MONGO_URI=mongodb+srv://<user>:<password>@cluster0.xxxxx.mongodb.net/youth-spark-nexus');
-        // Do not exit — server continues running (routes still register, DB calls will fail gracefully)
+        console.error(`↻ Retrying Mongo connection in ${DB_RETRY_MS / 1000}s...`);
+        setTimeout(connectDB, DB_RETRY_MS);
+    } finally {
+        isConnectingDb = false;
     }
 };
+
+mongoose.connection.on('disconnected', () => {
+    console.warn('⚠️ MongoDB disconnected. Retrying connection...');
+    setTimeout(connectDB, DB_RETRY_MS);
+});
 
 connectDB();
 
@@ -126,6 +150,7 @@ const verifyToken = (req, res, next) => {
 
 // --- Get all events (public, read-only) ---
 app.get('/api/events', async (req, res) => {
+    if (!ensureDbConnected(res)) return;
     try {
         const events = await Event.find().sort({ date: 1 });
         res.json(events);
@@ -136,6 +161,7 @@ app.get('/api/events', async (req, res) => {
 
 // --- Contact Form Submission (public) ---
 app.post('/api/contact', contactLimiter, async (req, res) => {
+    if (!ensureDbConnected(res)) return;
     const raw = req.body || {};
     const name = trimStr(raw.name, 120);
     const email = trimStr(raw.email, 254);
@@ -159,6 +185,7 @@ app.post('/api/contact', contactLimiter, async (req, res) => {
 
 // --- Event Registration (public) ---
 app.post('/api/registrations', async (req, res) => {
+    if (!ensureDbConnected(res)) return;
     const raw = req.body || {};
     const eventId = raw.eventId;
     const name = trimStr(raw.name, 120);
@@ -222,6 +249,7 @@ app.post('/api/admin/login', loginLimiter, async (req, res) => {
 
 // --- Create new event ---
 app.post('/api/events', verifyToken, async (req, res) => {
+    if (!ensureDbConnected(res)) return;
     const raw = req.body || {};
     const title = trimStr(raw.title, 200);
     const date = trimStr(raw.date, 20);
@@ -236,12 +264,14 @@ app.post('/api/events', verifyToken, async (req, res) => {
         const event = await Event.create({ title, date, description, location });
         res.status(201).json({ success: true, event });
     } catch (err) {
-        res.status(500).json({ success: false, message: 'Failed to create event.' });
+        console.error('❌ Create event failed:', err.message);
+        res.status(500).json({ success: false, message: 'Failed to create event. Please verify database access and try again.' });
     }
 });
 
 // --- Update event ---
 app.put('/api/events/:id', verifyToken, async (req, res) => {
+    if (!ensureDbConnected(res)) return;
     if (!isValidObjectId(req.params.id)) {
         return res.status(400).json({ success: false, message: 'Invalid event ID.' });
     }
@@ -261,12 +291,14 @@ app.put('/api/events/:id', verifyToken, async (req, res) => {
         if (!event) return res.status(404).json({ success: false, message: 'Event not found.' });
         res.json({ success: true, event });
     } catch (err) {
-        res.status(500).json({ success: false, message: 'Failed to update event.' });
+        console.error('❌ Update event failed:', err.message);
+        res.status(500).json({ success: false, message: 'Failed to update event. Please verify database access and try again.' });
     }
 });
 
 // --- Delete event ---
 app.delete('/api/events/:id', verifyToken, async (req, res) => {
+    if (!ensureDbConnected(res)) return;
     if (!isValidObjectId(req.params.id)) {
         return res.status(400).json({ success: false, message: 'Invalid event ID.' });
     }
@@ -275,12 +307,14 @@ app.delete('/api/events/:id', verifyToken, async (req, res) => {
         if (!event) return res.status(404).json({ success: false, message: 'Event not found.' });
         res.json({ success: true, message: 'Event deleted.' });
     } catch (err) {
-        res.status(500).json({ success: false, message: 'Failed to delete event.' });
+        console.error('❌ Delete event failed:', err.message);
+        res.status(500).json({ success: false, message: 'Failed to delete event. Please verify database access and try again.' });
     }
 });
 
 // --- Get all contact submissions (admin only) ---
 app.get('/api/admin/contacts', verifyToken, async (req, res) => {
+    if (!ensureDbConnected(res)) return;
     try {
         const contacts = await Contact.find().sort({ createdAt: -1 });
         res.json(contacts);
@@ -291,6 +325,7 @@ app.get('/api/admin/contacts', verifyToken, async (req, res) => {
 
 // --- Get all registrations (admin only) ---
 app.get('/api/admin/registrations', verifyToken, async (req, res) => {
+    if (!ensureDbConnected(res)) return;
     try {
         const registrations = await Registration.find().populate('eventId', 'title').sort({ createdAt: -1 });
         res.json(registrations);
