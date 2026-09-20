@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
-import './Header.css';
+import { Link, useLocation } from 'react-router-dom';
+import { Menu, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Header = () => {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -9,7 +10,7 @@ const Header = () => {
 
     useEffect(() => {
         const handleScroll = () => {
-            setIsScrolled(window.scrollY > 50);
+            setIsScrolled(window.scrollY > 20);
         };
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
@@ -42,92 +43,101 @@ const Header = () => {
         { name: 'Events', path: '/events' },
     ];
 
-    const closeMenu = () => setIsMenuOpen(false);
+    const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-    const renderNavItems = (variant) => {
-        const isDesktop = variant === 'desktop';
+    return (
+        <header 
+            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-transparent ${
+                isScrolled ? 'bg-brand-darker/80 backdrop-blur-lg border-white/5 py-4' : 'bg-transparent py-6'
+            }`}
+        >
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+                {/* Logo */}
+                <Link to="/" className="flex items-center gap-2 z-50 relative">
+                    <img src="/logo.png" alt="Youth Spark Nexus" className="h-10 sm:h-12 w-auto object-contain" />
+                    <span className="font-heading text-xl font-bold tracking-tight text-white hidden sm:block">
+                        Youth Spark <span className="text-brand-gold">Nexus</span>
+                    </span>
+                </Link>
 
-        return (
-            <>
-                {navLinks
-                    .filter((link) => !(isDesktop && link.name === 'Events'))
-                    .map((link) => (
-                        <li key={`${variant}-${link.path}`}>
-                            <RouterLink to={link.path} onClick={closeMenu}>
-                                {link.name}
-                            </RouterLink>
-                        </li>
-                    ))}
-
-                {/* Partner / Support lives only in the mobile menu to reduce desktop clutter */}
-                {!isDesktop && (
-                    <li>
-                        <RouterLink to="/partnerships" onClick={closeMenu}>
-                            Partner / Support
-                        </RouterLink>
-                    </li>
-                )}
-
-                <li>
+                {/* Desktop Nav */}
+                <nav className="hidden md:flex items-center gap-8">
+                    <ul className="flex items-center gap-6">
+                        {navLinks.map((link) => (
+                            <li key={link.path}>
+                                <Link 
+                                    to={link.path} 
+                                    className={`text-sm font-medium transition-colors hover:text-brand-gold ${
+                                        location.pathname === link.path ? 'text-brand-gold' : 'text-gray-300'
+                                    }`}
+                                >
+                                    {link.name}
+                                </Link>
+                            </li>
+                        ))}
+                    </ul>
                     <a
                         href="https://chat.whatsapp.com/IVLWWZyO2GT6ONfjCgOw7K?mode=gi_t"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="btn"
-                        onClick={closeMenu}
+                        className="px-5 py-2.5 bg-brand-gold/10 text-brand-gold font-bold text-sm rounded-full border border-brand-gold/20 hover:bg-brand-gold hover:text-black transition-all"
                     >
-                        Join Us
+                        Join Community
                     </a>
-                </li>
-            </>
-        );
-    };
-
-    return (
-        <header className={`site-header ${isScrolled ? 'scrolled' : ''}`}>
-            {isMenuOpen ? (
-                <div
-                    className="header-mobile-backdrop"
-                    aria-hidden
-                    onClick={closeMenu}
-                />
-            ) : null}
-
-            <div className="site-header__bar">
-                <RouterLink
-                    to="/"
-                    className="logo"
-                    style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}
-                >
-                    <img src="/logo.png" alt="Youth Spark Nexus" className="header-logo" />
-                </RouterLink>
-
-                <nav className="header-nav-desktop" aria-label="Main navigation">
-                    <ul className="header-nav-list">{renderNavItems('desktop')}</ul>
                 </nav>
 
-                <button
-                    type="button"
-                    className="menu-toggle"
-                    id="menu-toggle-button"
-                    onClick={() => setIsMenuOpen(!isMenuOpen)}
-                    aria-label="Toggle navigation"
-                    aria-expanded={isMenuOpen}
-                    aria-controls="mobile-nav-panel"
+                {/* Mobile Menu Toggle */}
+                <button 
+                    className="md:hidden text-brand-gold p-2 z-50 relative"
+                    onClick={toggleMenu}
+                    aria-label="Toggle menu"
                 >
-                    &#9776;
+                    {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
                 </button>
             </div>
 
-            <div
-                id="mobile-nav-panel"
-                className={`header-mobile-panel ${isMenuOpen ? 'is-open' : ''}`}
-                aria-hidden={!isMenuOpen}
-            >
-                <nav aria-label="Mobile navigation">
-                    <ul className="header-mobile-list">{renderNavItems('mobile')}</ul>
-                </nav>
-            </div>
+            {/* Mobile Nav Overlay */}
+            <AnimatePresence>
+                {isMenuOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.2 }}
+                        className="fixed inset-0 z-40 bg-brand-darker/95 backdrop-blur-xl flex flex-col pt-24 px-6 pb-6 overflow-y-auto"
+                    >
+                        <ul className="flex flex-col gap-6 text-center mt-8">
+                            {navLinks.map((link) => (
+                                <li key={link.path}>
+                                    <Link 
+                                        to={link.path}
+                                        className={`text-2xl font-heading font-semibold ${
+                                            location.pathname === link.path ? 'text-brand-gold' : 'text-white'
+                                        }`}
+                                    >
+                                        {link.name}
+                                    </Link>
+                                </li>
+                            ))}
+                            <li className="mt-4">
+                                <Link to="/partnerships" className="text-xl text-gray-400 hover:text-brand-gold transition-colors">
+                                    Partner / Support
+                                </Link>
+                            </li>
+                            <li className="mt-8">
+                                <a
+                                    href="https://chat.whatsapp.com/IVLWWZyO2GT6ONfjCgOw7K?mode=gi_t"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="btn-primary w-full max-w-xs mx-auto text-lg py-4"
+                                >
+                                    Join Community
+                                </a>
+                            </li>
+                        </ul>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </header>
     );
 };
