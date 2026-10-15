@@ -11,14 +11,17 @@ export default {
                     dark: '#050505',
                     darker: '#0A0A0A',
                     card: '#111111',
+                    cardHover: '#161616',
                     gold: '#FCD12A',
                     goldHover: '#e5bc25',
-                    muted: '#888888',
+                    goldLight: '#FEF08A',
+                    muted: '#9CA3AF',
                 }
             },
             fontFamily: {
-                heading: ['Poppins', 'sans-serif'],
-                body: ['Inter', 'Roboto', 'sans-serif'],
+                heading: ['Poppins', 'Plus Jakarta Sans', 'sans-serif'],
+                display: ['Plus Jakarta Sans', 'Poppins', 'sans-serif'],
+                body: ['Inter', 'sans-serif'],
             },
             animation: {
                 'fade-in': 'fadeIn 0.8s ease-out forwards',

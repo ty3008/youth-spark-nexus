@@ -18,11 +18,13 @@ import ReconstructiveLeadership from './pages/programs/ReconstructiveLeadership'
 import EngagementsPage from './pages/EngagementsPage';
 import AudiencePage from './pages/AudiencePage';
 import PartnershipsPage from './pages/PartnershipsPage';
+import ScrollToTop from './components/ScrollToTop';
 import './App.css';
 
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <Helmet>
         <title>Youth Spark Nexus</title>
         <meta name="description" content="Empowering Kingdom-minded youth in Africa through leadership and faith." />
