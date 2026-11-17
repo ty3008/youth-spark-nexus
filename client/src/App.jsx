@@ -39,11 +39,11 @@ const Shell = () => {
             <Route path="/partnerships" element={<PartnershipsPage />} />
             <Route path="/contact" element={<Contact />} />
 
-            {/* Old marketing pages are folded into About or Programs. Old links still land somewhere useful. */}
-            <Route path="/pillars" element={<Navigate to="/about" replace />} />
-            <Route path="/who-we-serve" element={<Navigate to="/about" replace />} />
-            <Route path="/impact" element={<Navigate to="/about" replace />} />
-            <Route path="/engagements" element={<Navigate to="/programs" replace />} />
+            {/* Old marketing URLs redirect to the designed sections on About or Programs. */}
+            <Route path="/pillars" element={<Navigate to="/about#pillars" replace />} />
+            <Route path="/who-we-serve" element={<Navigate to="/about#who-we-serve" replace />} />
+            <Route path="/impact" element={<Navigate to="/about#impact" replace />} />
+            <Route path="/engagements" element={<Navigate to="/programs#engagements" replace />} />
 
             <Route path="/admin" element={<AdminLogin />} />
             <Route

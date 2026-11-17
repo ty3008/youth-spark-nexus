@@ -1,17 +1,21 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-/**
- * Ensures the window smoothly scrolls back to the top whenever the route pathname changes.
- */
 const ScrollToTop = () => {
-    const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
 
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, [pathname]);
+  useEffect(() => {
+    if (hash) {
+      const target = document.getElementById(hash.slice(1));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+        return;
+      }
+    }
+    window.scrollTo(0, 0);
+  }, [pathname, hash]);
 
-    return null;
+  return null;
 };
 
 export default ScrollToTop;

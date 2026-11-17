@@ -6,7 +6,7 @@ import { programName } from '../data/site';
 export const StatusChip = ({ gathering }) =>
   isUpcoming(gathering) ? <span className="chip-upcoming">Upcoming</span> : <span className="chip-held">Held</span>;
 
-// Photo, or a plain dark panel when no photo has been added yet. Text never sits on top of a photo.
+// Photo, or a finished dark card when no cover has been uploaded yet. Text never sits on top of a photo.
 export const CoverOrPanel = ({ gathering, eager = false }) =>
   gathering.cover ? (
     <img
@@ -19,8 +19,13 @@ export const CoverOrPanel = ({ gathering, eager = false }) =>
       className="aspect-[4/3] w-full object-cover"
     />
   ) : (
-    <div className="flex aspect-[4/3] w-full items-center justify-center border-b border-white/10 bg-ink p-4 text-center">
-      <p className="text-sm text-muted">Photos from this gathering will be added</p>
+    <div className="flex aspect-[4/3] w-full flex-col justify-between border-b border-white/10 bg-ink p-5">
+      <div className="flex items-center justify-between gap-2">
+        <span className="text-xs font-semibold uppercase tracking-wider text-gold">{formatShort(gathering)}</span>
+        <span className="text-xs text-muted">{programName(gathering.program)}</span>
+      </div>
+      <p className="text-base font-semibold leading-snug text-fg">{gathering.title}</p>
+      <p className="text-xs text-muted">Photos from this gathering will be added.</p>
     </div>
   );
 

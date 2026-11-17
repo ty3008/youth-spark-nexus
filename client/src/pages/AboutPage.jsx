@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { FOUNDERS, FOUNDERS_PHOTO, PROGRAMS, VENUES_USED } from '../data/site';
+import { EQUIP_AREAS, FOUNDERS, FOUNDERS_PHOTO, PROGRAMS, VENUES_USED } from '../data/site';
 import { PageHeader } from '../components/PageParts';
 
 const About = () => (
@@ -19,6 +19,7 @@ const About = () => (
       </p>
     </PageHeader>
 
+    {/* Founders */}
     <section className="section">
       <div className="wrap grid items-start gap-8 md:grid-cols-2 md:gap-12">
         <figure>
@@ -50,14 +51,15 @@ const About = () => (
       </div>
     </section>
 
-    <section className="section border-t border-white/10">
+    {/* Four programs */}
+    <section className="section border-t border-white/10 bg-panel">
       <div className="wrap">
         <p className="eyebrow mb-2">What we host</p>
         <h2 className="mb-6 text-2xl sm:text-3xl">Four programs</h2>
         <ul className="grid gap-4 md:grid-cols-2">
           {PROGRAMS.map((p) => (
             <li key={p.slug}>
-              <Link to={`/programs/${p.slug}`} className="card group flex h-full flex-col gap-2 p-5 transition-colors hover:border-gold">
+              <Link to={`/programs/${p.slug}`} className="card group flex h-full flex-col gap-2 bg-ink p-5 transition-colors hover:border-gold">
                 <span className="chip-program self-start">{p.cadence}</span>
                 <h3 className="text-lg group-hover:text-gold">{p.name}</h3>
                 <p className="text-sm leading-relaxed text-muted">{p.blurb}</p>
@@ -71,24 +73,87 @@ const About = () => (
       </div>
     </section>
 
-    <section className="section border-t border-white/10">
-      <div className="wrap grid gap-10 md:grid-cols-2">
+    {/* How we equip / Pillars */}
+    <section id="pillars" className="section border-t border-white/10">
+      <div className="wrap">
+        <p className="eyebrow mb-2">How we equip</p>
+        <h2 className="mb-6 text-2xl sm:text-3xl">Seven areas across our gatherings</h2>
+        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {EQUIP_AREAS.map((area) => (
+            <li key={area.key} className="card p-5">
+              <h3 className="text-base font-semibold text-gold">{area.name}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted">{area.line}</p>
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-8 grid gap-4 md:grid-cols-3">
+          <figure className="overflow-hidden rounded-xl border border-white/10 bg-panel">
+            <img src="/WHO WE ARE.jpg" alt="Group discussion at Youth Spark Nexus" loading="lazy" decoding="async" className="aspect-[4/3] w-full object-cover" />
+            <figcaption className="p-3 text-xs text-muted">Peer discussion at Youth Spark Nexus</figcaption>
+          </figure>
+          <figure className="overflow-hidden rounded-xl border border-white/10 bg-panel">
+            <img src="/pillar.jpg" alt="Speaker at Youth Spark Summit 2025, Nairobi Cinema" loading="lazy" decoding="async" className="aspect-[4/3] w-full object-cover" />
+            <figcaption className="p-3 text-xs text-muted">Youth Spark Summit 2025, Nairobi Cinema</figcaption>
+          </figure>
+          <figure className="overflow-hidden rounded-xl border border-white/10 bg-panel">
+            <img src="/pillar 2.jpg" alt="Audience seated at Nairobi Cinema during Summit 2025" loading="lazy" decoding="async" className="aspect-[4/3] w-full object-cover" />
+            <figcaption className="p-3 text-xs text-muted">Summit 2025 auditorium session</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    {/* Who we serve */}
+    <section id="who-we-serve" className="section border-t border-white/10 bg-panel">
+      <div className="wrap grid items-center gap-8 md:grid-cols-2 md:gap-12">
         <div>
-          <h2 className="text-xl">Venues we have used</h2>
-          <ul className="mt-4 space-y-2 text-muted">
-            {VENUES_USED.map((v) => (
-              <li key={v}>{v}</li>
-            ))}
+          <p className="eyebrow mb-2">Who we serve</p>
+          <h2 className="text-2xl sm:text-3xl">Young leaders in Nairobi</h2>
+          <p className="mt-4 leading-relaxed text-muted">
+            Our rooms bring together university students, young professionals, entrepreneurs, creatives, and campus leaders across Nairobi.
+          </p>
+          <ul className="mt-5 list-disc space-y-2 pl-5 text-sm text-muted">
+            <li>University students and campus liaisons</li>
+            <li>Early-career professionals and entrepreneurs</li>
+            <li>Photographers, videographers, designers, artists, hosts, and content creators</li>
           </ul>
         </div>
+        <div className="grid grid-cols-2 gap-3">
+          <img src="/kenya-vision.png" alt="Nairobi city skyline" loading="lazy" decoding="async" className="aspect-[4/3] w-full rounded-xl border border-white/10 object-cover" />
+          <img src="/about-skyline.png" alt="Nairobi evening skyline" loading="lazy" decoding="async" className="aspect-[4/3] w-full rounded-xl border border-white/10 object-cover" />
+        </div>
+      </div>
+    </section>
+
+    {/* Rooms & Past gatherings (replaces old /impact) */}
+    <section id="impact" className="section border-t border-white/10">
+      <div className="wrap grid items-start gap-10 md:grid-cols-2">
         <div>
-          <h2 className="text-xl">Past gatherings</h2>
-          <p className="mt-4 text-muted">
-            Every gathering we have on record has its own page with the date, venue, and photos when we have them.
+          <p className="eyebrow mb-2">Where we meet</p>
+          <h2 className="text-2xl sm:text-3xl">Venues we have used</h2>
+          <ul className="mt-4 space-y-2 text-muted">
+            {VENUES_USED.map((v) => (
+              <li key={v} className="card px-4 py-3 text-sm">{v}</li>
+            ))}
+          </ul>
+          <p className="mt-6 text-muted">
+            Every gathering we have on record has its own page with the date, venue, video links when available, and photos.
           </p>
           <Link to="/events" className="btn-ghost mt-5">
             See the calendar
           </Link>
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-2">
+          <figure className="overflow-hidden rounded-xl border border-white/10 bg-panel">
+            <img src="/Impact (2).jpg" alt="Youth Spark Summit 2025 full hall at Nairobi Cinema" loading="lazy" decoding="async" className="aspect-[4/3] w-full object-cover" />
+            <figcaption className="p-3 text-xs text-muted">Youth Spark Summit 2025, Nairobi Cinema</figcaption>
+          </figure>
+          <figure className="overflow-hidden rounded-xl border border-white/10 bg-panel">
+            <img src="/Founders with PLO.jpg" alt="Kevin and Daphne Kimani with PLO Lumumba, speaker at Youth Spark Summit 2026" loading="lazy" decoding="async" className="aspect-[4/3] w-full object-cover" />
+            <figcaption className="p-3 text-xs text-muted">With PLO Lumumba, speaker at Youth Spark Summit 2026</figcaption>
+          </figure>
         </div>
       </div>
     </section>

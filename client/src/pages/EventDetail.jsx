@@ -42,6 +42,18 @@ const EventDetail = () => {
       <section className="section">
         <div className="wrap grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-7">
+            {g.cover && (
+              <figure className="mb-8">
+                <img
+                  src={g.cover}
+                  alt={g.title}
+                  width="1200"
+                  height="900"
+                  decoding="async"
+                  className="aspect-[16/10] w-full rounded-xl border border-white/10 object-cover"
+                />
+              </figure>
+            )}
             <p className="text-lg leading-relaxed">{g.summary}</p>
 
             {/* Films and recap links sit under the summary and above the gallery. */}

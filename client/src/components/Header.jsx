@@ -4,11 +4,10 @@ import { Menu, X } from 'lucide-react';
 
 const NAV = [
   { to: '/', label: 'Home', end: true },
-  { to: '/about', label: 'About' },
   { to: '/programs', label: 'Programs' },
   { to: '/events', label: 'Events' },
+  { to: '/about', label: 'About' },
   { to: '/partnerships', label: 'Partner' },
-  { to: '/contact', label: 'Contact' },
 ];
 
 const linkClass = ({ isActive }) =>

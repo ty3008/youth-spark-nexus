@@ -11,7 +11,7 @@ import {
   newestFirst,
   oldestFirst,
 } from '../lib/gatherings';
-import { SITE } from '../data/site';
+import { PROGRAMS, SITE } from '../data/site';
 import MonthCalendar from '../components/MonthCalendar';
 import { GatheringRow } from '../components/GatheringCard';
 import { EmptyState, PageHeader } from '../components/PageParts';
@@ -19,12 +19,21 @@ import { EmptyState, PageHeader } from '../components/PageParts';
 const Events = () => {
   const { items } = useGatherings();
   const [picked, setPicked] = useState(null);
-  const month = picked ?? defaultMonth(items);
+  const [programFilter, setProgramFilter] = useState('all');
 
-  const upcoming = items.filter(isUpcoming).sort(oldestFirst);
-  const thisMonth = items.filter((g) => monthKey(g) === month).sort(oldestFirst);
+  const visibleItems = programFilter === 'all' ? items : items.filter((g) => g.program === programFilter);
+  const month = picked ?? defaultMonth(visibleItems);
+
+  const upcoming = visibleItems.filter(isUpcoming).sort(oldestFirst);
+  const thisMonth = visibleItems.filter((g) => monthKey(g) === month).sort(oldestFirst);
   const monthOnlyNote = thisMonth.some(isMonthOnly);
-  const everything = [...items].sort(newestFirst);
+  const everything = [...visibleItems].sort(newestFirst);
+  const availableMonths = monthsWithItems(visibleItems);
+
+  const handleFilterChange = (slug) => {
+    setProgramFilter(slug);
+    setPicked(null);
+  };
 
   return (
     <>
@@ -38,6 +47,33 @@ const Events = () => {
 
       <PageHeader eyebrow="Calendar" title="Our gatherings">
         <p className="lead">Tap a highlighted day, or pick from the list. {SITE.noRegistrationLine}</p>
+        <div className="mt-6 flex flex-wrap gap-2" role="group" aria-label="Filter gatherings by program">
+          <button
+            type="button"
+            onClick={() => handleFilterChange('all')}
+            className={`min-h-[48px] rounded-lg border px-4 text-sm font-medium transition-colors ${
+              programFilter === 'all'
+                ? 'border-gold bg-gold text-ink'
+                : 'border-white/15 bg-panel text-fg hover:border-gold hover:text-gold'
+            }`}
+          >
+            All programs
+          </button>
+          {PROGRAMS.map((p) => (
+            <button
+              key={p.slug}
+              type="button"
+              onClick={() => handleFilterChange(p.slug)}
+              className={`min-h-[48px] rounded-lg border px-4 text-sm font-medium transition-colors ${
+                programFilter === p.slug
+                  ? 'border-gold bg-gold text-ink'
+                  : 'border-white/15 bg-panel text-fg hover:border-gold hover:text-gold'
+              }`}
+            >
+              {p.name}
+            </button>
+          ))}
+        </div>
       </PageHeader>
 
       <section className="section pb-0">
@@ -72,19 +108,19 @@ const Events = () => {
               </label>
               <select
                 id="month-jump"
-                value={monthsWithItems(items).includes(month) ? month : ''}
+                value={availableMonths.includes(month) ? month : ''}
                 onChange={(e) => e.target.value && setPicked(e.target.value)}
                 className="min-h-[48px] w-full rounded-lg border border-white/20 bg-panel px-3 text-fg"
               >
-                {!monthsWithItems(items).includes(month) && <option value="">Choose a month</option>}
-                {monthsWithItems(items).map((k) => (
+                {!availableMonths.includes(month) && <option value="">Choose a month</option>}
+                {availableMonths.map((k) => (
                   <option key={k} value={k}>
                     {monthLabel(k)}
                   </option>
                 ))}
               </select>
             </div>
-            <MonthCalendar items={items} month={month} onMonthChange={setPicked} />
+            <MonthCalendar items={visibleItems} month={month} onMonthChange={setPicked} />
           </div>
 
           <div className="lg:col-span-5">
