@@ -11,7 +11,7 @@ const rateLimit = require('express-rate-limit');
 // Models
 const Event = require('./models/Event');
 const Contact = require('./models/Contact');
-const Registration = require('./models/Registration');
+const seedGatherings = require('./seed/gatherings.json');
 
 // Load environment variables from server/.env specifically
 dotenv.config({ path: path.join(__dirname, '.env') });
@@ -66,17 +66,57 @@ const loginLimiter = rateLimit({
     legacyHeaders: false,
 });
 
-const contactLimiter = rateLimit({
-    windowMs: 15 * 60 * 1000,
-    max: 10,
-    standardHeaders: true,
-    legacyHeaders: false,
-});
-
 // Simple validation helpers
-const isValidEmail = (s) => typeof s === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s.trim()) && s.length <= 254;
 const isValidObjectId = (id) => id && mongoose.Types.ObjectId.isValid(id) && String(new mongoose.Types.ObjectId(id)) === String(id);
 const trimStr = (s, max) => (typeof s === 'string' ? s.trim().slice(0, max) : '');
+const trimList = (arr, max, maxItems = 40) =>
+    Array.isArray(arr) ? arr.map((s) => trimStr(s, max)).filter(Boolean).slice(0, maxItems) : undefined;
+const slugify = (s) => s.toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 100);
+const isValidDate = (s) => /^\d{4}-\d{2}(-\d{2})?$/.test(s);
+// Only web links are accepted for films and recaps. Empty is allowed. This blocks javascript: and data: URLs.
+const isWebUrl = (s) => s === '' || /^https?:\/\/[^\s]+$/i.test(s);
+
+// Pick the gathering fields an admin may set. Fields that are not sent are left out so they are not overwritten.
+// Returns { data, error }.
+const gatheringFields = (raw) => {
+    const out = {};
+    const str = (key, max) => { if (raw[key] !== undefined) out[key] = trimStr(raw[key], max); };
+    str('title', 200);
+    str('time', 80);
+    str('venue', 300);
+    str('summary', 2000);
+    str('cover', 500);
+    str('youtubeUrl', 500);
+    str('instagramUrl', 500);
+    if (raw.date !== undefined) out.date = trimStr(raw.date, 20);
+    if (raw.program !== undefined) out.program = Event.PROGRAMS.includes(raw.program) ? raw.program : '';
+    if (raw.status !== undefined) out.status = raw.status === 'upcoming' ? 'upcoming' : 'held';
+    if (raw.datePrecision !== undefined) out.datePrecision = raw.datePrecision === 'month' ? 'month' : 'day';
+    const details = trimList(raw.details, 500);
+    if (details) out.details = details;
+    const speakers = trimList(raw.speakers, 120);
+    if (speakers) out.speakers = speakers;
+    const gallery = trimList(raw.gallery, 500);
+    if (gallery) out.gallery = gallery;
+    if (Array.isArray(raw.videos)) {
+        out.videos = raw.videos
+            .map((v) => ({ label: trimStr(v && v.label, 200), url: trimStr(v && v.url, 500) }))
+            .filter((v) => v.label && v.url)
+            .slice(0, 40);
+    }
+    for (const key of ['youtubeUrl', 'instagramUrl']) {
+        if (out[key] !== undefined && !isWebUrl(out[key])) return { error: `${key} must start with http:// or https://` };
+    }
+    if (out.videos && out.videos.some((v) => !isWebUrl(v.url))) return { error: 'Every video link must start with http:// or https://' };
+    return { data: out };
+};
+
+const uniqueSlug = async (base) => {
+    let slug = base || 'gathering';
+    let n = 2;
+    while (await Event.exists({ slug })) slug = `${base}-${n++}`;
+    return slug;
+};
 
 // --- MongoDB Connection ---
 const DB_RETRY_MS = 30_000;
@@ -90,15 +130,14 @@ const ensureDbConnected = (res) => {
     });
 };
 
+// Every restart upserts each canonical gathering by slug, so a slug can never appear twice.
+// Cover and gallery are never written by the seed, so photos added later through /admin survive a restart.
 const seedInitialEvents = async () => {
-    const count = await Event.countDocuments();
-    if (count === 0) {
-        await Event.insertMany([
-            { title: 'Youth Spark Summit', date: '2026-03-14', description: 'Annual event in Nairobi CBD.', location: 'Nairobi CBD' },
-            { title: 'Youth Spark Nexus Session', date: '2026-04-10', description: 'Monthly networking and leadership session.', location: 'Nairobi' },
-        ]);
-        console.log('🌱 Seeded initial events');
+    for (const item of seedGatherings) {
+        const { cover, gallery, ...fields } = item; // eslint-disable-line no-unused-vars
+        await Event.updateOne({ slug: item.slug }, { $set: fields }, { upsert: true, runValidators: true });
     }
+    console.log(`🌱 Upserted ${seedGatherings.length} canonical gatherings by slug`);
 };
 
 const connectDB = async () => {
@@ -148,64 +187,30 @@ const verifyToken = (req, res, next) => {
 // PUBLIC ROUTES
 // =============================================
 
-// --- Get all events (public, read-only) ---
+// --- Get all published gatherings (public, read-only) ---
 app.get('/api/events', async (req, res) => {
     if (!ensureDbConnected(res)) return;
     try {
-        const events = await Event.find().sort({ date: 1 });
+        const events = await Event.find({
+            slug: { $exists: true, $ne: '' },
+            program: { $in: Event.PROGRAMS },
+        }).sort({ date: -1 });
         res.json(events);
     } catch (err) {
-        res.status(500).json({ success: false, message: 'Failed to retrieve events.' });
+        res.status(500).json({ success: false, message: 'Failed to retrieve gatherings.' });
     }
 });
 
-// --- Contact Form Submission (public) ---
-app.post('/api/contact', contactLimiter, async (req, res) => {
+// --- Get one published gathering by slug (public, read-only) ---
+app.get('/api/events/:slug', async (req, res) => {
     if (!ensureDbConnected(res)) return;
-    const raw = req.body || {};
-    const name = trimStr(raw.name, 120);
-    const email = trimStr(raw.email, 254);
-    const message = trimStr(raw.message, 2000);
-
-    if (!name || !email || !message) {
-        return res.status(400).json({ success: false, message: 'Please provide name, email, and message.' });
-    }
-    if (!isValidEmail(email)) {
-        return res.status(400).json({ success: false, message: 'Please provide a valid email address.' });
-    }
-
     try {
-        await Contact.create({ name, email, message });
-        console.log(`[Contact Form] submission from ${email}`);
-        return res.status(200).json({ success: true, message: 'Message received successfully! We will get back to you.' });
+        const slug = trimStr(req.params.slug, 120);
+        const event = await Event.findOne({ slug, program: { $in: Event.PROGRAMS } });
+        if (!event) return res.status(404).json({ success: false, message: 'Gathering not found.' });
+        res.json(event);
     } catch (err) {
-        return res.status(500).json({ success: false, message: 'Failed to save your message.' });
-    }
-});
-
-// --- Event Registration (public) ---
-app.post('/api/registrations', async (req, res) => {
-    if (!ensureDbConnected(res)) return;
-    const raw = req.body || {};
-    const eventId = raw.eventId;
-    const name = trimStr(raw.name, 120);
-    const email = trimStr(raw.email, 254);
-
-    if (!eventId || !name || !email) {
-        return res.status(400).json({ success: false, message: 'Please provide eventId, name, and email.' });
-    }
-    if (!isValidObjectId(eventId)) {
-        return res.status(400).json({ success: false, message: 'Invalid event.' });
-    }
-    if (!isValidEmail(email)) {
-        return res.status(400).json({ success: false, message: 'Please provide a valid email address.' });
-    }
-
-    try {
-        await Registration.create({ eventId, name, email });
-        return res.status(200).json({ success: true, message: 'Successfully registered for the event!' });
-    } catch (err) {
-        return res.status(500).json({ success: false, message: 'Failed to register for the event.' });
+        res.status(500).json({ success: false, message: 'Failed to retrieve gathering.' });
     }
 });
 
@@ -247,56 +252,68 @@ app.post('/api/admin/login', loginLimiter, async (req, res) => {
 // PROTECTED ADMIN ROUTES (require JWT)
 // =============================================
 
-// --- Create new event ---
-app.post('/api/events', verifyToken, async (req, res) => {
+// --- Get all gatherings for admin (including legacy un-migrated records) ---
+app.get('/api/admin/events', verifyToken, async (req, res) => {
     if (!ensureDbConnected(res)) return;
-    const raw = req.body || {};
-    const title = trimStr(raw.title, 200);
-    const date = trimStr(raw.date, 20);
-    const description = trimStr(raw.description, 2000);
-    const location = trimStr(raw.location, 200);
-
-    if (!title || !date) {
-        return res.status(400).json({ success: false, message: 'Title and date are required.' });
-    }
-
     try {
-        const event = await Event.create({ title, date, description, location });
-        res.status(201).json({ success: true, event });
+        const events = await Event.find().sort({ date: -1 });
+        res.json(events);
     } catch (err) {
-        console.error('❌ Create event failed:', err.message);
-        res.status(500).json({ success: false, message: 'Failed to create event. Please verify database access and try again.' });
+        res.status(500).json({ success: false, message: 'Failed to retrieve gatherings.' });
     }
 });
 
-// --- Update event ---
+// --- Create new gathering ---
+app.post('/api/events', verifyToken, async (req, res) => {
+    if (!ensureDbConnected(res)) return;
+    const { data, error } = gatheringFields(req.body || {});
+    if (error) return res.status(400).json({ success: false, message: error });
+    if (!data.title || !data.date || !isValidDate(data.date) || !data.program) {
+        return res.status(400).json({ success: false, message: 'Title, program, and a valid date (YYYY-MM-DD or YYYY-MM) are required.' });
+    }
+
+    try {
+        data.slug = await uniqueSlug(slugify(data.title));
+        const event = await Event.create(data);
+        res.status(201).json({ success: true, event });
+    } catch (err) {
+        console.error('❌ Create gathering failed:', err.message);
+        res.status(500).json({ success: false, message: 'Failed to create gathering. Please verify database access and try again.' });
+    }
+});
+
+// --- Update gathering ---
 app.put('/api/events/:id', verifyToken, async (req, res) => {
     if (!ensureDbConnected(res)) return;
     if (!isValidObjectId(req.params.id)) {
-        return res.status(400).json({ success: false, message: 'Invalid event ID.' });
+        return res.status(400).json({ success: false, message: 'Invalid gathering ID.' });
     }
-    const raw = req.body || {};
-    const title = trimStr(raw.title, 200);
-    const date = trimStr(raw.date, 20);
-    const description = trimStr(raw.description, 2000);
-    const location = trimStr(raw.location, 200);
+    const { data, error } = gatheringFields(req.body || {});
+    if (error) return res.status(400).json({ success: false, message: error });
+    if (data.date !== undefined && !isValidDate(data.date)) {
+        return res.status(400).json({ success: false, message: 'Invalid date format. Use YYYY-MM-DD or YYYY-MM.' });
+    }
 
     try {
+        const existing = await Event.findById(req.params.id);
+        if (!existing) return res.status(404).json({ success: false, message: 'Gathering not found.' });
+        if (!existing.slug && data.title) {
+            data.slug = await uniqueSlug(slugify(data.title));
+        }
+
         const event = await Event.findByIdAndUpdate(
             req.params.id,
-            { title, date, description, location },
+            data,
             { new: true, runValidators: true }
         );
-
-        if (!event) return res.status(404).json({ success: false, message: 'Event not found.' });
         res.json({ success: true, event });
     } catch (err) {
-        console.error('❌ Update event failed:', err.message);
-        res.status(500).json({ success: false, message: 'Failed to update event. Please verify database access and try again.' });
+        console.error('❌ Update gathering failed:', err.message);
+        res.status(500).json({ success: false, message: 'Failed to update gathering. Please verify database access and try again.' });
     }
 });
 
-// --- Delete event ---
+// --- Delete gathering ---
 app.delete('/api/events/:id', verifyToken, async (req, res) => {
     if (!ensureDbConnected(res)) return;
     if (!isValidObjectId(req.params.id)) {
@@ -312,7 +329,7 @@ app.delete('/api/events/:id', verifyToken, async (req, res) => {
     }
 });
 
-// --- Get all contact submissions (admin only) ---
+// --- Get all contact submissions (admin only, read-only archive) ---
 app.get('/api/admin/contacts', verifyToken, async (req, res) => {
     if (!ensureDbConnected(res)) return;
     try {
@@ -320,17 +337,6 @@ app.get('/api/admin/contacts', verifyToken, async (req, res) => {
         res.json(contacts);
     } catch (err) {
         res.status(500).json({ success: false, message: 'Failed to retrieve contacts.' });
-    }
-});
-
-// --- Get all registrations (admin only) ---
-app.get('/api/admin/registrations', verifyToken, async (req, res) => {
-    if (!ensureDbConnected(res)) return;
-    try {
-        const registrations = await Registration.find().populate('eventId', 'title').sort({ createdAt: -1 });
-        res.json(registrations);
-    } catch (err) {
-        res.status(500).json({ success: false, message: 'Failed to retrieve registrations.' });
     }
 });
 

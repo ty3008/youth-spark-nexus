@@ -3,100 +3,80 @@
 @tailwind utilities;
 
 @layer base {
-    :root {
-        --brand-gold: #FCD12A;
-        --brand-dark: #050505;
-        --brand-card: #111111;
-    }
-    
     html {
         -webkit-text-size-adjust: 100%;
         scroll-behavior: smooth;
     }
-    
+
     body {
-        @apply bg-brand-dark text-white font-body antialiased;
+        @apply bg-ink text-fg font-sans antialiased;
         overflow-x: hidden;
     }
 
-    h1, h2, h3, h4, h5, h6 {
-        @apply font-heading tracking-tight;
+    h1, h2, h3, h4 {
+        @apply font-semibold tracking-tight text-fg;
+    }
+
+    a, button, select, summary {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    :focus-visible {
+        outline: 2px solid #FCD12A;
+        outline-offset: 2px;
     }
 }
 
 @layer components {
-    .btn-primary {
-        @apply inline-flex items-center justify-center px-6 py-3.5 bg-brand-gold text-black font-heading font-bold uppercase tracking-wider text-xs sm:text-sm rounded-xl hover:bg-brand-goldHover transition-all duration-300 shadow-[0_0_20px_rgba(252,209,42,0.35)] hover:shadow-[0_0_30px_rgba(252,209,42,0.6)] hover:-translate-y-0.5 active:translate-y-0;
-    }
-    
-    .btn-secondary {
-        @apply inline-flex items-center justify-center px-6 py-3.5 border border-brand-gold/40 text-brand-gold font-heading font-bold uppercase tracking-wider text-xs sm:text-sm rounded-xl hover:bg-brand-gold/10 hover:border-brand-gold transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0;
-    }
-    
-    .glass-card {
-        @apply bg-brand-card/90 backdrop-blur-md border border-white/10 rounded-2xl shadow-xl transition-all duration-300 hover:border-brand-gold/40 hover:shadow-[0_10px_30px_rgba(0,0,0,0.6)];
+    .wrap {
+        @apply mx-auto w-full max-w-6xl px-4 sm:px-6;
     }
 
-    .badge-gold {
-        @apply inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-gold/10 border border-brand-gold/30 text-brand-gold font-heading text-xs font-semibold tracking-widest uppercase;
+    .section {
+        @apply py-12 sm:py-16;
     }
 
-    .text-gold-gradient {
-        @apply text-transparent bg-clip-text bg-gradient-to-r from-brand-gold via-yellow-200 to-amber-400;
-    }
-    
-    .section-padding {
-        @apply py-16 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto;
+    .eyebrow {
+        @apply text-xs font-semibold uppercase tracking-[0.18em] text-gold;
     }
 
-    .page-top-spacing {
-        @apply pt-24 md:pt-32;
+    .lead {
+        @apply text-base leading-relaxed text-muted sm:text-lg;
     }
-}
 
-/* World Map & Kenya Highlight */
-.world-map-svg {
-    width: 100%;
-    max-width: 600px;
-    margin: 40px auto;
-    display: block;
-    filter: drop-shadow(0 0 10px rgba(252, 209, 42, 0.1));
-}
+    .card {
+        @apply rounded-xl border border-white/10 bg-panel;
+    }
 
-.world-map-svg path {
-    fill: #1a1a1a;
-    transition: all 0.4s ease;
-    cursor: pointer;
-    stroke: #333;
-    stroke-width: 0.5px;
-}
+    .btn {
+        @apply inline-flex min-h-[48px] items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold transition-colors;
+    }
 
-.world-map-svg path:hover {
-    fill: #2a2a2a;
-    stroke: var(--brand-gold);
-}
+    .btn-gold {
+        @apply btn bg-gold text-ink hover:bg-gold-dark;
+    }
 
-.world-map-svg .active-region {
-    fill: rgba(252, 209, 42, 0.15) !important;
-    stroke: var(--brand-gold);
-    stroke-width: 1.5px;
-}
+    .btn-ghost {
+        @apply btn border border-white/20 text-fg hover:border-gold hover:text-gold;
+    }
 
-.africa-pulse {
-    animation: africa-glow 4s infinite ease-in-out;
-}
+    .chip {
+        @apply inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold;
+    }
 
-@keyframes africa-glow {
-    0%, 100% { stroke-opacity: 0.3; stroke-width: 0.5px; }
-    50% { stroke-opacity: 1; stroke-width: 1.5px; }
-}
+    .chip-held {
+        @apply chip border-white/20 text-muted;
+    }
 
-/* Slick overrides */
-.slick-dots li button:before {
-    color: white !important;
-    opacity: 0.5 !important;
-}
-.slick-dots li.slick-active button:before {
-    color: var(--brand-gold) !important;
-    opacity: 1 !important;
+    .chip-upcoming {
+        @apply chip border-gold bg-gold text-ink;
+    }
+
+    .chip-program {
+        @apply chip border-white/10 bg-white/5 text-fg;
+    }
+
+    .link-inline {
+        @apply text-gold underline underline-offset-4 hover:text-gold-dark;
+    }
 }

@@ -1,0 +1,73 @@
+import { Link } from 'react-router-dom';
+import { CalendarDays, Clock, MapPin } from 'lucide-react';
+import { formatDate, formatShort, isUpcoming } from '../lib/gatherings';
+import { programName } from '../data/site';
+
+export const StatusChip = ({ gathering }) =>
+  isUpcoming(gathering) ? <span className="chip-upcoming">Upcoming</span> : <span className="chip-held">Held</span>;
+
+// Photo, or a plain dark panel when no photo has been added yet. Text never sits on top of a photo.
+export const CoverOrPanel = ({ gathering, eager = false }) =>
+  gathering.cover ? (
+    <img
+      src={gathering.cover}
+      alt={gathering.title}
+      width="800"
+      height="600"
+      loading={eager ? 'eager' : 'lazy'}
+      decoding="async"
+      className="aspect-[4/3] w-full object-cover"
+    />
+  ) : (
+    <div className="flex aspect-[4/3] w-full items-center justify-center border-b border-white/10 bg-ink p-4 text-center">
+      <p className="text-sm text-muted">Photos from this gathering will be added</p>
+    </div>
+  );
+
+export const GatheringCard = ({ gathering: g }) => (
+  <Link
+    to={`/events/${g.slug}`}
+    className="card group flex h-full flex-col overflow-hidden transition-colors hover:border-gold"
+  >
+    <CoverOrPanel gathering={g} />
+    <div className="flex flex-1 flex-col gap-3 p-4">
+      <div className="flex flex-wrap gap-2">
+        <span className="chip-program">{programName(g.program)}</span>
+        <StatusChip gathering={g} />
+      </div>
+      <h3 className="text-lg leading-snug group-hover:text-gold">{g.title}</h3>
+      <p className="flex items-start gap-2 text-sm text-muted">
+        <CalendarDays size={16} className="mt-0.5 shrink-0 text-gold" aria-hidden="true" />
+        <span>{formatShort(g)}</span>
+      </p>
+      <p className="flex items-start gap-2 text-sm text-muted">
+        <MapPin size={16} className="mt-0.5 shrink-0 text-gold" aria-hidden="true" />
+        <span>{g.venue}</span>
+      </p>
+    </div>
+  </Link>
+);
+
+// Compact row used in month lists.
+export const GatheringRow = ({ gathering: g }) => (
+  <Link
+    to={`/events/${g.slug}`}
+    className="card flex min-h-[64px] flex-col gap-1 p-4 transition-colors hover:border-gold"
+  >
+    <div className="flex flex-wrap items-center gap-2">
+      <StatusChip gathering={g} />
+      <span className="text-sm font-medium text-gold">{formatDate(g)}</span>
+    </div>
+    <span className="text-base font-semibold leading-snug">{g.title}</span>
+    <span className="flex items-start gap-2 text-sm text-muted">
+      <MapPin size={16} className="mt-0.5 shrink-0" aria-hidden="true" />
+      <span>{g.venue}</span>
+    </span>
+    {g.time && (
+      <span className="flex items-center gap-2 text-sm text-muted">
+        <Clock size={16} aria-hidden="true" />
+        {g.time}
+      </span>
+    )}
+  </Link>
+);

@@ -1,57 +1,78 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Suspense, lazy } from 'react';
+import { BrowserRouter as Router, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import Home from './pages/Home';
-import Events from './pages/Events';
-import AdminLogin from './pages/AdminLogin';
-import AdminDashboard from './pages/AdminDashboard';
-import AdminRoute from './components/AdminRoute';
+import { GatheringsProvider } from './lib/GatheringsContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import AboutPage from './pages/AboutPage';
-import PillarsPage from './pages/PillarsPage';
-import ImpactPage from './pages/ImpactPage';
-import ProgramsPage from './pages/ProgramsPage';
-import YouthSparkSummit from './pages/programs/YouthSparkSummit';
-import YouthSparkNexus from './pages/programs/YouthSparkNexus';
-import NxtAfricaForum from './pages/programs/NxtAfricaForum';
-import ReconstructiveLeadership from './pages/programs/ReconstructiveLeadership';
-import EngagementsPage from './pages/EngagementsPage';
-import AudiencePage from './pages/AudiencePage';
-import PartnershipsPage from './pages/PartnershipsPage';
 import ScrollToTop from './components/ScrollToTop';
-import './App.css';
+import Home from './pages/Home';
+
+const AboutPage = lazy(() => import('./pages/AboutPage'));
+const ProgramsPage = lazy(() => import('./pages/ProgramsPage'));
+const ProgramPage = lazy(() => import('./pages/ProgramPage'));
+const Events = lazy(() => import('./pages/Events'));
+const EventDetail = lazy(() => import('./pages/EventDetail'));
+const PartnershipsPage = lazy(() => import('./pages/PartnershipsPage'));
+const Contact = lazy(() => import('./pages/Contact'));
+const NotFound = lazy(() => import('./pages/NotFound'));
+const AdminLogin = lazy(() => import('./pages/AdminLogin'));
+const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
+const AdminRoute = lazy(() => import('./components/AdminRoute'));
+
+const Loading = () => <div className="wrap section text-muted">Loading…</div>;
+
+// The admin screens have their own top bar, so the public header and footer are left out there.
+const Shell = () => {
+  const isAdmin = useLocation().pathname.startsWith('/admin');
+  return (
+    <div className="flex min-h-screen flex-col bg-ink text-fg">
+      {!isAdmin && <Header />}
+      <main className="flex-grow">
+        <Suspense fallback={<Loading />}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/programs" element={<ProgramsPage />} />
+            <Route path="/programs/:slug" element={<ProgramPage />} />
+            <Route path="/events" element={<Events />} />
+            <Route path="/events/:slug" element={<EventDetail />} />
+            <Route path="/partnerships" element={<PartnershipsPage />} />
+            <Route path="/contact" element={<Contact />} />
+
+            {/* Old marketing pages are folded into About or Programs. Old links still land somewhere useful. */}
+            <Route path="/pillars" element={<Navigate to="/about" replace />} />
+            <Route path="/who-we-serve" element={<Navigate to="/about" replace />} />
+            <Route path="/impact" element={<Navigate to="/about" replace />} />
+            <Route path="/engagements" element={<Navigate to="/programs" replace />} />
+
+            <Route path="/admin" element={<AdminLogin />} />
+            <Route
+              path="/admin/dashboard"
+              element={
+                <AdminRoute>
+                  <AdminDashboard />
+                </AdminRoute>
+              }
+            />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
+      </main>
+      {!isAdmin && <Footer />}
+    </div>
+  );
+};
 
 function App() {
   return (
     <Router>
       <ScrollToTop />
-      <Helmet>
-        <title>Youth Spark Nexus</title>
-        <meta name="description" content="Empowering Kingdom-minded youth in Africa through leadership and faith." />
+      <Helmet defaultTitle="Youth Spark Summit — Gatherings for young leaders in Nairobi">
+        <html lang="en" />
       </Helmet>
-      <div className="bg-[#0A0A0A] text-[#BFBFBF] min-h-screen flex flex-col">
-        <Header />
-        <main className="flex-grow">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/pillars" element={<PillarsPage />} />
-            <Route path="/impact" element={<ImpactPage />} />
-            <Route path="/programs" element={<ProgramsPage />} />
-            <Route path="/programs/youth-spark-summit" element={<YouthSparkSummit />} />
-            <Route path="/programs/youth-spark-nexus" element={<YouthSparkNexus />} />
-            <Route path="/programs/nxt-africa-forum" element={<NxtAfricaForum />} />
-            <Route path="/programs/reconstructive-leadership" element={<ReconstructiveLeadership />} />
-            <Route path="/engagements" element={<EngagementsPage />} />
-            <Route path="/who-we-serve" element={<AudiencePage />} />
-            <Route path="/partnerships" element={<PartnershipsPage />} />
-            <Route path="/events" element={<Events />} />
-            <Route path="/admin" element={<AdminLogin />} />
-            <Route path="/admin/dashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
+      <GatheringsProvider>
+        <Shell />
+      </GatheringsProvider>
     </Router>
   );
 }
