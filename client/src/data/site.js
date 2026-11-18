@@ -30,6 +30,43 @@ export const FOUNDERS = [
 export const FOUNDERS_PHOTO = '/gatherings/founders.webp';
 export const HERO_PHOTO = '/gatherings/summit-2025/01.webp';
 
+// Existing project frames used on homepage tiles when a gathering's own cover has not been uploaded yet.
+export const BORROWED_COVERS = {
+  'youth-spark-summit-2025-the-unveiling': '/gatherings/summit-2025/01.webp',
+  'youth-spark-nexus-may-2025': '/gatherings/nexus/00.webp',
+  'youth-spark-nexus-august-2025': '/gatherings/nexus/03.webp',
+  'youth-spark-summit-2026-the-reset': '/Founders with PLO.jpg',
+  'reconstructive-leadership-creative-economy-2026': '/Hangout 2.jpg',
+  'nxt-africa-forum-2026': '/NXT 1.webp',
+};
+
+export const WATCH_REELS = [
+  {
+    slug: 'youth-spark-summit-2026-the-reset',
+    theme: 'The Reset',
+    title: 'Youth Spark Summit 2026',
+    meta: '14 March 2026 · CITAM Valley Road',
+    image: '/Founders with PLO.jpg',
+    url: 'https://www.youtube.com/watch?v=1zU-8DwNkAY',
+  },
+  {
+    slug: 'youth-spark-summit-2025-the-unveiling',
+    theme: 'The Unveiling',
+    title: 'Youth Spark Summit 2025',
+    meta: '15 March 2025 · Nairobi Cinema',
+    image: '/gatherings/summit-2025/05.webp',
+    url: 'https://www.youtube.com/watch?v=gDaZRRZNANk',
+  },
+  {
+    slug: 'youth-spark-nexus-may-2025',
+    theme: 'May Nexus',
+    title: 'Youth Spark Nexus — May 2025',
+    meta: 'May 2025 · After40 Hotel',
+    image: '/gatherings/nexus/03.webp',
+    url: 'https://www.youtube.com/watch?v=HoeH5TSccPs',
+  },
+];
+
 export const EQUIP_AREAS = [
   {
     key: 'business',

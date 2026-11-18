@@ -7,6 +7,7 @@ const Gallery = ({ images = [], alt = 'Gathering photo', caption }) => {
   const [index, setIndex] = useState(null);
   const closeRef = useRef(null);
   const lastTrigger = useRef(null);
+  const touchStartX = useRef(null);
 
   const open = (i, el) => {
     lastTrigger.current = el;
@@ -18,6 +19,20 @@ const Gallery = ({ images = [], alt = 'Gathering photo', caption }) => {
   };
   const next = () => setIndex((i) => (i + 1) % images.length);
   const prev = () => setIndex((i) => (i - 1 + images.length) % images.length);
+
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0]?.clientX ?? null;
+  };
+  const handleTouchEnd = (e) => {
+    if (touchStartX.current === null) return;
+    const endX = e.changedTouches[0]?.clientX ?? touchStartX.current;
+    const dx = endX - touchStartX.current;
+    touchStartX.current = null;
+    if (Math.abs(dx) > 40) {
+      if (dx < 0) next();
+      else prev();
+    }
+  };
 
   useEffect(() => {
     if (index === null) return undefined;
@@ -90,7 +105,11 @@ const Gallery = ({ images = [], alt = 'Gathering photo', caption }) => {
             </button>
           </div>
 
-          <div className="flex min-h-0 flex-1 items-center justify-center px-2 sm:px-4">
+          <div
+            className="flex min-h-0 flex-1 items-center justify-center px-2 sm:px-4"
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
             <img
               src={images[index]}
               alt={`${alt}, photo ${index + 1}`}

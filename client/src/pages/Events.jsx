@@ -19,18 +19,28 @@ import { EmptyState, PageHeader } from '../components/PageParts';
 const Events = () => {
   const { items } = useGatherings();
   const [picked, setPicked] = useState(null);
+  const [yearFilter, setYearFilter] = useState('all');
   const [programFilter, setProgramFilter] = useState('all');
 
-  const visibleItems = programFilter === 'all' ? items : items.filter((g) => g.program === programFilter);
-  const month = picked ?? defaultMonth(visibleItems);
+  const visibleItems = items.filter((g) => {
+    const matchYear = yearFilter === 'all' || String(g.date).startsWith(yearFilter);
+    const matchProgram = programFilter === 'all' || g.program === programFilter;
+    return matchYear && matchProgram;
+  });
 
+  const month = picked ?? defaultMonth(visibleItems);
   const upcoming = visibleItems.filter(isUpcoming).sort(oldestFirst);
   const thisMonth = visibleItems.filter((g) => monthKey(g) === month).sort(oldestFirst);
   const monthOnlyNote = thisMonth.some(isMonthOnly);
   const everything = [...visibleItems].sort(newestFirst);
   const availableMonths = monthsWithItems(visibleItems);
 
-  const handleFilterChange = (slug) => {
+  const handleYearChange = (y) => {
+    setYearFilter(y);
+    setPicked(null);
+  };
+
+  const handleProgramChange = (slug) => {
     setProgramFilter(slug);
     setPicked(null);
   };
@@ -47,32 +57,65 @@ const Events = () => {
 
       <PageHeader eyebrow="Calendar" title="Our gatherings">
         <p className="lead">Tap a highlighted day, or pick from the list. {SITE.noRegistrationLine}</p>
-        <div className="mt-6 flex flex-wrap gap-2" role="group" aria-label="Filter gatherings by program">
-          <button
-            type="button"
-            onClick={() => handleFilterChange('all')}
-            className={`min-h-[48px] rounded-lg border px-4 text-sm font-medium transition-colors ${
-              programFilter === 'all'
-                ? 'border-gold bg-gold text-ink'
-                : 'border-white/15 bg-panel text-fg hover:border-gold hover:text-gold'
-            }`}
-          >
-            All programs
-          </button>
-          {PROGRAMS.map((p) => (
+
+        <div className="mt-6 flex flex-col gap-3">
+          <div className="flex flex-wrap gap-2" role="group" aria-label="Filter gatherings by year">
+            {[
+              { key: 'all', label: 'All years' },
+              { key: '2026', label: '2026' },
+              { key: '2025', label: '2025' },
+            ].map((opt) => {
+              const active = yearFilter === opt.key;
+              const isYear = opt.key !== 'all';
+              return (
+                <button
+                  key={opt.key}
+                  type="button"
+                  aria-pressed={active}
+                  onClick={() => handleYearChange(opt.key)}
+                  className={`min-h-[48px] rounded-lg border px-4 text-sm font-semibold transition-colors ${
+                    active
+                      ? isYear
+                        ? 'border-gold bg-gold text-ink'
+                        : 'border-white/40 bg-white/10 text-fg'
+                      : 'border-white/15 bg-panel text-muted hover:border-white/30 hover:text-fg'
+                  }`}
+                >
+                  {opt.label}
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="flex flex-wrap gap-2" role="group" aria-label="Filter gatherings by program">
             <button
-              key={p.slug}
               type="button"
-              onClick={() => handleFilterChange(p.slug)}
+              aria-pressed={programFilter === 'all'}
+              onClick={() => handleProgramChange('all')}
               className={`min-h-[48px] rounded-lg border px-4 text-sm font-medium transition-colors ${
-                programFilter === p.slug
-                  ? 'border-gold bg-gold text-ink'
-                  : 'border-white/15 bg-panel text-fg hover:border-gold hover:text-gold'
+                programFilter === 'all'
+                  ? 'border-white/40 bg-white/10 text-fg'
+                  : 'border-white/15 bg-panel text-muted hover:border-white/30 hover:text-fg'
               }`}
             >
-              {p.name}
+              All programs
             </button>
-          ))}
+            {PROGRAMS.map((p) => (
+              <button
+                key={p.slug}
+                type="button"
+                aria-pressed={programFilter === p.slug}
+                onClick={() => handleProgramChange(p.slug)}
+                className={`min-h-[48px] rounded-lg border px-4 text-sm font-medium transition-colors ${
+                  programFilter === p.slug
+                    ? 'border-white/40 bg-white/10 text-fg'
+                    : 'border-white/15 bg-panel text-muted hover:border-white/30 hover:text-fg'
+                }`}
+              >
+                {p.name}
+              </button>
+            ))}
+          </div>
         </div>
       </PageHeader>
 
@@ -148,13 +191,17 @@ const Events = () => {
       <section className="section border-t border-white/10">
         <div className="wrap">
           <h2 className="mb-4 text-xl">All gatherings, newest first</h2>
-          <ul className="grid gap-3 md:grid-cols-2">
-            {everything.map((g) => (
-              <li key={g.slug}>
-                <GatheringRow gathering={g} />
-              </li>
-            ))}
-          </ul>
+          {everything.length ? (
+            <ul className="grid gap-3 md:grid-cols-2">
+              {everything.map((g) => (
+                <li key={g.slug}>
+                  <GatheringRow gathering={g} />
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <EmptyState>No gatherings match the selected filter.</EmptyState>
+          )}
         </div>
       </section>
     </>

@@ -1,17 +1,27 @@
+import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { CalendarDays, Camera, Clock, ExternalLink, MapPin, Play } from 'lucide-react';
+import { CalendarDays, Camera, Clock, MapPin, Play } from 'lucide-react';
 import { useGatherings } from '../lib/GatheringsContext';
 import { formatDate } from '../lib/gatherings';
 import { SITE, programBySlug } from '../data/site';
 import { StatusChip } from '../components/GatheringCard';
 import Gallery from '../components/Gallery';
+import VideoModal from '../components/VideoModal';
 import { EmptyState, PageHeader } from '../components/PageParts';
 import NotFound from './NotFound';
+
+function findSpeakerVideo(speakerName, videos) {
+  const cleanSpeaker = speakerName.replace(/\s*\(.*?\)\s*/g, '').trim().toLowerCase();
+  if (!cleanSpeaker) return null;
+  return videos.find((v) => v.label.toLowerCase().includes(cleanSpeaker)) || null;
+}
 
 const EventDetail = () => {
   const { slug } = useParams();
   const { items } = useGatherings();
+  const [activeVideo, setActiveVideo] = useState(null);
+
   const g = items.find((x) => x.slug === slug);
   if (!g) return <NotFound />;
 
@@ -56,13 +66,17 @@ const EventDetail = () => {
             )}
             <p className="text-lg leading-relaxed">{g.summary}</p>
 
-            {/* Films and recap links sit under the summary and above the gallery. */}
+            {/* Primary film and Instagram recap controls sit under the summary and above the gallery. */}
             {(g.youtubeUrl || g.instagramUrl) && (
               <div className="mt-6 flex flex-col gap-3 sm:flex-row">
                 {g.youtubeUrl && (
-                  <a href={g.youtubeUrl} target="_blank" rel="noopener noreferrer" className="btn-gold">
+                  <button
+                    type="button"
+                    onClick={() => setActiveVideo({ label: g.title, url: g.youtubeUrl })}
+                    className="btn-gold"
+                  >
                     <Play size={18} aria-hidden="true" /> Watch the gathering
-                  </a>
+                  </button>
                 )}
                 {g.instagramUrl && (
                   <a href={g.instagramUrl} target="_blank" rel="noopener noreferrer" className="btn-ghost">
@@ -78,15 +92,14 @@ const EventDetail = () => {
                 <ul className="mt-3 space-y-1">
                   {g.videos.map((v) => (
                     <li key={v.url}>
-                      <a
-                        href={v.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex min-h-[48px] items-center gap-2 text-gold underline underline-offset-4 hover:text-gold-dark"
+                      <button
+                        type="button"
+                        onClick={() => setActiveVideo(v)}
+                        className="inline-flex min-h-[48px] items-center gap-2 text-left text-gold underline underline-offset-4 hover:text-gold-dark"
                       >
-                        {v.label}
-                        <ExternalLink size={14} aria-hidden="true" />
-                      </a>
+                        <Play size={15} className="shrink-0" aria-hidden="true" />
+                        <span>{v.label}</span>
+                      </button>
                     </li>
                   ))}
                 </ul>
@@ -106,10 +119,29 @@ const EventDetail = () => {
             {g.speakers.length > 0 && (
               <div className="mt-8">
                 <h2 className="text-lg">Speakers on the official highlights</h2>
-                <ul className="mt-3 list-disc space-y-1 pl-5 text-muted">
-                  {g.speakers.map((s) => (
-                    <li key={s}>{s}</li>
-                  ))}
+                <ul className="mt-3 flex flex-wrap gap-2">
+                  {g.speakers.map((speaker) => {
+                    const clip = findSpeakerVideo(speaker, g.videos);
+                    return clip ? (
+                      <li key={speaker}>
+                        <button
+                          type="button"
+                          onClick={() => setActiveVideo(clip)}
+                          className="inline-flex min-h-[48px] items-center gap-2 rounded-lg border border-white/15 bg-panel px-4 text-sm font-medium text-fg transition-colors hover:border-gold hover:text-gold"
+                        >
+                          <Play size={14} className="text-gold" aria-hidden="true" />
+                          <span>{speaker}</span>
+                        </button>
+                      </li>
+                    ) : (
+                      <li
+                        key={speaker}
+                        className="inline-flex min-h-[48px] items-center rounded-lg border border-white/10 bg-ink px-4 text-sm text-muted"
+                      >
+                        {speaker}
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             )}
@@ -169,6 +201,8 @@ const EventDetail = () => {
       <section className="border-t border-white/10">
         <div className="wrap py-6 text-sm text-muted">{SITE.noRegistrationLine}</div>
       </section>
+
+      <VideoModal video={activeVideo} onClose={() => setActiveVideo(null)} />
     </>
   );
 };
