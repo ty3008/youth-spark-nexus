@@ -16,6 +16,7 @@ const eventSchema = new mongoose.Schema({
     status: { type: String, enum: ['held', 'upcoming'], default: 'held' },
     summary: { type: String, default: '', maxlength: 2000 },
     details: { type: [String], default: [] },
+    poster: { type: String, default: '', maxlength: 500 },
     cover: { type: String, default: '', maxlength: 500 },
     gallery: { type: [String], default: [] },
     // The single primary film (livestream or full recording).

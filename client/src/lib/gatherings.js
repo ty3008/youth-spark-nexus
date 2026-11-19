@@ -99,6 +99,7 @@ export function normalizeGathering(raw) {
     summary: clean(raw.summary),
     details: list(raw.details),
     speakers: list(raw.speakers),
+    poster: clean(raw.poster),
     cover: clean(raw.cover),
     gallery: list(raw.gallery),
     youtubeUrl: webUrl(raw.youtubeUrl),

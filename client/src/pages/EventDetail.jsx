@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { CalendarDays, Camera, Clock, MapPin, Play } from 'lucide-react';
+import { CalendarDays, Camera, ChevronRight, Clock, MapPin, Play } from 'lucide-react';
 import { useGatherings } from '../lib/GatheringsContext';
 import { formatDate } from '../lib/gatherings';
 import { SITE, programBySlug } from '../data/site';
 import { StatusChip } from '../components/GatheringCard';
 import Gallery from '../components/Gallery';
 import VideoModal from '../components/VideoModal';
-import { EmptyState, PageHeader } from '../components/PageParts';
+import { EmptyState } from '../components/PageParts';
 import NotFound from './NotFound';
 
 function findSpeakerVideo(speakerName, videos) {
@@ -35,19 +35,59 @@ const EventDetail = () => {
         <meta name="description" content={`${formatDate(g)}. ${g.venue}. ${g.summary}`} />
       </Helmet>
 
-      <PageHeader
-        crumbs={[{ label: 'Events', to: '/events' }, { label: g.title }]}
-        title={g.title}
-      >
-        <div className="flex flex-wrap items-center gap-2">
-          <StatusChip gathering={g} />
-          {program && (
-            <Link to={`/programs/${program.slug}`} className="chip-program hover:border-gold">
-              {program.name}
-            </Link>
-          )}
+      {/* Event header: pairs the headline with the official gathering poster when present */}
+      <section className="border-b border-white/10">
+        <div className="wrap py-10 sm:py-14">
+          <nav aria-label="Breadcrumb" className="mb-4 flex flex-wrap items-center gap-1 text-sm text-muted">
+            <Link to="/" className="inline-flex min-h-[32px] items-center hover:text-gold">Home</Link>
+            <ChevronRight size={14} aria-hidden="true" />
+            <Link to="/events" className="inline-flex min-h-[32px] items-center hover:text-gold">Events</Link>
+            <ChevronRight size={14} aria-hidden="true" />
+            <span aria-current="page" className="text-fg">{g.title}</span>
+          </nav>
+
+          <div className={g.poster ? 'grid items-center gap-8 md:grid-cols-12' : ''}>
+            <div className={g.poster ? 'md:col-span-8' : ''}>
+              <h1 className="max-w-3xl text-3xl leading-tight sm:text-5xl">{g.title}</h1>
+              <div className="mt-4 flex flex-wrap items-center gap-2">
+                <StatusChip gathering={g} />
+                {program && (
+                  <Link to={`/programs/${program.slug}`} className="chip-program hover:border-gold">
+                    {program.name}
+                  </Link>
+                )}
+              </div>
+              <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted">
+                <span className="inline-flex items-center gap-2">
+                  <CalendarDays size={16} className="text-gold" aria-hidden="true" />
+                  {formatDate(g)}
+                </span>
+                {g.time && (
+                  <span className="inline-flex items-center gap-2">
+                    <Clock size={16} className="text-gold" aria-hidden="true" />
+                    {g.time}
+                  </span>
+                )}
+                <span className="inline-flex items-center gap-2">
+                  <MapPin size={16} className="text-gold" aria-hidden="true" />
+                  {g.venue}
+                </span>
+              </div>
+            </div>
+
+            {g.poster && (
+              <figure className="md:col-span-4">
+                <img
+                  src={g.poster}
+                  alt={`${g.title} official poster`}
+                  decoding="async"
+                  className="mx-auto w-full max-w-xs rounded-xl border border-white/10 bg-panel object-cover shadow-2xl md:max-w-none"
+                />
+              </figure>
+            )}
+          </div>
         </div>
-      </PageHeader>
+      </section>
 
       <section className="section">
         <div className="wrap grid gap-10 lg:grid-cols-12">

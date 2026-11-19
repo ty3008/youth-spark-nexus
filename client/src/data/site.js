@@ -1,5 +1,5 @@
-// Canonical facts and existing project images.
-// Gathering covers & galleries remain in gatherings.json / MongoDB so founder uploads never get overwritten.
+// Canonical facts and verified project photography.
+// Gathering covers, posters & galleries live in gatherings.json / MongoDB so admin uploads persist cleanly.
 
 export const SITE = {
   name: 'Youth Spark Summit',
@@ -13,6 +13,43 @@ export const SITE = {
   youtube: 'https://www.youtube.com/channel/UCx0MZvWSyw9nE85eJF4Dmbg',
   noRegistrationLine: 'This site lists our gatherings. It does not take registrations.',
 };
+
+export const VISION_MISSION = {
+  tagline: 'Empowering a Generation, Discipling Nations',
+  subtitle: 'Igniting a movement of Kingdom-minded youth shaping Africa’s future.',
+  vision: 'Discipling Nations through the Gospel of the Kingdom.',
+  mission:
+    'To disciple and equip young leaders through Kingdom-centered leadership training, practical skills development, and industry-focused mentorship — empowering them to transform industries, shape culture, influence societies, and advance nation-building with excellence.',
+};
+
+export const FOUR_PILLARS = [
+  { name: 'Faith', line: 'Deep spiritual growth & clear identity.' },
+  { name: 'Leadership', line: 'Bold, ethical, visionary leaders.' },
+  { name: 'Influence', line: 'Youth shaping industries & nations.' },
+  { name: 'Community', line: 'Spaces for growth & connection.' },
+];
+
+export const WHO_WE_SERVE = [
+  'University students',
+  'Recent graduates & professionals',
+  'Student leaders & influencers',
+  'Young entrepreneurs & creatives',
+];
+
+export const PARTNERSHIP_DECK = [
+  {
+    title: 'Partners',
+    line: 'Faith groups, universities, corporates, and NGOs aligning with our work in Nairobi.',
+  },
+  {
+    title: 'Why partner',
+    line: 'Connect with ambitious young leaders, develop emerging talent, and build meaningful community presence.',
+  },
+  {
+    title: 'We seek',
+    line: 'Strategic allies, mentors, speakers, sponsors, and donors.',
+  },
+];
 
 export const FOUNDERS = [
   {
@@ -28,16 +65,16 @@ export const FOUNDERS = [
 ];
 
 export const FOUNDERS_PHOTO = '/gatherings/founders.webp';
-export const HERO_PHOTO = '/gatherings/summit-2025/01.webp';
+export const HERO_PHOTO = '/gatherings/summit-2026/01.webp';
 
-// Existing project frames used on homepage tiles when a gathering's own cover has not been uploaded yet.
+// Existing project frames used on homepage tiles when a gathering's own cover is not yet uploaded.
 export const BORROWED_COVERS = {
   'youth-spark-summit-2025-the-unveiling': '/gatherings/summit-2025/01.webp',
   'youth-spark-nexus-may-2025': '/gatherings/nexus/00.webp',
   'youth-spark-nexus-august-2025': '/gatherings/nexus/03.webp',
-  'youth-spark-summit-2026-the-reset': '/Founders with PLO.jpg',
+  'youth-spark-summit-2026-the-reset': '/gatherings/summit-2026/01.webp',
   'reconstructive-leadership-creative-economy-2026': '/Hangout 2.jpg',
-  'nxt-africa-forum-2026': '/NXT 1.webp',
+  'nxt-africa-forum-2026': '/gatherings/nxt-2026/01.webp',
 };
 
 export const WATCH_REELS = [
@@ -46,7 +83,7 @@ export const WATCH_REELS = [
     theme: 'The Reset',
     title: 'Youth Spark Summit 2026',
     meta: '14 March 2026 · CITAM Valley Road',
-    image: '/Founders with PLO.jpg',
+    image: '/gatherings/summit-2026/03.webp',
     url: 'https://www.youtube.com/watch?v=1zU-8DwNkAY',
   },
   {
@@ -108,6 +145,7 @@ export const EQUIP_AREAS = [
 const pad = (n) => String(n).padStart(2, '0');
 
 export const SUMMIT_PHOTOS = [
+  ...Array.from({ length: 10 }, (_, i) => `/gatherings/summit-2026/${pad(i + 1)}.webp`),
   ...Array.from({ length: 9 }, (_, i) => `/gatherings/summit-2025/${pad(i + 1)}.webp`),
   '/pillar.jpg',
   '/pillar 2.jpg',
@@ -121,6 +159,7 @@ export const NEXUS_PHOTOS = [
 ];
 
 export const NXT_PHOTOS = [
+  ...Array.from({ length: 12 }, (_, i) => `/gatherings/nxt-2026/${pad(i + 1)}.webp`),
   '/NXT 1.webp',
   '/NXT 2.webp',
   '/NXT 3.webp',
@@ -142,16 +181,17 @@ export const PROGRAMS = [
     slug: 'youth-spark-summit',
     name: 'Youth Spark Summit',
     cadence: 'Annual',
-    cover: '/gatherings/summit-2025/01.webp',
-    blurb: 'Annual one-day flagship in Nairobi.',
+    cover: '/gatherings/summit-2026/01.webp',
+    blurb: 'Annual one-day flagship in Nairobi focused on Kingdom leadership, career workshops, wealth creation purpose, and innovation.',
     facts: [
-      '2025 theme: The Unveiling — Nairobi Cinema.',
-      '2026 theme: The Reset: His Purpose Will Stand — CITAM Valley Road — Dennis White Hall, 14 March 2026.',
+      '2025 theme: The Unveiling — Nairobi Cinema (15 March 2025).',
+      '2026 theme: The Reset: His Purpose Will Stand — CITAM Valley Road — Dennis White Hall (14 March 2026).',
+      'Combines worship, word, marketplace panels, workshops, networking, and exhibitions.',
     ],
     photos: {
-      caption: 'Youth Spark Summit 2025, Nairobi Cinema',
+      caption: 'Youth Spark Summit 2026 (Dennis White Hall) and 2025 (Nairobi Cinema)',
       images: SUMMIT_PHOTOS,
-      alt: 'Youth Spark Summit 2025 at Nairobi Cinema',
+      alt: 'Youth Spark Summit gathering',
     },
   },
   {
@@ -172,12 +212,15 @@ export const PROGRAMS = [
     slug: 'nxt-africa-forum',
     name: 'NXT Africa Forum',
     cadence: 'Forum',
-    cover: '/NXT 1.webp',
+    cover: '/gatherings/nxt-2026/01.webp',
     blurb:
-      'A smaller forum for practical conversations across business, technology, finance, leadership, and the creative economy.',
-    facts: ['2026 edition: 14 November 2026 at After40 Hotel.'],
+      'An intimate, interactive, and application-driven forum convening voices from business, technology, finance, leadership, and the creative economy.',
+    facts: [
+      'Combines keynotes, masterclasses, and fireside dialogues focused on execution, collaboration, and scalable ventures.',
+      '2026 edition: 14 November 2026 at After40 Hotel, Biashara Street, Nairobi CBD.',
+    ],
     photos: {
-      caption: 'From NXT Africa Forum',
+      caption: 'From NXT Africa Forum 2026 and earlier editions',
       images: NXT_PHOTOS,
       alt: 'NXT Africa Forum gathering',
     },

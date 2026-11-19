@@ -85,6 +85,7 @@ const gatheringFields = (raw) => {
     str('time', 80);
     str('venue', 300);
     str('summary', 2000);
+    str('poster', 500);
     str('cover', 500);
     str('youtubeUrl', 500);
     str('instagramUrl', 500);
@@ -131,11 +132,17 @@ const ensureDbConnected = (res) => {
 };
 
 // Every restart upserts each canonical gathering by slug, so a slug can never appear twice.
-// Cover and gallery are never written by the seed, so photos added later through /admin survive a restart.
+// Existing cover or gallery photos in the DB are never overwritten once populated (e.g. via /admin).
 const seedInitialEvents = async () => {
     for (const item of seedGatherings) {
-        const { cover, gallery, ...fields } = item; // eslint-disable-line no-unused-vars
-        await Event.updateOne({ slug: item.slug }, { $set: fields }, { upsert: true, runValidators: true });
+        const { cover, gallery, ...fields } = item;
+        const existing = await Event.findOne({ slug: item.slug }).select('cover gallery').lean();
+        const update = { ...fields };
+        if ((!existing || !existing.cover) && cover) update.cover = cover;
+        if ((!existing || !Array.isArray(existing.gallery) || existing.gallery.length === 0) && Array.isArray(gallery) && gallery.length) {
+            update.gallery = gallery;
+        }
+        await Event.updateOne({ slug: item.slug }, { $set: update }, { upsert: true, runValidators: true });
     }
     console.log(`🌱 Upserted ${seedGatherings.length} canonical gatherings by slug`);
 };

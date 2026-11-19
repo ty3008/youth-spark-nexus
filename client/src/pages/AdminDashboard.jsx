@@ -15,6 +15,7 @@ const EMPTY = {
     venue: '',
     summary: '',
     details: '',
+    poster: '',
     cover: '',
     gallery: '',
     youtubeUrl: '',
@@ -108,6 +109,7 @@ const AdminDashboard = () => {
         venue: form.venue,
         summary: form.summary,
         details: lines(form.details),
+        poster: form.poster,
         cover: form.cover,
         gallery: lines(form.gallery),
         youtubeUrl: form.youtubeUrl,
@@ -147,6 +149,7 @@ const AdminDashboard = () => {
             venue: ev.venue || '',
             summary: ev.summary || '',
             details: (ev.details || []).join('\n'),
+            poster: ev.poster || '',
             cover: ev.cover || '',
             gallery: (ev.gallery || []).join('\n'),
             youtubeUrl: ev.youtubeUrl || '',
@@ -325,6 +328,10 @@ const FormBody = ({ form, set, toggleMonthOnly, onSubmit, onCancel, editing }) =
         <div className="sm:col-span-2">
             <label className={label} htmlFor="g-details">More details (one per line)</label>
             <textarea id="g-details" className={field} rows={3} value={form.details} onChange={set('details')} />
+        </div>
+        <div className="sm:col-span-2">
+            <label className={label} htmlFor="g-poster">Poster image (path or URL). Shown beside the event header.</label>
+            <input id="g-poster" className={field} placeholder="/gatherings/example/poster.webp" value={form.poster} onChange={set('poster')} />
         </div>
         <div className="sm:col-span-2">
             <label className={label} htmlFor="g-cover">Cover image (path or URL). Leave blank until photos are ready.</label>

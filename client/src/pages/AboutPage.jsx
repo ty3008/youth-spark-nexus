@@ -1,6 +1,15 @@
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { EQUIP_AREAS, FOUNDERS, FOUNDERS_PHOTO, PROGRAMS, VENUES_USED } from '../data/site';
+import {
+  EQUIP_AREAS,
+  FOUNDERS,
+  FOUNDERS_PHOTO,
+  FOUR_PILLARS,
+  PROGRAMS,
+  VENUES_USED,
+  VISION_MISSION,
+  WHO_WE_SERVE,
+} from '../data/site';
 import { PageHeader } from '../components/PageParts';
 
 const About = () => (
@@ -9,15 +18,27 @@ const About = () => (
       <title>About — Youth Spark Summit</title>
       <meta
         name="description"
-        content="Youth Spark Summit is run by Kevin Kimani and Daphne Kimani in Nairobi. It hosts the annual Summit, monthly Nexus, NXT Africa Forum, and Reconstructive Leadership."
+        content="Youth Spark Summit is run by Kevin Kimani and Daphne Kimani in Nairobi. Vision: Discipling Nations through the Gospel of the Kingdom."
       />
     </Helmet>
 
-    <PageHeader crumbs={[{ label: 'About' }]} eyebrow="About" title="Youth Spark Summit">
-      <p className="lead">
-        We host gatherings in Nairobi for young Christian leaders, professionals, entrepreneurs, and creatives. We run four programs.
-      </p>
+    <PageHeader crumbs={[{ label: 'About' }]} eyebrow="About" title={VISION_MISSION.tagline}>
+      <p className="lead">{VISION_MISSION.subtitle}</p>
     </PageHeader>
+
+    {/* Vision & Mission */}
+    <section className="section border-b border-white/10 bg-panel">
+      <div className="wrap grid gap-6 md:grid-cols-2">
+        <div className="card bg-ink p-6">
+          <p className="eyebrow mb-2">Vision</p>
+          <p className="text-xl font-medium leading-snug text-fg">{VISION_MISSION.vision}</p>
+        </div>
+        <div className="card bg-ink p-6">
+          <p className="eyebrow mb-2">Mission</p>
+          <p className="leading-relaxed text-muted">{VISION_MISSION.mission}</p>
+        </div>
+      </div>
+    </section>
 
     {/* Founders */}
     <section className="section">
@@ -73,15 +94,25 @@ const About = () => (
       </div>
     </section>
 
-    {/* How we equip / Pillars */}
+    {/* Four Pillars & Seven Areas */}
     <section id="pillars" className="section border-t border-white/10">
       <div className="wrap">
-        <p className="eyebrow mb-2">How we equip</p>
-        <h2 className="mb-6 text-2xl sm:text-3xl">Seven areas across our gatherings</h2>
+        <p className="eyebrow mb-2">Pillars</p>
+        <h2 className="mb-6 text-2xl sm:text-3xl">Our pillars for youth leadership</h2>
+        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {FOUR_PILLARS.map((pillar) => (
+            <li key={pillar.name} className="card p-5">
+              <h3 className="text-base font-semibold text-gold">{pillar.name}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted">{pillar.line}</p>
+            </li>
+          ))}
+        </ul>
+
+        <h3 className="mb-4 mt-12 text-xl">Seven areas we focus on</h3>
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {EQUIP_AREAS.map((area) => (
             <li key={area.key} className="card p-5">
-              <h3 className="text-base font-semibold text-gold">{area.name}</h3>
+              <h4 className="text-base font-semibold text-fg">{area.name}</h4>
               <p className="mt-2 text-sm leading-relaxed text-muted">{area.line}</p>
             </li>
           ))}
@@ -109,14 +140,13 @@ const About = () => (
       <div className="wrap grid items-center gap-8 md:grid-cols-2 md:gap-12">
         <div>
           <p className="eyebrow mb-2">Who we serve</p>
-          <h2 className="text-2xl sm:text-3xl">Young leaders in Nairobi</h2>
-          <p className="mt-4 leading-relaxed text-muted">
-            Our rooms bring together university students, young professionals, entrepreneurs, creatives, and campus leaders across Nairobi.
-          </p>
-          <ul className="mt-5 list-disc space-y-2 pl-5 text-sm text-muted">
-            <li>University students and campus liaisons</li>
-            <li>Early-career professionals and entrepreneurs</li>
-            <li>Photographers, videographers, designers, artists, hosts, and content creators</li>
+          <h2 className="text-2xl sm:text-3xl">Young leaders across Nairobi and Kenya</h2>
+          <ul className="mt-5 grid gap-3 sm:grid-cols-2">
+            {WHO_WE_SERVE.map((group) => (
+              <li key={group} className="card bg-ink p-4 text-sm font-medium text-fg">
+                {group}
+              </li>
+            ))}
           </ul>
         </div>
         <div className="grid grid-cols-2 gap-3">
@@ -126,7 +156,7 @@ const About = () => (
       </div>
     </section>
 
-    {/* Rooms & Past gatherings (replaces old /impact) */}
+    {/* Venues & Past Rooms */}
     <section id="impact" className="section border-t border-white/10">
       <div className="wrap grid items-start gap-10 md:grid-cols-2">
         <div>
@@ -151,7 +181,7 @@ const About = () => (
             <figcaption className="p-3 text-xs text-muted">Youth Spark Summit 2025, Nairobi Cinema</figcaption>
           </figure>
           <figure className="overflow-hidden rounded-xl border border-white/10 bg-panel">
-            <img src="/Founders with PLO.jpg" alt="Kevin and Daphne Kimani with PLO Lumumba, speaker at Youth Spark Summit 2026" loading="lazy" decoding="async" className="aspect-[4/3] w-full object-cover" />
+            <img src="/gatherings/summit-2026/03.webp" alt="Kevin and Daphne Kimani with PLO Lumumba, speaker at Youth Spark Summit 2026" loading="lazy" decoding="async" className="aspect-[4/3] w-full object-cover" />
             <figcaption className="p-3 text-xs text-muted">With PLO Lumumba, speaker at Youth Spark Summit 2026</figcaption>
           </figure>
         </div>
