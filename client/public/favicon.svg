@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="spark-gold" x1="16" y1="8" x2="48" y2="54" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FEF08A" />
+      <stop offset="45%" stop-color="#FCD12A" />
+      <stop offset="100%" stop-color="#D49B0E" />
+    </linearGradient>
+    <linearGradient id="spark-accent" x1="36" y1="14" x2="48" y2="52" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FDE68A" />
+      <stop offset="100%" stop-color="#FCD12A" />
+    </linearGradient>
+  </defs>
+
+  <!-- Rounded dark badge for browser tabs -->
+  <rect width="64" height="64" rx="14" fill="#0A0A0A" />
+
+  <!-- Outer flame swirl with smooth pointed top tip -->
+  <path
+    d="M35.5 9C30.2 14.5 17 24 17 36.2C17 45.2 24 52 32.8 52C39.6 52 44.2 47.6 44.2 41.6C44.2 36.4 40.4 32.8 35.6 32.8C32 32.8 29.2 35.2 29.2 38.4C29.2 40.8 30.8 42.4 33 42.4C35 42.4 36.4 41.2 36.4 39.6C36.4 38.6 35.8 37.9 35 37.6C36.8 37.6 38.4 39.2 38.4 41.4C38.4 44.6 35.7 46.8 32.4 46.8C27 46.8 23.2 42.2 23.2 36.2C23.2 27.6 30.6 19.8 34.4 13.6C35.2 12.2 35.9 10.6 35.5 9Z"
+    fill="url(#spark-gold)"
+  />
+
+  <!-- Inner rising flame tongue -->
+  <path
+    d="M33.8 18.8C30 23.4 27 28 27 33.4C27 36.9 29.2 39.6 32 40.3C30.3 38.6 29.8 36.2 30.3 33.8C30.9 30.8 33.2 28 35.2 25.3C37 28.2 37.9 30.8 37.9 33.1C39.5 30.3 39 25.8 33.8 18.8Z"
+    fill="#FEF08A"
+  />
+
+  <!-- Right outer spark arc -->
+  <path
+    d="M40.6 16.5C44.8 22.4 47.4 28.8 47.4 35.6C47.4 44.4 41.6 51.2 33.6 53.2C44 52.2 51.2 44.6 51.2 35C51.2 27.6 47.2 20.9 40.6 16.5Z"
+    fill="url(#spark-accent)"
+  />
+</svg>
