@@ -6,8 +6,15 @@ const Footer = () => (
     <div className="wrap grid gap-10 py-12 md:grid-cols-3">
       <div>
         <Link to="/" className="inline-flex items-center gap-3">
-          <img src="/logo.png" alt="" width="40" height="40" loading="lazy" className="h-10 w-10 object-contain" />
-          <span className="text-base font-semibold">Youth Spark Summit</span>
+          <img src="/favicon.svg" alt="" width="40" height="40" loading="lazy" className="h-10 w-10 rounded-xl object-contain" />
+          <div className="flex flex-col">
+            <span className="text-base font-semibold leading-tight text-fg">
+              Youth Spark <span className="text-gold">Summit</span>
+            </span>
+            <span className="text-[11px] font-medium uppercase tracking-[0.18em] text-muted">
+              Nairobi
+            </span>
+          </div>
         </Link>
         <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted">
           Gatherings for young leaders in Nairobi.

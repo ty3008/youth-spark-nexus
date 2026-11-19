@@ -184,7 +184,7 @@ const Home = () => {
               <h2 className="text-2xl sm:text-4xl">Rooms we have held</h2>
             </div>
 
-            <div className="inline-flex gap-2" role="group" aria-label="Filter rooms by year">
+            <div className="inline-flex rounded-xl border border-white/10 bg-panel p-1" role="group" aria-label="Filter rooms by year">
               {[
                 { key: 'all', label: 'All' },
                 { key: '2026', label: '2026' },
@@ -198,12 +198,12 @@ const Home = () => {
                     type="button"
                     aria-pressed={active}
                     onClick={() => setYear(opt.key)}
-                    className={`min-h-[48px] rounded-lg border px-4 text-sm font-semibold transition-colors ${
+                    className={`min-h-[44px] rounded-lg px-4 text-sm font-semibold transition-colors ${
                       active
                         ? isYear
-                          ? 'border-gold bg-gold text-ink'
-                          : 'border-white/40 bg-white/10 text-fg'
-                        : 'border-white/15 bg-panel text-muted hover:border-white/30 hover:text-fg'
+                          ? 'bg-gold text-ink shadow-sm'
+                          : 'bg-white/10 text-fg ring-1 ring-white/15'
+                        : 'text-muted hover:text-fg'
                     }`}
                   >
                     {opt.label}

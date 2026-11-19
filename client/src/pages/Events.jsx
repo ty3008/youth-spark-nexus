@@ -58,8 +58,8 @@ const Events = () => {
       <PageHeader eyebrow="Calendar" title="Our gatherings">
         <p className="lead">Tap a highlighted day, or pick from the list. {SITE.noRegistrationLine}</p>
 
-        <div className="mt-6 flex flex-col gap-3">
-          <div className="flex flex-wrap gap-2" role="group" aria-label="Filter gatherings by year">
+        <div className="mt-6 flex flex-col items-start gap-3">
+          <div className="inline-flex flex-wrap rounded-xl border border-white/10 bg-panel p-1" role="group" aria-label="Filter gatherings by year">
             {[
               { key: 'all', label: 'All years' },
               { key: '2026', label: '2026' },
@@ -73,12 +73,12 @@ const Events = () => {
                   type="button"
                   aria-pressed={active}
                   onClick={() => handleYearChange(opt.key)}
-                  className={`min-h-[48px] rounded-lg border px-4 text-sm font-semibold transition-colors ${
+                  className={`min-h-[44px] rounded-lg px-4 text-sm font-semibold transition-colors ${
                     active
                       ? isYear
-                        ? 'border-gold bg-gold text-ink'
-                        : 'border-white/40 bg-white/10 text-fg'
-                      : 'border-white/15 bg-panel text-muted hover:border-white/30 hover:text-fg'
+                        ? 'bg-gold text-ink shadow-sm'
+                        : 'bg-white/10 text-fg ring-1 ring-white/15'
+                      : 'text-muted hover:text-fg'
                   }`}
                 >
                   {opt.label}
@@ -87,15 +87,15 @@ const Events = () => {
             })}
           </div>
 
-          <div className="flex flex-wrap gap-2" role="group" aria-label="Filter gatherings by program">
+          <div className="inline-flex flex-wrap gap-1 rounded-xl border border-white/10 bg-panel p-1" role="group" aria-label="Filter gatherings by program">
             <button
               type="button"
               aria-pressed={programFilter === 'all'}
               onClick={() => handleProgramChange('all')}
-              className={`min-h-[48px] rounded-lg border px-4 text-sm font-medium transition-colors ${
+              className={`min-h-[44px] rounded-lg px-3.5 text-sm font-medium transition-colors ${
                 programFilter === 'all'
-                  ? 'border-white/40 bg-white/10 text-fg'
-                  : 'border-white/15 bg-panel text-muted hover:border-white/30 hover:text-fg'
+                  ? 'bg-white/10 text-fg ring-1 ring-white/15'
+                  : 'text-muted hover:text-fg'
               }`}
             >
               All programs
@@ -106,10 +106,10 @@ const Events = () => {
                 type="button"
                 aria-pressed={programFilter === p.slug}
                 onClick={() => handleProgramChange(p.slug)}
-                className={`min-h-[48px] rounded-lg border px-4 text-sm font-medium transition-colors ${
+                className={`min-h-[44px] rounded-lg px-3.5 text-sm font-medium transition-colors ${
                   programFilter === p.slug
-                    ? 'border-white/40 bg-white/10 text-fg'
-                    : 'border-white/15 bg-panel text-muted hover:border-white/30 hover:text-fg'
+                    ? 'bg-white/10 text-fg ring-1 ring-white/15'
+                    : 'text-muted hover:text-fg'
                 }`}
               >
                 {p.name}
