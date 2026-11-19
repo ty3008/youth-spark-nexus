@@ -6,13 +6,13 @@ import { PageHeader } from '../components/PageParts';
 import SocialRow from '../components/SocialRow';
 
 const Contact = () => {
-  const [copied, setCopied] = useState('');
+  const [copied, setCopied] = useState(false);
 
-  const copy = async (key, value) => {
+  const copyEmail = async () => {
     try {
-      await navigator.clipboard.writeText(value);
-      setCopied(key);
-      setTimeout(() => setCopied(''), 2000);
+      await navigator.clipboard.writeText(SITE.email);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
     } catch {
       /* ignore clipboard error */
     }
@@ -24,12 +24,12 @@ const Contact = () => {
         <title>Contact — Youth Spark Summit</title>
         <meta
           name="description"
-          content="Contact Youth Spark Summit in Nairobi by phone, email, WhatsApp, Instagram, or YouTube."
+          content="Reach Youth Spark Summit in Nairobi directly via WhatsApp, email, Instagram, Facebook, or YouTube."
         />
       </Helmet>
 
       <PageHeader crumbs={[{ label: 'Contact' }]} eyebrow="Contact" title="Reach us">
-        <p className="lead">We are based in Nairobi. Call or email, or join the WhatsApp group.</p>
+        <p className="lead">We are based in Nairobi. Message us directly on WhatsApp, send an email, or follow our channels.</p>
       </PageHeader>
 
       <section className="section">
@@ -37,13 +37,9 @@ const Contact = () => {
           <SocialRow />
 
           <div className="mt-6 flex flex-wrap gap-3">
-            <button type="button" onClick={() => copy('email', SITE.email)} className="btn-ghost text-xs">
-              {copied === 'email' ? <Check size={16} className="text-gold" /> : <Copy size={16} />}
-              {copied === 'email' ? 'Copied email' : `Copy ${SITE.email}`}
-            </button>
-            <button type="button" onClick={() => copy('phone', SITE.phone)} className="btn-ghost text-xs">
-              {copied === 'phone' ? <Check size={16} className="text-gold" /> : <Copy size={16} />}
-              {copied === 'phone' ? 'Copied phone' : `Copy ${SITE.phone}`}
+            <button type="button" onClick={copyEmail} className="btn-ghost text-xs">
+              {copied ? <Check size={16} className="text-gold" /> : <Copy size={16} />}
+              {copied ? 'Copied email' : `Copy ${SITE.email}`}
             </button>
           </div>
 

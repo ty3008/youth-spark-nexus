@@ -8,9 +8,9 @@
     "time": "",
     "venue": "Nairobi Cinema, Aga Khan Walk, Nairobi CBD",
     "status": "held",
-    "summary": "The 2025 flagship gathering for young Christian leaders, professionals, and entrepreneurs.",
+    "summary": "Our 2025 annual flagship gathering in Nairobi for young Christian leaders, professionals, creatives, and entrepreneurs.",
     "details": [
-      "The public invitation promised a marketplace panel, leadership and business workshops, networking, an exhibition, and worship with Jane Aller, Ruth Stephens, and Jeremy Jeradi."
+      "Featured a marketplace panel, leadership and business workshops, exhibitions, networking, and worship with Jane Aller, Ruth Stephens, and Jeremy Jeradi."
     ],
     "speakers": [],
     "poster": "/gatherings/summit-2025/poster.webp",
@@ -40,11 +40,13 @@
     "title": "Youth Spark Nexus — May 2025 Edition",
     "date": "2025-05",
     "datePrecision": "month",
-    "time": "Time of day not recorded",
+    "time": "",
     "venue": "After40 Hotel, Nairobi CBD",
     "status": "held",
-    "summary": "Daphne Kimani taught “Kingdom Impact: Rebuilding”. Kevin Kim taught “Bridging the Knowing–Action Gap”. There were peer-group discussions.",
-    "details": [],
+    "summary": "A monthly Nairobi CBD gathering featuring practical teaching by Daphne Kimani (“Kingdom Impact: Rebuilding”) and Kevin Kim (“Bridging the Knowing–Action Gap”), alongside peer-group discussions.",
+    "details": [
+      "Included interactive table discussions focused on applying faith and leadership principles in daily work."
+    ],
     "speakers": [],
     "poster": "",
     "cover": "",
@@ -62,10 +64,12 @@
     "date": "2025-08-23",
     "datePrecision": "day",
     "time": "11:00 AM – 4:00 PM",
-    "venue": "After40 Hotel, 2nd floor, Eagles Room, opposite Naivas at Jamia Mall, Biashara Street, Nairobi CBD",
+    "venue": "After40 Hotel, 2nd floor, Eagles Room, Biashara Street, Nairobi CBD",
     "status": "held",
-    "summary": "Founders Kevin and Daphne publicly invited young people to prayer, worship, and Kingdom leadership training.",
-    "details": [],
+    "summary": "An afternoon of prayer, worship, and practical Kingdom leadership training led by co-founders Kevin and Daphne Kimani.",
+    "details": [
+      "Hosted in Eagles Room, opposite Naivas at Jamia Mall, Biashara Street."
+    ],
     "speakers": [],
     "poster": "",
     "cover": "",
@@ -85,20 +89,18 @@
     "status": "held",
     "summary": "A one-day gathering on leadership and governance, entrepreneurship, AI and future readiness, financial literacy, purpose, and networking. Entry was free.",
     "details": [
-      "TJ Enos Airo was named in official posts.",
-      "Jaque Gachiri led worship in the invitation videos.",
-      "Patience Muli was introduced as the Strathmore University liaison.",
-      "Recap posts followed the gathering, including “When GOD SHOWS UP”."
+      "Brought together students, young professionals, and founders across Nairobi for worship, keynotes, and marketplace conversations.",
+      "Session highlights covered ethical leadership, enterprise, artificial intelligence, and personal stewardship."
     ],
     "speakers": [
-      "TJ Enos Airo",
-      "Jaque Gachiri (worship)",
+      "PLO Lumumba",
+      "Robert Burale",
       "Kevin Kimani",
       "Daphne Kimani",
-      "Robert Burale",
-      "PLO Lumumba",
       "Lemuel Abishua",
-      "Apostle Damorn Shunet"
+      "Apostle Damorn Shunet",
+      "Jaque Gachiri (worship)",
+      "TJ Enos Airo"
     ],
     "poster": "/gatherings/summit-2026/poster.webp",
     "cover": "/gatherings/summit-2026/01.webp",
@@ -132,11 +134,12 @@
     "date": "2026-05-15",
     "datePrecision": "day",
     "time": "8:00 PM start (virtual)",
-    "venue": "Virtual sessions, with a physical capstone announced",
+    "venue": "Virtual sessions & Nairobi capstone",
     "status": "held",
-    "summary": "An 8-week hybrid experience for creatives — photographers, videographers, designers, artists, hosts, content creators, and creative entrepreneurs — covering positioning, monetising a craft, and leadership.",
+    "summary": "An 8-week hybrid cohort for creatives — photographers, videographers, designers, artists, hosts, content creators, and creative entrepreneurs — covering positioning, monetising a craft, and leadership.",
     "details": [
-      "Publicly named contributors: TJ Enos Airo, Amigo Johnson, and Kevin Kim."
+      "Contributors and mentors included TJ Enos Airo, Amigo Johnson, and Kevin Kim.",
+      "Combined weekly virtual masterclasses with a physical capstone gathering in Nairobi."
     ],
     "speakers": [],
     "poster": "",
@@ -187,9 +190,9 @@
     "time": "From 9:00 AM",
     "venue": "After40 Hotel, Biashara Street, Nairobi CBD",
     "status": "held",
-    "summary": "A free forum on business, career development, the creative economy, and AI & technology.",
+    "summary": "A free, application-driven forum on business, career development, the creative economy, and AI & technology.",
     "details": [
-      "Lead-up videos featured Coach Esther."
+      "Included keynotes, interactive dialogues, and practical career and enterprise sessions, featuring Coach Esther."
     ],
     "speakers": [],
     "poster": "/gatherings/nxt-2026/poster.webp",

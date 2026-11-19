@@ -23,17 +23,19 @@ const ProgramsPage = () => (
         <ul className="grid gap-6 md:grid-cols-2">
           {PROGRAMS.map((p) => (
             <li key={p.slug}>
-              <Link to={`/programs/${p.slug}`} className="card group flex h-full flex-col overflow-hidden transition-colors hover:border-gold">
-                <img
-                  src={p.cover}
-                  alt={p.name}
-                  width="1200"
-                  height="900"
-                  loading="lazy"
-                  decoding="async"
-                  className="aspect-[16/10] w-full border-b border-white/10 object-cover"
-                />
-                <div className="flex flex-1 flex-col gap-3 p-6">
+              <Link to={`/programs/${p.slug}`} className="card group flex h-full flex-col overflow-hidden transition-all duration-300 hover:-translate-y-0.5 hover:border-gold/50 hover:shadow-[0_12px_32px_rgba(0,0,0,0.45)]">
+                <div className="aspect-[16/10] w-full overflow-hidden border-b border-white/10 bg-ink">
+                  <img
+                    src={p.cover}
+                    alt={p.name}
+                    width="1200"
+                    height="900"
+                    loading="lazy"
+                    decoding="async"
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                  />
+                </div>
+                <div className="flex flex-1 flex-col gap-3 p-5 sm:p-6">
                   <span className="chip-program self-start">{p.cadence}</span>
                   <h2 className="text-xl group-hover:text-gold">{p.name}</h2>
                   <p className="flex-1 leading-relaxed text-muted">{p.blurb}</p>

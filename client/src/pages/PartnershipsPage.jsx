@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { Check, Copy, Mail, MessageCircle, Phone } from 'lucide-react';
+import { Check, Copy, Mail } from 'lucide-react';
 import { PARTNERSHIP_DECK, PROGRAMS, SITE } from '../data/site';
 import { PageHeader } from '../components/PageParts';
+import { WhatsAppIcon } from '../components/BrandIcons';
 
 const PARTNER_CHANNELS = [
   { label: 'Corporate or Sponsor Inquiry', subject: 'Corporate / Sponsor Partnership — Youth Spark Summit' },
@@ -31,7 +32,7 @@ const Partnerships = () => {
         <title>Partner with us — Youth Spark Summit</title>
         <meta
           name="description"
-          content="Strategic partnerships with Youth Spark Summit across faith groups, universities, corporates, and NGOs. Email, call, or message us on WhatsApp."
+          content="Strategic partnerships with Youth Spark Summit across faith groups, universities, corporates, and NGOs. Email or message us directly on WhatsApp."
         />
       </Helmet>
 
@@ -58,7 +59,7 @@ const Partnerships = () => {
         <div className="wrap grid gap-10 lg:grid-cols-2">
           <div>
             <h2 className="text-xl">Start a conversation</h2>
-            <p className="mt-3 text-muted">Choose a topic below to open a pre-addressed email, or call or message us directly.</p>
+            <p className="mt-3 text-muted">Choose a topic below to open a pre-addressed email, or message us directly on WhatsApp.</p>
 
             <div className="mt-6 grid gap-2 sm:grid-cols-2">
               {PARTNER_CHANNELS.map((ch) => (
@@ -88,22 +89,12 @@ const Partnerships = () => {
                 </button>
               </div>
 
-              <div className="flex flex-wrap items-center gap-2">
-                <a href={SITE.phoneHref} className="btn-ghost flex-1">
-                  <Phone size={18} aria-hidden="true" /> Call {SITE.phone}
-                </a>
-                <button
-                  type="button"
-                  onClick={() => copyValue('phone', SITE.phone)}
-                  aria-label="Copy phone number"
-                  className="btn-ghost !px-4"
-                >
-                  {copied === 'phone' ? <Check size={18} className="text-gold" /> : <Copy size={18} />}
-                </button>
-              </div>
-
               <a href={SITE.whatsapp} target="_blank" rel="noopener noreferrer" className="btn-ghost">
-                <MessageCircle size={18} aria-hidden="true" /> Join the WhatsApp group
+                <WhatsAppIcon size={18} className="text-gold" /> Join the WhatsApp community
+              </a>
+
+              <a href={SITE.whatsappDirect} target="_blank" rel="noopener noreferrer" className="btn-ghost">
+                <WhatsAppIcon size={18} className="text-gold" /> Reach us on WhatsApp
               </a>
             </div>
           </div>

@@ -1,9 +1,9 @@
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { Camera, Play } from 'lucide-react';
 import { useGatherings } from '../lib/GatheringsContext';
 import { newestFirst } from '../lib/gatherings';
 import { SITE, programBySlug } from '../data/site';
+import { FacebookIcon, InstagramIcon, WhatsAppIcon, YouTubeIcon } from '../components/BrandIcons';
 import { GatheringCard } from '../components/GatheringCard';
 import Gallery from '../components/Gallery';
 import { EmptyState, PageHeader } from '../components/PageParts';
@@ -71,12 +71,21 @@ const ProgramPage = () => {
       <section className="section border-t border-white/10">
         <div className="wrap">
           <h2 className="mb-6 text-2xl">Watch and follow</h2>
-          <div className="flex flex-col gap-3 sm:flex-row">
+          <div className="grid gap-3 sm:flex sm:flex-wrap">
             <a href={SITE.youtube} target="_blank" rel="noopener noreferrer" className="btn-ghost">
-              <Play size={18} aria-hidden="true" /> Watch on YouTube
+              <YouTubeIcon size={18} className="text-gold" /> Watch on YouTube
             </a>
             <a href={SITE.instagram} target="_blank" rel="noopener noreferrer" className="btn-ghost">
-              <Camera size={18} aria-hidden="true" /> Follow {SITE.instagramHandle}
+              <InstagramIcon size={18} className="text-gold" /> {SITE.instagramHandle}
+            </a>
+            <a href={SITE.facebook} target="_blank" rel="noopener noreferrer" className="btn-ghost">
+              <FacebookIcon size={18} className="text-gold" /> Facebook · {SITE.facebookHandle}
+            </a>
+            <a href={SITE.whatsapp} target="_blank" rel="noopener noreferrer" className="btn-ghost">
+              <WhatsAppIcon size={18} className="text-gold" /> Join WhatsApp community
+            </a>
+            <a href={SITE.whatsappDirect} target="_blank" rel="noopener noreferrer" className="btn-ghost">
+              <WhatsAppIcon size={18} className="text-gold" /> Reach us on WhatsApp
             </a>
           </div>
           <p className="mt-6 text-sm text-muted">{SITE.noRegistrationLine}</p>

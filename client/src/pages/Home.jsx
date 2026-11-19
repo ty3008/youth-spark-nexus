@@ -30,15 +30,15 @@ const Home = () => {
         <title>Youth Spark Summit — Gatherings for young leaders in Nairobi</title>
         <meta
           name="description"
-          content="Youth Spark Summit hosts the annual Summit, monthly Nexus, NXT Africa Forum, Reconstructive Leadership, and Let Her Conference in Nairobi. See dates and past gatherings. No registration on this site."
+          content="Youth Spark Summit hosts the annual Summit, monthly Nexus, NXT Africa Forum, Reconstructive Leadership, and Let Her Conference in Nairobi."
         />
       </Helmet>
 
       {/* 1. Full-viewport photo hero with headline and one context line on darkened bottom edge */}
-      <section className="relative flex min-h-[calc(100svh-64px)] items-end overflow-hidden border-b border-white/10 bg-ink">
+      <section className="relative flex min-h-[calc(100svh-72px)] items-end overflow-hidden border-b border-white/10 bg-ink">
         <img
           src={HERO_PHOTO}
-          alt="Young people seated in Nairobi Cinema at Youth Spark Summit 2025"
+          alt="Young people gathered at Youth Spark Summit in Nairobi"
           width="1600"
           height="1068"
           fetchPriority="high"
@@ -46,18 +46,21 @@ const Home = () => {
           className="absolute inset-0 h-full w-full object-cover object-center"
         />
         <div
-          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink via-ink/75 to-ink/20"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink via-ink/80 to-ink/25"
           aria-hidden="true"
         />
 
-        <div className="wrap relative z-10 pb-10 pt-24 sm:pb-16">
-          <h1 className="max-w-3xl text-4xl leading-[1.08] text-fg sm:text-6xl lg:text-7xl">
+        <div className="wrap relative z-10 pb-12 pt-24 sm:pb-16">
+          <p className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/15 bg-ink/70 px-3.5 py-1 text-xs font-medium uppercase tracking-[0.18em] text-gold backdrop-blur-sm">
+            Nairobi · Youth Spark Summit
+          </p>
+          <h1 className="max-w-3xl text-4xl leading-[1.06] text-fg sm:text-6xl lg:text-7xl">
             Raising a generation that builds
           </h1>
 
           {latest && (
-            <p className="mt-4 max-w-2xl text-sm text-fg/85 sm:text-base">
-              <Link to={`/events/${latest.slug}`} className="underline decoration-white/30 underline-offset-4 hover:text-gold hover:decoration-gold">
+            <p className="mt-4 max-w-2xl text-sm leading-relaxed text-fg/85 sm:text-base">
+              <Link to={`/events/${latest.slug}`} className="underline decoration-gold/50 underline-offset-4 hover:text-gold hover:decoration-gold">
                 {latest.title}
               </Link>
               {' · '}
@@ -76,11 +79,11 @@ const Home = () => {
                   url: latestWithFilm.youtubeUrl,
                 })
               }
-              className="btn-gold"
+              className="btn-gold w-full sm:w-auto"
             >
               <Play size={18} aria-hidden="true" /> Watch the gathering
             </button>
-            <Link to="/events" className="btn-ghost bg-ink/60 backdrop-blur-sm">
+            <Link to="/events" className="btn-ghost w-full bg-ink/65 backdrop-blur-sm sm:w-auto">
               See the calendar
             </Link>
           </div>
@@ -91,36 +94,30 @@ const Home = () => {
       <section className="border-b border-white/10 bg-panel">
         <div className="wrap py-8 sm:py-10">
           <p className="mb-4 text-xs font-medium uppercase tracking-[0.18em] text-muted">One movement, five rooms</p>
-          <nav aria-label="Movement rhythm" className="flex flex-wrap items-center gap-x-3 gap-y-2 text-lg font-medium sm:text-2xl">
-            <Link to="/programs/youth-spark-summit" className="inline-flex min-h-[48px] items-center text-fg transition-colors hover:text-gold">
-              Summit
-            </Link>
-            <ArrowRight size={18} className="text-muted" aria-hidden="true" />
-            <Link to="/programs/youth-spark-nexus" className="inline-flex min-h-[48px] items-center text-fg transition-colors hover:text-gold">
-              Nexus
-            </Link>
-            <ArrowRight size={18} className="text-muted" aria-hidden="true" />
-            <span className="inline-flex min-h-[48px] flex-wrap items-center gap-2">
-              <Link to="/programs/nxt-africa-forum" className="text-fg transition-colors hover:text-gold">
-                NXT
+          <nav aria-label="Movement rhythm" className="flex flex-wrap items-center gap-2 sm:gap-2.5">
+            {[
+              ['/programs/youth-spark-summit', 'Summit'],
+              ['/programs/youth-spark-nexus', 'Nexus'],
+              ['/programs/nxt-africa-forum', 'NXT Africa'],
+              ['/programs/reconstructive-leadership', 'Reconstructive'],
+              ['/programs/let-her', 'Let Her'],
+            ].map(([to, label]) => (
+              <Link
+                key={to}
+                to={to}
+                className="inline-flex min-h-[44px] items-center rounded-full border border-white/10 bg-ink/80 px-4 text-sm font-medium text-fg transition-colors hover:border-gold hover:text-gold"
+              >
+                {label}
               </Link>
-              <span className="text-muted">·</span>
-              <Link to="/programs/reconstructive-leadership" className="text-fg transition-colors hover:text-gold">
-                Reconstructive Leadership
-              </Link>
-              <span className="text-muted">·</span>
-              <Link to="/programs/let-her" className="text-fg transition-colors hover:text-gold">
-                Let Her
-              </Link>
-            </span>
-            <ArrowRight size={18} className="text-muted" aria-hidden="true" />
+            ))}
+            <ArrowRight size={16} className="hidden text-muted sm:inline" aria-hidden="true" />
             <a
               href={SITE.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-h-[48px] items-center text-fg underline decoration-white/30 underline-offset-4 transition-colors hover:text-gold hover:decoration-gold"
+              className="inline-flex min-h-[44px] items-center rounded-full border border-gold/40 bg-gold/10 px-4 text-sm font-semibold text-gold transition-colors hover:bg-gold hover:text-ink"
             >
-              WhatsApp
+              WhatsApp Community
             </a>
           </nav>
         </div>
@@ -138,7 +135,7 @@ const Home = () => {
               href={SITE.youtube}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-h-[48px] items-center text-sm text-muted underline underline-offset-4 hover:text-fg"
+              className="inline-flex min-h-[48px] items-center text-sm text-muted underline underline-offset-4 hover:text-gold"
             >
               Full YouTube channel
             </a>
@@ -150,7 +147,7 @@ const Home = () => {
                 <button
                   type="button"
                   onClick={() => setActiveVideo({ label: `${reel.title} — ${reel.theme}`, url: reel.url })}
-                  className="card group flex h-full w-full flex-col overflow-hidden text-left transition-colors hover:border-white/30"
+                  className="card group flex h-full w-full flex-col overflow-hidden text-left transition-all duration-300 hover:-translate-y-0.5 hover:border-gold/50 hover:shadow-[0_12px_32px_rgba(0,0,0,0.45)]"
                 >
                   <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-white/10 bg-ink">
                     <img
@@ -224,18 +221,20 @@ const Home = () => {
                 <li key={g.slug}>
                   <Link
                     to={`/events/${g.slug}`}
-                    className="card group flex h-full flex-col overflow-hidden transition-colors hover:border-white/30"
+                    className="card group flex h-full flex-col overflow-hidden transition-all duration-300 hover:-translate-y-0.5 hover:border-gold/50 hover:shadow-[0_12px_32px_rgba(0,0,0,0.45)]"
                   >
                     {photo && (
-                      <img
-                        src={photo}
-                        alt={g.title}
-                        width="800"
-                        height="600"
-                        loading="lazy"
-                        decoding="async"
-                        className="aspect-[4/3] w-full border-b border-white/10 object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
+                      <div className="aspect-[4/3] w-full overflow-hidden border-b border-white/10 bg-ink">
+                        <img
+                          src={photo}
+                          alt={g.title}
+                          width="800"
+                          height="600"
+                          loading="lazy"
+                          decoding="async"
+                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                        />
+                      </div>
                     )}
                     <div className="flex flex-1 flex-col gap-2.5 p-5">
                       <span className="text-xs font-medium uppercase tracking-wider text-muted">
@@ -259,7 +258,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 5. Founders, then WhatsApp, email, and phone */}
+      {/* 5. Founders, then social platforms and direct reach */}
       <section className="section bg-panel">
         <div className="wrap">
           <div className="grid items-center gap-8 md:grid-cols-2 md:gap-12">
@@ -295,8 +294,8 @@ const Home = () => {
           </div>
 
           <div className="mt-12 border-t border-white/10 pt-10">
-            <p className="mb-4 text-xs font-medium uppercase tracking-[0.18em] text-muted">Reach us</p>
-            <SocialRow keys={['wa', 'mail', 'tel']} />
+            <p className="mb-4 text-xs font-medium uppercase tracking-[0.18em] text-muted">Follow &amp; reach us</p>
+            <SocialRow />
             <p className="mt-6 text-sm text-muted">{SITE.noRegistrationLine}</p>
           </div>
         </div>

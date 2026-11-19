@@ -5,13 +5,14 @@ export const SITE = {
   name: 'Youth Spark Summit',
   city: 'Nairobi',
   email: 'youthsparksummit@gmail.com',
-  phone: '+254 711 425 593',
-  phoneHref: 'tel:+254711425593',
   whatsapp: 'https://chat.whatsapp.com/IVLWWZyO2GT6ONfjCgOw7K',
+  whatsappDirect: 'https://wa.me/254711425593',
   instagram: 'https://www.instagram.com/youthsparksummitofficial/',
   instagramHandle: '@youthsparksummitofficial',
+  facebook: 'https://www.facebook.com/search/top?q=youth%20spark%20summit',
+  facebookHandle: 'Youth Spark Summit',
   youtube: 'https://www.youtube.com/channel/UCx0MZvWSyw9nE85eJF4Dmbg',
-  noRegistrationLine: 'This site lists our gatherings. It does not take registrations.',
+  noRegistrationLine: 'Browse dates, venues, and recaps across all five Nairobi programs.',
 };
 
 export const VISION_MISSION = {
@@ -203,8 +204,11 @@ export const PROGRAMS = [
     cadence: 'Monthly',
     cover: '/gatherings/nexus/03.webp',
     blurb:
-      'Monthly discipleship and leadership gathering in Nairobi CBD, repeatedly hosted at After40 Hotel on Biashara Street. Word, worship, and group discussion. Not a conference.',
-    facts: [],
+      'Monthly discipleship and leadership gathering in Nairobi CBD—bringing young professionals and students together for the Word, worship, and honest peer discussion.',
+    facts: [
+      'Hosted in Nairobi CBD, including After40 Hotel on Biashara Street.',
+      'Combines practical teaching, worship, prayer, and interactive group dialogue.',
+    ],
     photos: {
       caption: 'From Youth Spark Nexus gatherings',
       images: NEXUS_PHOTOS,
@@ -220,7 +224,7 @@ export const PROGRAMS = [
       'An intimate, interactive, and application-driven forum convening voices from business, technology, finance, leadership, and the creative economy.',
     facts: [
       'Combines keynotes, masterclasses, and fireside dialogues focused on execution, collaboration, and scalable ventures.',
-      '2026 edition: 14 November 2026 at After40 Hotel, Biashara Street, Nairobi CBD.',
+      '2026 edition held on 14 November 2026 at After40 Hotel, Biashara Street, Nairobi CBD.',
     ],
     photos: {
       caption: 'From NXT Africa Forum 2026 and earlier editions',
@@ -233,10 +237,10 @@ export const PROGRAMS = [
     name: 'Reconstructive Leadership',
     cadence: 'Cohort',
     cover: '/Hangout 2.jpg',
-    blurb: 'A structured, practical leadership cohort.',
+    blurb: 'A structured, practical leadership cohort equipping creatives and emerging builders to position and sustain their craft.',
     facts: [
-      'The public chapter is the Creative Economy chapter, a cohort that started on 15 May 2026.',
-      'It was publicly described as an 8-week hybrid experience for creatives.',
+      'Creative Economy Chapter: an 8-week hybrid cohort launched on 15 May 2026.',
+      'Designed for photographers, videographers, designers, artists, hosts, content creators, and creative entrepreneurs.',
     ],
     photos: {
       caption: 'Cohort community sessions',

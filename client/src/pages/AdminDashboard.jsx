@@ -191,7 +191,7 @@ const AdminDashboard = () => {
         <div className="min-h-screen bg-ink text-fg">
             <nav className="sticky top-0 z-40 flex min-h-[60px] items-center justify-between gap-3 border-b border-white/10 bg-panel px-4 sm:px-6">
                 <div className="flex items-center gap-3">
-                    <img src="/logo.png" alt="" width="32" height="32" className="h-8 w-8 object-contain" />
+                    <img src="/favicon.svg" alt="" width="32" height="32" className="h-8 w-8 rounded-lg object-contain" />
                     <span className="font-semibold">Youth Spark Summit <span className="text-gold">Admin</span></span>
                 </div>
                 <div className="flex items-center gap-2">

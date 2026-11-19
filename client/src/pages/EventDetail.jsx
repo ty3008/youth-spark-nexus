@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { CalendarDays, Camera, ChevronRight, Clock, MapPin, Play } from 'lucide-react';
+import { CalendarDays, ChevronRight, Clock, MapPin, Play } from 'lucide-react';
 import { useGatherings } from '../lib/GatheringsContext';
 import { formatDate } from '../lib/gatherings';
 import { SITE, programBySlug } from '../data/site';
+import { FacebookIcon, InstagramIcon, WhatsAppIcon, YouTubeIcon } from '../components/BrandIcons';
 import { StatusChip } from '../components/GatheringCard';
 import Gallery from '../components/Gallery';
 import VideoModal from '../components/VideoModal';
@@ -120,7 +121,7 @@ const EventDetail = () => {
                 )}
                 {g.instagramUrl && (
                   <a href={g.instagramUrl} target="_blank" rel="noopener noreferrer" className="btn-ghost">
-                    <Camera size={18} aria-hidden="true" /> See the recap
+                    <InstagramIcon size={18} className="text-gold" /> See the recap
                   </a>
                 )}
               </div>
@@ -221,13 +222,22 @@ const EventDetail = () => {
               </div>
             </dl>
 
-            <div className="card space-y-3 p-5">
-              <h2 className="text-lg">Follow us</h2>
-              <a href={SITE.instagram} target="_blank" rel="noopener noreferrer" className="btn-ghost w-full">
-                <Camera size={18} aria-hidden="true" /> Follow {SITE.instagramHandle}
+            <div className="card space-y-2.5 p-5">
+              <h2 className="text-lg">Follow &amp; reach us</h2>
+              <a href={SITE.instagram} target="_blank" rel="noopener noreferrer" className="btn-ghost w-full justify-start">
+                <InstagramIcon size={18} className="text-gold" /> {SITE.instagramHandle}
               </a>
-              <a href={SITE.youtube} target="_blank" rel="noopener noreferrer" className="btn-ghost w-full">
-                <Play size={18} aria-hidden="true" /> Our YouTube channel
+              <a href={SITE.facebook} target="_blank" rel="noopener noreferrer" className="btn-ghost w-full justify-start">
+                <FacebookIcon size={18} className="text-gold" /> Facebook · {SITE.facebookHandle}
+              </a>
+              <a href={SITE.youtube} target="_blank" rel="noopener noreferrer" className="btn-ghost w-full justify-start">
+                <YouTubeIcon size={18} className="text-gold" /> YouTube channel
+              </a>
+              <a href={SITE.whatsapp} target="_blank" rel="noopener noreferrer" className="btn-ghost w-full justify-start">
+                <WhatsAppIcon size={18} className="text-gold" /> Join WhatsApp community
+              </a>
+              <a href={SITE.whatsappDirect} target="_blank" rel="noopener noreferrer" className="btn-ghost w-full justify-start">
+                <WhatsAppIcon size={18} className="text-gold" /> Reach us on WhatsApp
               </a>
             </div>
 

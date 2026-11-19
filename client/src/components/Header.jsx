@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { Menu, MessageCircle, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { SITE } from '../data/site';
+import { FacebookIcon, InstagramIcon, WhatsAppIcon, YouTubeIcon } from './BrandIcons';
 
 const NAV = [
   { to: '/', label: 'Home', end: true },
@@ -9,6 +10,13 @@ const NAV = [
   { to: '/events', label: 'Events' },
   { to: '/about', label: 'About' },
   { to: '/partnerships', label: 'Partner' },
+];
+
+const MOBILE_SOCIALS = [
+  { label: 'Instagram', href: SITE.instagram, icon: InstagramIcon },
+  { label: 'Facebook', href: SITE.facebook, icon: FacebookIcon },
+  { label: 'YouTube', href: SITE.youtube, icon: YouTubeIcon },
+  { label: 'WhatsApp', href: SITE.whatsapp, icon: WhatsAppIcon },
 ];
 
 const desktopTabClass = ({ isActive }) =>
@@ -42,7 +50,7 @@ const Header = () => {
         <Link
           to="/"
           onClick={() => setOpen(false)}
-          className="flex min-h-[48px] shrink-0 items-center gap-3 group"
+          className="group flex min-h-[48px] shrink-0 items-center gap-3"
           aria-label="Youth Spark Summit, home"
         >
           <img
@@ -79,7 +87,7 @@ const Header = () => {
           ))}
         </nav>
 
-        {/* Right: Balanced action link on desktop */}
+        {/* Right: Balanced community action on desktop */}
         <div className="hidden shrink-0 items-center md:flex">
           <a
             href={SITE.whatsapp}
@@ -87,7 +95,7 @@ const Header = () => {
             rel="noopener noreferrer"
             className="inline-flex min-h-[48px] items-center gap-2 rounded-full border border-white/15 bg-panel/70 px-4 text-sm font-medium text-fg transition-colors hover:border-gold hover:text-gold"
           >
-            <MessageCircle size={16} className="text-gold" aria-hidden="true" />
+            <WhatsAppIcon size={17} className="text-gold" />
             <span>Community</span>
           </a>
         </div>
@@ -113,7 +121,7 @@ const Header = () => {
                 <span>{item.label}</span>
               </NavLink>
             ))}
-            <div className="mt-3 border-t border-white/10 pt-3">
+            <div className="mt-3 space-y-2.5 border-t border-white/10 pt-3">
               <a
                 href={SITE.whatsapp}
                 target="_blank"
@@ -121,8 +129,35 @@ const Header = () => {
                 onClick={() => setOpen(false)}
                 className="btn-gold w-full"
               >
-                <MessageCircle size={18} aria-hidden="true" /> Join WhatsApp community
+                <WhatsAppIcon size={18} /> Join WhatsApp community
               </a>
+              <a
+                href={SITE.whatsappDirect}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setOpen(false)}
+                className="btn-ghost w-full"
+              >
+                <WhatsAppIcon size={18} className="text-gold" /> Reach us on WhatsApp
+              </a>
+              <div className="grid grid-cols-4 gap-2 pt-1">
+                {MOBILE_SOCIALS.map((s) => {
+                  const IconComponent = s.icon;
+                  return (
+                    <a
+                      key={s.label}
+                      href={s.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setOpen(false)}
+                      aria-label={s.label}
+                      className="inline-flex min-h-[48px] items-center justify-center rounded-xl border border-white/10 bg-panel text-fg transition-colors hover:border-gold hover:text-gold"
+                    >
+                      <IconComponent size={20} />
+                    </a>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </nav>
