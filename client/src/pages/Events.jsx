@@ -51,7 +51,7 @@ const Events = () => {
         <title>Events calendar — Youth Spark Summit</title>
         <meta
           name="description"
-          content="Dates and venues for Youth Spark Summit gatherings in Nairobi: the annual Summit, monthly Nexus, NXT Africa Forum, and Reconstructive Leadership."
+          content="Dates and venues for Youth Spark Summit gatherings in Nairobi: the annual Summit, monthly Nexus, NXT Africa Forum, Reconstructive Leadership, and Let Her Conference."
         />
       </Helmet>
 

@@ -72,11 +72,11 @@ const About = () => (
       </div>
     </section>
 
-    {/* Four programs */}
+    {/* Five programs */}
     <section className="section border-t border-white/10 bg-panel">
       <div className="wrap">
         <p className="eyebrow mb-2">What we host</p>
-        <h2 className="mb-6 text-2xl sm:text-3xl">Four programs</h2>
+        <h2 className="mb-6 text-2xl sm:text-3xl">Five programs</h2>
         <ul className="grid gap-4 md:grid-cols-2">
           {PROGRAMS.map((p) => (
             <li key={p.slug}>

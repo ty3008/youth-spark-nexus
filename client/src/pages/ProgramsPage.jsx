@@ -10,11 +10,11 @@ const ProgramsPage = () => (
       <title>Programs — Youth Spark Summit</title>
       <meta
         name="description"
-        content="The four Youth Spark Summit programs: the annual Summit, monthly Nexus, NXT Africa Forum, and Reconstructive Leadership."
+        content="The five Youth Spark Summit programs: the annual Summit, monthly Nexus, NXT Africa Forum, Reconstructive Leadership, and Let Her Conference."
       />
     </Helmet>
 
-    <PageHeader crumbs={[{ label: 'Programs' }]} eyebrow="Programs" title="Four programs, one city">
+    <PageHeader crumbs={[{ label: 'Programs' }]} eyebrow="Programs" title="Five programs, one city">
       <p className="lead">All of our gatherings are hosted from Nairobi.</p>
     </PageHeader>
 

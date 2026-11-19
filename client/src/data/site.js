@@ -74,6 +74,7 @@ export const BORROWED_COVERS = {
   'youth-spark-nexus-august-2025': '/gatherings/nexus/03.webp',
   'youth-spark-summit-2026-the-reset': '/gatherings/summit-2026/01.webp',
   'reconstructive-leadership-creative-economy-2026': '/Hangout 2.jpg',
+  'let-her-ladies-conference-2026': '/gatherings/let-her-2026/01.webp',
   'nxt-africa-forum-2026': '/gatherings/nxt-2026/01.webp',
 };
 
@@ -176,6 +177,8 @@ export const RECONSTRUCTIVE_PHOTOS = [
   '/Hangout 3.jpg',
 ];
 
+export const LET_HER_PHOTOS = Array.from({ length: 10 }, (_, i) => `/gatherings/let-her-2026/${pad(i + 1)}.webp`);
+
 export const PROGRAMS = [
   {
     slug: 'youth-spark-summit',
@@ -241,6 +244,22 @@ export const PROGRAMS = [
       alt: 'Reconstructive Leadership cohort gathering',
     },
   },
+  {
+    slug: 'let-her',
+    name: 'Let Her Conference',
+    cadence: 'Conference',
+    cover: '/gatherings/let-her-2026/01.webp',
+    blurb: 'A ladies conference in Nairobi gathering women for purpose, leadership, community, and bold conversation.',
+    facts: [
+      '2026 edition held on 18 July 2026 at Swiss Lenana Mount Hotel, Ralph Bunche Rd, Nairobi.',
+      'Dress code theme: Bold & Bright.',
+    ],
+    photos: {
+      caption: 'Let Her Ladies Conference at Swiss Lenana Mount Hotel (18 July 2026)',
+      images: LET_HER_PHOTOS,
+      alt: 'Let Her Ladies Conference gathering',
+    },
+  },
 ];
 
 export const programBySlug = (slug) => PROGRAMS.find((p) => p.slug === slug);
@@ -250,4 +269,5 @@ export const VENUES_USED = [
   'Nairobi Cinema, Aga Khan Walk, Nairobi CBD',
   'After40 Hotel, Biashara Street, Nairobi CBD',
   'CITAM Valley Road — Dennis White Hall, Nairobi',
+  'Swiss Lenana Mount Hotel, Ralph Bunche Rd, Nairobi',
 ];

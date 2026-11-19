@@ -9,7 +9,7 @@ import Gallery from '../components/Gallery';
 import { EmptyState, PageHeader } from '../components/PageParts';
 import NotFound from './NotFound';
 
-// One template for all four program pages: /programs/:slug
+// One template for all program pages: /programs/:slug
 const ProgramPage = () => {
   const { slug } = useParams();
   const program = programBySlug(slug);

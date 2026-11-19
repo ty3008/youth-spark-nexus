@@ -30,7 +30,7 @@ const Home = () => {
         <title>Youth Spark Summit — Gatherings for young leaders in Nairobi</title>
         <meta
           name="description"
-          content="Youth Spark Summit hosts the annual Summit, monthly Nexus, NXT Africa Forum, and Reconstructive Leadership in Nairobi. See dates and past gatherings. No registration on this site."
+          content="Youth Spark Summit hosts the annual Summit, monthly Nexus, NXT Africa Forum, Reconstructive Leadership, and Let Her Conference in Nairobi. See dates and past gatherings. No registration on this site."
         />
       </Helmet>
 
@@ -90,7 +90,7 @@ const Home = () => {
       {/* 2. One pathway */}
       <section className="border-b border-white/10 bg-panel">
         <div className="wrap py-8 sm:py-10">
-          <p className="mb-4 text-xs font-medium uppercase tracking-[0.18em] text-muted">One movement, four rooms</p>
+          <p className="mb-4 text-xs font-medium uppercase tracking-[0.18em] text-muted">One movement, five rooms</p>
           <nav aria-label="Movement rhythm" className="flex flex-wrap items-center gap-x-3 gap-y-2 text-lg font-medium sm:text-2xl">
             <Link to="/programs/youth-spark-summit" className="inline-flex min-h-[48px] items-center text-fg transition-colors hover:text-gold">
               Summit
@@ -104,9 +104,13 @@ const Home = () => {
               <Link to="/programs/nxt-africa-forum" className="text-fg transition-colors hover:text-gold">
                 NXT
               </Link>
-              <span className="text-muted">and</span>
+              <span className="text-muted">·</span>
               <Link to="/programs/reconstructive-leadership" className="text-fg transition-colors hover:text-gold">
                 Reconstructive Leadership
+              </Link>
+              <span className="text-muted">·</span>
+              <Link to="/programs/let-her" className="text-fg transition-colors hover:text-gold">
+                Let Her
               </Link>
             </span>
             <ArrowRight size={18} className="text-muted" aria-hidden="true" />
