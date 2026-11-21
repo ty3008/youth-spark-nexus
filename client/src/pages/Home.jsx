@@ -85,7 +85,7 @@ const Home = () => {
               <Play size={18} aria-hidden="true" /> Watch the gathering
             </button>
             <Link to="/events" className="btn-ghost w-full bg-ink/65 backdrop-blur-sm sm:w-auto">
-              See the calendar
+              See all gatherings
             </Link>
           </div>
         </div>

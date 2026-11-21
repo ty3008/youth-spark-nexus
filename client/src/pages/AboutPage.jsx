@@ -145,7 +145,7 @@ const About = () => (
             Every gathering we have on record has its own page with the date, venue, video links when available, and photos.
           </p>
           <Link to="/events" className="btn-ghost mt-5">
-            See the calendar
+            See all gatherings
           </Link>
         </div>
 

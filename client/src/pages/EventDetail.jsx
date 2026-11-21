@@ -242,7 +242,7 @@ const EventDetail = () => {
             </div>
 
             <Link to="/events" className="link-inline inline-flex min-h-[48px] items-center">
-              Back to the calendar
+              Back to all gatherings
             </Link>
           </aside>
         </div>

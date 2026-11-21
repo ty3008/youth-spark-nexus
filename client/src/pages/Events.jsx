@@ -1,24 +1,14 @@
 import { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useGatherings } from '../lib/GatheringsContext';
-import {
-  defaultMonth,
-  isMonthOnly,
-  isUpcoming,
-  monthKey,
-  monthLabel,
-  monthsWithItems,
-  newestFirst,
-  oldestFirst,
-} from '../lib/gatherings';
+import { isUpcoming, newestFirst, oldestFirst } from '../lib/gatherings';
 import { PROGRAMS, SITE } from '../data/site';
-import MonthCalendar from '../components/MonthCalendar';
-import { GatheringRow } from '../components/GatheringCard';
+import { FacebookIcon, InstagramIcon, WhatsAppIcon } from '../components/BrandIcons';
+import { GatheringCard } from '../components/GatheringCard';
 import { EmptyState, PageHeader } from '../components/PageParts';
 
 const Events = () => {
   const { items } = useGatherings();
-  const [picked, setPicked] = useState(null);
   const [yearFilter, setYearFilter] = useState('all');
   const [programFilter, setProgramFilter] = useState('all');
 
@@ -28,35 +18,25 @@ const Events = () => {
     return matchYear && matchProgram;
   });
 
-  const month = picked ?? defaultMonth(visibleItems);
   const upcoming = visibleItems.filter(isUpcoming).sort(oldestFirst);
-  const thisMonth = visibleItems.filter((g) => monthKey(g) === month).sort(oldestFirst);
-  const monthOnlyNote = thisMonth.some(isMonthOnly);
-  const everything = [...visibleItems].sort(newestFirst);
-  const availableMonths = monthsWithItems(visibleItems);
-
-  const handleYearChange = (y) => {
-    setYearFilter(y);
-    setPicked(null);
-  };
-
-  const handleProgramChange = (slug) => {
-    setProgramFilter(slug);
-    setPicked(null);
-  };
+  const archive = visibleItems.filter((g) => !isUpcoming(g)).sort(newestFirst);
+  const years = [...new Set(archive.map((g) => String(g.date).slice(0, 4)))].sort().reverse();
+  const hasFilters = yearFilter !== 'all' || programFilter !== 'all';
 
   return (
     <>
       <Helmet>
-        <title>Events calendar — Youth Spark Summit</title>
+        <title>Events &amp; Gatherings — Youth Spark Summit</title>
         <meta
           name="description"
-          content="Dates and venues for Youth Spark Summit gatherings in Nairobi: the annual Summit, monthly Nexus, NXT Africa Forum, Reconstructive Leadership, and Let Her Conference."
+          content="Explore past and upcoming Youth Spark Summit gatherings in Nairobi: the annual Summit, monthly Nexus, NXT Africa Forum, Reconstructive Leadership, and Let Her Conference."
         />
       </Helmet>
 
-      <PageHeader eyebrow="Calendar" title="Our gatherings">
-        <p className="lead">Tap a highlighted day, or pick from the list. {SITE.noRegistrationLine}</p>
+      <PageHeader eyebrow="Gatherings" title="Events &amp; archive">
+        <p className="lead">
+          Open any gathering for full photo galleries, talks, dates, and venues across Nairobi.
+        </p>
 
         <div className="mt-6 flex flex-col items-start gap-3">
           <div className="inline-flex flex-wrap rounded-xl border border-white/10 bg-panel p-1" role="group" aria-label="Filter gatherings by year">
@@ -72,7 +52,7 @@ const Events = () => {
                   key={opt.key}
                   type="button"
                   aria-pressed={active}
-                  onClick={() => handleYearChange(opt.key)}
+                  onClick={() => setYearFilter(opt.key)}
                   className={`min-h-[44px] rounded-lg px-4 text-sm font-semibold transition-colors ${
                     active
                       ? isYear
@@ -91,7 +71,7 @@ const Events = () => {
             <button
               type="button"
               aria-pressed={programFilter === 'all'}
-              onClick={() => handleProgramChange('all')}
+              onClick={() => setProgramFilter('all')}
               className={`min-h-[44px] rounded-lg px-3.5 text-sm font-medium transition-colors ${
                 programFilter === 'all'
                   ? 'bg-white/10 text-fg ring-1 ring-white/15'
@@ -105,7 +85,7 @@ const Events = () => {
                 key={p.slug}
                 type="button"
                 aria-pressed={programFilter === p.slug}
-                onClick={() => handleProgramChange(p.slug)}
+                onClick={() => setProgramFilter(p.slug)}
                 className={`min-h-[44px] rounded-lg px-3.5 text-sm font-medium transition-colors ${
                   programFilter === p.slug
                     ? 'bg-white/10 text-fg ring-1 ring-white/15'
@@ -119,88 +99,92 @@ const Events = () => {
         </div>
       </PageHeader>
 
+      {/* Upcoming gatherings or "What's next" channel banner */}
       <section className="section pb-0">
         <div className="wrap">
-          <h2 className="mb-4 text-xl">Upcoming</h2>
-          {upcoming.length ? (
-            <ul className="grid gap-3 md:grid-cols-2">
-              {upcoming.map((g) => (
-                <li key={g.slug}>
-                  <GatheringRow gathering={g} />
-                </li>
-              ))}
-            </ul>
+          {upcoming.length > 0 ? (
+            <>
+              <div className="mb-6 flex items-baseline justify-between gap-4">
+                <h2 className="text-2xl sm:text-3xl">Upcoming</h2>
+                <span className="text-sm text-muted">
+                  {upcoming.length} {upcoming.length === 1 ? 'gathering' : 'gatherings'}
+                </span>
+              </div>
+              <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                {upcoming.map((g) => (
+                  <li key={g.slug}>
+                    <GatheringCard gathering={g} />
+                  </li>
+                ))}
+              </ul>
+            </>
           ) : (
-            <EmptyState>
-              The next date will appear here when we publish it. Follow{' '}
-              <a href={SITE.instagram} target="_blank" rel="noopener noreferrer" className="link-inline">
-                {SITE.instagramHandle}
-              </a>
-              .
-            </EmptyState>
+            <div className="card flex flex-col gap-5 p-6 sm:p-8 lg:flex-row lg:items-center lg:justify-between">
+              <div className="max-w-xl">
+                <p className="eyebrow mb-2">What’s next</p>
+                <h2 className="text-xl sm:text-2xl">New gathering dates are shared first on our channels</h2>
+                <p className="mt-2 text-sm leading-relaxed text-muted">
+                  Join our WhatsApp community or follow Instagram and Facebook for upcoming dates and venues in Nairobi.
+                </p>
+              </div>
+              <div className="flex flex-col gap-2.5 sm:flex-row sm:flex-wrap lg:shrink-0">
+                <a href={SITE.whatsapp} target="_blank" rel="noopener noreferrer" className="btn-gold">
+                  <WhatsAppIcon size={18} /> Join WhatsApp community
+                </a>
+                <a href={SITE.instagram} target="_blank" rel="noopener noreferrer" className="btn-ghost">
+                  <InstagramIcon size={18} className="text-gold" /> {SITE.instagramHandle}
+                </a>
+                <a href={SITE.facebook} target="_blank" rel="noopener noreferrer" className="btn-ghost">
+                  <FacebookIcon size={18} className="text-gold" /> {SITE.facebookHandle}
+                </a>
+              </div>
+            </div>
           )}
         </div>
       </section>
 
+      {/* Year-grouped visual archive */}
       <section className="section">
-        <div className="wrap grid gap-8 lg:grid-cols-12">
-          <div className="lg:col-span-7">
-            <div className="mb-4">
-              <label htmlFor="month-jump" className="mb-1 block text-sm text-muted">
-                Jump to a month with gatherings
-              </label>
-              <select
-                id="month-jump"
-                value={availableMonths.includes(month) ? month : ''}
-                onChange={(e) => e.target.value && setPicked(e.target.value)}
-                className="min-h-[48px] w-full rounded-lg border border-white/20 bg-panel px-3 text-fg"
-              >
-                {!availableMonths.includes(month) && <option value="">Choose a month</option>}
-                {availableMonths.map((k) => (
-                  <option key={k} value={k}>
-                    {monthLabel(k)}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <MonthCalendar items={visibleItems} month={month} onMonthChange={setPicked} />
-          </div>
-
-          <div className="lg:col-span-5">
-            <h2 className="mb-4 text-xl">Gatherings in {monthLabel(month)}</h2>
-            {thisMonth.length ? (
-              <ul className="space-y-3">
-                {thisMonth.map((g) => (
-                  <li key={g.slug}>
-                    <GatheringRow gathering={g} />
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <EmptyState>No gatherings are on record for this month.</EmptyState>
-            )}
-            {monthOnlyNote && (
-              <p className="mt-3 text-sm text-muted">
-                A gathering shown with only a month has no day on record, so it is listed here and not on a calendar day.
-              </p>
-            )}
-          </div>
-        </div>
-      </section>
-
-      <section className="section border-t border-white/10">
-        <div className="wrap">
-          <h2 className="mb-4 text-xl">All gatherings, newest first</h2>
-          {everything.length ? (
-            <ul className="grid gap-3 md:grid-cols-2">
-              {everything.map((g) => (
-                <li key={g.slug}>
-                  <GatheringRow gathering={g} />
-                </li>
-              ))}
-            </ul>
+        <div className="wrap space-y-12">
+          {years.length > 0 ? (
+            years.map((yr) => {
+              const inYear = archive.filter((g) => String(g.date).startsWith(yr));
+              return (
+                <div key={yr}>
+                  <div className="mb-6 flex items-baseline justify-between gap-4 border-b border-white/10 pb-3">
+                    <h2 className="text-2xl sm:text-3xl">{yr}</h2>
+                    <span className="text-sm text-muted">
+                      {inYear.length} {inYear.length === 1 ? 'gathering' : 'gatherings'}
+                    </span>
+                  </div>
+                  <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                    {inYear.map((g) => (
+                      <li key={g.slug}>
+                        <GatheringCard gathering={g} />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })
           ) : (
-            <EmptyState>No gatherings match the selected filter.</EmptyState>
+            !upcoming.length && (
+              <EmptyState>
+                <p>No gatherings match the selected filter.</p>
+                {hasFilters && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setYearFilter('all');
+                      setProgramFilter('all');
+                    }}
+                    className="btn-ghost mt-4"
+                  >
+                    Reset filters
+                  </button>
+                )}
+              </EmptyState>
+            )
           )}
         </div>
       </section>
