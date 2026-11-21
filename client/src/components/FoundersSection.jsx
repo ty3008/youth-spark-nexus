@@ -23,7 +23,7 @@ const FoundersSection = ({ showMoreLink = false }) => (
       <p className="eyebrow mb-2">Founders</p>
       <h2 className="text-2xl sm:text-4xl">Kevin Kimani and Daphne Kimani</h2>
       <p className="mt-3 max-w-2xl leading-relaxed text-muted">
-        A husband-and-wife team in Nairobi stewarding Youth Spark Summit—raising young Christian leaders to lead with clarity across faith, enterprise, and public life.
+        A husband-and-wife team in Nairobi stewarding Youth Spark Summit—raising young leaders to lead with clarity, empowering them to transform industries, shape culture, influence societies, and advance nation-building with excellence.
       </p>
 
       <div className="mt-6 grid gap-4 sm:grid-cols-2">
