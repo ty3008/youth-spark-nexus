@@ -94,15 +94,15 @@ const About = () => (
 
         <div className="mt-8 grid gap-4 md:grid-cols-3">
           <figure className="overflow-hidden rounded-xl border border-white/10 bg-panel">
-            <img src="/WHO WE ARE.jpg" alt="Group discussion at Youth Spark Nexus" loading="lazy" decoding="async" className="aspect-[4/3] w-full object-cover" />
+            <img src="/gatherings/extras/who-we-are.webp" alt="Group discussion at Youth Spark Nexus" loading="lazy" decoding="async" className="aspect-[4/3] w-full object-cover" />
             <figcaption className="p-3 text-xs text-muted">Peer discussion at Youth Spark Nexus</figcaption>
           </figure>
           <figure className="overflow-hidden rounded-xl border border-white/10 bg-panel">
-            <img src="/pillar.jpg" alt="Speaker at Youth Spark Summit 2025, Nairobi Cinema" loading="lazy" decoding="async" className="aspect-[4/3] w-full object-cover" />
+            <img src="/gatherings/extras/pillar-1.webp" alt="Speaker at Youth Spark Summit 2025, Nairobi Cinema" loading="lazy" decoding="async" className="aspect-[4/3] w-full object-cover" />
             <figcaption className="p-3 text-xs text-muted">Youth Spark Summit 2025, Nairobi Cinema</figcaption>
           </figure>
           <figure className="overflow-hidden rounded-xl border border-white/10 bg-panel">
-            <img src="/pillar 2.jpg" alt="Audience seated at Nairobi Cinema during Summit 2025" loading="lazy" decoding="async" className="aspect-[4/3] w-full object-cover" />
+            <img src="/gatherings/extras/pillar-2.webp" alt="Audience seated at Nairobi Cinema during Summit 2025" loading="lazy" decoding="async" className="aspect-[4/3] w-full object-cover" />
             <figcaption className="p-3 text-xs text-muted">Summit 2025 auditorium session</figcaption>
           </figure>
         </div>
@@ -124,8 +124,8 @@ const About = () => (
           </ul>
         </div>
         <div className="grid grid-cols-2 gap-3">
-          <img src="/kenya-vision.png" alt="Nairobi city skyline" loading="lazy" decoding="async" className="aspect-[4/3] w-full rounded-xl border border-white/10 object-cover" />
-          <img src="/about-skyline.png" alt="Nairobi evening skyline" loading="lazy" decoding="async" className="aspect-[4/3] w-full rounded-xl border border-white/10 object-cover" />
+          <img src="/gatherings/extras/kenya-vision.webp" alt="Nairobi city skyline" loading="lazy" decoding="async" className="aspect-[4/3] w-full rounded-xl border border-white/10 object-cover" />
+          <img src="/gatherings/extras/about-skyline.webp" alt="Nairobi evening skyline" loading="lazy" decoding="async" className="aspect-[4/3] w-full rounded-xl border border-white/10 object-cover" />
         </div>
       </div>
     </section>
@@ -151,7 +151,7 @@ const About = () => (
 
         <div className="grid gap-4 sm:grid-cols-2">
           <figure className="overflow-hidden rounded-xl border border-white/10 bg-panel">
-            <img src="/Impact (2).jpg" alt="Youth Spark Summit 2025 full hall at Nairobi Cinema" loading="lazy" decoding="async" className="aspect-[4/3] w-full object-cover" />
+            <img src="/gatherings/extras/impact-2.webp" alt="Youth Spark Summit 2025 full hall at Nairobi Cinema" loading="lazy" decoding="async" className="aspect-[4/3] w-full object-cover" />
             <figcaption className="p-3 text-xs text-muted">Youth Spark Summit 2025, Nairobi Cinema</figcaption>
           </figure>
           <figure className="overflow-hidden rounded-xl border border-white/10 bg-panel">

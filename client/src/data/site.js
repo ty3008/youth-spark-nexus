@@ -76,7 +76,7 @@ export const BORROWED_COVERS = {
   'youth-spark-nexus-may-2025': '/gatherings/nexus/00.webp',
   'youth-spark-nexus-august-2025': '/gatherings/nexus/03.webp',
   'youth-spark-summit-2026-the-reset': '/gatherings/summit-2026/01.webp',
-  'reconstructive-leadership-creative-economy-2026': '/Hangout 2.jpg',
+  'reconstructive-leadership-creative-economy-2026': '/gatherings/extras/hangout-2.webp',
   'let-her-ladies-conference-2026': '/gatherings/let-her-2026/01.webp',
   'nxt-africa-forum-2026': '/gatherings/nxt-2026/01.webp',
 };
@@ -151,9 +151,9 @@ const pad = (n) => String(n).padStart(2, '0');
 export const SUMMIT_PHOTOS = [
   ...Array.from({ length: 10 }, (_, i) => `/gatherings/summit-2026/${pad(i + 1)}.webp`),
   ...Array.from({ length: 9 }, (_, i) => `/gatherings/summit-2025/${pad(i + 1)}.webp`),
-  '/pillar.jpg',
-  '/pillar 2.jpg',
-  '/Impact (2).jpg',
+  '/gatherings/extras/pillar-1.webp',
+  '/gatherings/extras/pillar-2.webp',
+  '/gatherings/extras/impact-2.webp',
 ];
 
 export const NEXUS_PHOTOS = [
@@ -175,9 +175,9 @@ export const NXT_PHOTOS = [
 ];
 
 export const RECONSTRUCTIVE_PHOTOS = [
-  '/Hangout1.jpg',
-  '/Hangout 2.jpg',
-  '/Hangout 3.jpg',
+  '/gatherings/extras/hangout-1.webp',
+  '/gatherings/extras/hangout-2.webp',
+  '/gatherings/extras/hangout-3.webp',
 ];
 
 export const LET_HER_PHOTOS = Array.from({ length: 10 }, (_, i) => `/gatherings/let-her-2026/${pad(i + 1)}.webp`);
@@ -238,7 +238,7 @@ export const PROGRAMS = [
     slug: 'reconstructive-leadership',
     name: 'Reconstructive Leadership',
     cadence: 'Cohort',
-    cover: '/Hangout 2.jpg',
+    cover: '/gatherings/extras/hangout-2.webp',
     blurb: 'A structured, practical leadership cohort equipping creatives and emerging builders to position and sustain their craft.',
     facts: [
       'Creative Economy Chapter: an 8-week hybrid cohort launched on 15 May 2026.',
