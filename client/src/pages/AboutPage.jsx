@@ -2,14 +2,13 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import {
   EQUIP_AREAS,
-  FOUNDERS,
-  FOUNDERS_PHOTO,
   FOUR_PILLARS,
   PROGRAMS,
   VENUES_USED,
   VISION_MISSION,
   WHO_WE_SERVE,
 } from '../data/site';
+import FoundersSection from '../components/FoundersSection';
 import { PageHeader } from '../components/PageParts';
 
 const About = () => (
@@ -42,33 +41,8 @@ const About = () => (
 
     {/* Founders */}
     <section className="section">
-      <div className="wrap grid items-start gap-8 md:grid-cols-2 md:gap-12">
-        <figure>
-          <img
-            src={FOUNDERS_PHOTO}
-            alt="Kevin Kimani and Daphne Kimani"
-            width="1400"
-            height="933"
-            loading="lazy"
-            decoding="async"
-            className="aspect-[3/2] w-full rounded-xl border border-white/10 object-cover"
-          />
-        </figure>
-        <div>
-          <p className="eyebrow mb-2">Founders</p>
-          <h2 className="text-2xl sm:text-3xl">Kevin Kimani and Daphne Kimani</h2>
-          <p className="mt-3 text-muted">A couple in Nairobi.</p>
-          <dl className="mt-6 space-y-5">
-            {FOUNDERS.map((f) => (
-              <div key={f.name}>
-                <dt className="font-semibold">
-                  {f.name} <span className="font-normal text-muted">· {f.role}</span>
-                </dt>
-                <dd className="mt-1 text-muted">{f.bio}</dd>
-              </div>
-            ))}
-          </dl>
-        </div>
+      <div className="wrap">
+        <FoundersSection />
       </div>
     </section>
 

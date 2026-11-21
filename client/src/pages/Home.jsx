@@ -4,7 +4,8 @@ import { Helmet } from 'react-helmet';
 import { ArrowRight, CalendarDays, MapPin, Play } from 'lucide-react';
 import { useGatherings } from '../lib/GatheringsContext';
 import { formatDate, formatShort, newestFirst } from '../lib/gatherings';
-import { BORROWED_COVERS, FOUNDERS, FOUNDERS_PHOTO, HERO_PHOTO, SITE, WATCH_REELS, programName } from '../data/site';
+import { BORROWED_COVERS, HERO_PHOTO, SITE, WATCH_REELS, programName } from '../data/site';
+import FoundersSection from '../components/FoundersSection';
 import SocialRow from '../components/SocialRow';
 import VideoModal from '../components/VideoModal';
 
@@ -261,37 +262,7 @@ const Home = () => {
       {/* 5. Founders, then social platforms and direct reach */}
       <section className="section bg-panel">
         <div className="wrap">
-          <div className="grid items-center gap-8 md:grid-cols-2 md:gap-12">
-            <figure>
-              <img
-                src={FOUNDERS_PHOTO}
-                alt="Kevin Kimani and Daphne Kimani"
-                width="1400"
-                height="933"
-                loading="lazy"
-                decoding="async"
-                className="aspect-[3/2] w-full rounded-xl border border-white/10 object-cover"
-              />
-            </figure>
-            <div>
-              <p className="mb-2 text-xs font-medium uppercase tracking-[0.18em] text-muted">Founders</p>
-              <h2 className="text-2xl sm:text-3xl">Kevin Kimani and Daphne Kimani</h2>
-              <p className="mt-3 text-muted">A couple in Nairobi who started Youth Spark Summit.</p>
-              <dl className="mt-6 space-y-5">
-                {FOUNDERS.map((f) => (
-                  <div key={f.name}>
-                    <dt className="font-semibold">
-                      {f.name} <span className="font-normal text-muted">· {f.role}</span>
-                    </dt>
-                    <dd className="mt-1 text-muted">{f.bio}</dd>
-                  </div>
-                ))}
-              </dl>
-              <Link to="/about" className="mt-6 inline-flex min-h-[48px] items-center text-sm text-fg underline underline-offset-4 hover:text-gold">
-                More about us
-              </Link>
-            </div>
-          </div>
+          <FoundersSection showMoreLink />
 
           <div className="mt-12 border-t border-white/10 pt-10">
             <p className="mb-4 text-xs font-medium uppercase tracking-[0.18em] text-muted">Follow &amp; reach us</p>

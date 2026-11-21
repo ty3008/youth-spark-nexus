@@ -56,16 +56,18 @@ export const FOUNDERS = [
   {
     name: 'Kevin Kimani',
     role: 'Co-founder',
+    image: '/gatherings/founders/kevin.webp',
     bio: 'Communications and marketing professional who builds youth leadership platforms.',
   },
   {
     name: 'Daphne Kimani',
     role: 'Co-founder',
+    image: '/gatherings/founders/daphne.webp',
     bio: 'Leadership coach, corporate trainer, and youth empowerment advocate.',
   },
 ];
 
-export const FOUNDERS_PHOTO = '/gatherings/founders.webp';
+export const FOUNDERS_PHOTO = '/gatherings/founders/together.webp';
 export const HERO_PHOTO = '/gatherings/summit-2026/01.webp';
 
 // Existing project frames used on homepage tiles when a gathering's own cover is not yet uploaded.
