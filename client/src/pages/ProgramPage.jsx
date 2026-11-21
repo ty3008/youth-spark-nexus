@@ -52,21 +52,19 @@ const ProgramPage = () => {
               ))}
             </ul>
           ) : (
-            <EmptyState>No gatherings are on record for this program yet.</EmptyState>
+            <EmptyState>Upcoming dates for this program will appear here soon.</EmptyState>
           )}
         </div>
       </section>
 
-      <section className="section border-t border-white/10">
-        <div className="wrap">
-          <h2 className="mb-6 text-2xl">Photos</h2>
-          {program.photos ? (
+      {program.photos?.images?.length > 0 && (
+        <section className="section border-t border-white/10">
+          <div className="wrap">
+            <h2 className="mb-6 text-2xl">Photos</h2>
             <Gallery images={program.photos.images} alt={program.photos.alt} caption={program.photos.caption} />
-          ) : (
-            <EmptyState>Photos will be added</EmptyState>
-          )}
-        </div>
-      </section>
+          </div>
+        </section>
+      )}
 
       <section className="section border-t border-white/10">
         <div className="wrap">
@@ -88,7 +86,6 @@ const ProgramPage = () => {
               <WhatsAppIcon size={18} className="text-gold" /> Reach us on WhatsApp
             </a>
           </div>
-          <p className="mt-6 text-sm text-muted">{SITE.noRegistrationLine}</p>
         </div>
       </section>
     </>

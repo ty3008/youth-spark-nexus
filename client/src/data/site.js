@@ -12,7 +12,6 @@ export const SITE = {
   facebook: 'https://www.facebook.com/search/top?q=youth%20spark%20summit',
   facebookHandle: 'Youth Spark Summit',
   youtube: 'https://www.youtube.com/channel/UCx0MZvWSyw9nE85eJF4Dmbg',
-  noRegistrationLine: 'Browse dates, venues, and recaps across all six Nairobi programs.',
 };
 
 export const VISION_MISSION = {

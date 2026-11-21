@@ -99,8 +99,8 @@ const Footer = () => (
 
     <div className="border-t border-white/10">
       <div className="wrap flex flex-col gap-2 py-6 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
-        <p>{SITE.noRegistrationLine}</p>
-        <p>© {new Date().getFullYear()} Youth Spark Summit, Nairobi.</p>
+        <p>Youth Spark Summit · Nairobi, Kenya.</p>
+        <p>© {new Date().getFullYear()} Youth Spark Summit. All rights reserved.</p>
       </div>
     </div>
   </footer>

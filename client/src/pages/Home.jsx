@@ -268,7 +268,6 @@ const Home = () => {
           <div className="mt-12 border-t border-white/10 pt-10">
             <p className="mb-4 text-xs font-medium uppercase tracking-[0.18em] text-muted">Follow &amp; reach us</p>
             <SocialRow />
-            <p className="mt-6 text-sm text-muted">{SITE.noRegistrationLine}</p>
           </div>
         </div>
       </section>

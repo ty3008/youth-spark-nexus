@@ -42,8 +42,6 @@ const Contact = () => {
               {copied ? 'Copied email' : `Copy ${SITE.email}`}
             </button>
           </div>
-
-          <p className="mt-8 text-sm text-muted">{SITE.noRegistrationLine}</p>
         </div>
       </section>
     </>

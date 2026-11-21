@@ -9,7 +9,6 @@ import { FacebookIcon, InstagramIcon, WhatsAppIcon, YouTubeIcon } from '../compo
 import { StatusChip } from '../components/GatheringCard';
 import Gallery from '../components/Gallery';
 import VideoModal from '../components/VideoModal';
-import { EmptyState } from '../components/PageParts';
 import NotFound from './NotFound';
 
 function findSpeakerVideo(speakerName, videos) {
@@ -27,7 +26,6 @@ const EventDetail = () => {
   if (!g) return <NotFound />;
 
   const program = programBySlug(g.program);
-  const hasFilm = Boolean(g.youtubeUrl || g.instagramUrl || g.videos.length);
 
   return (
     <>
@@ -147,8 +145,6 @@ const EventDetail = () => {
               </div>
             )}
 
-            {!hasFilm && <p className="mt-6 text-sm text-muted">The film from this gathering will be added.</p>}
-
             {g.details.length > 0 && (
               <ul className="mt-8 list-disc space-y-2 pl-5 text-muted">
                 {g.details.map((d) => (
@@ -187,11 +183,11 @@ const EventDetail = () => {
               </div>
             )}
 
-            <h2 className="mb-4 mt-12 text-xl">Photos</h2>
-            {g.gallery.length ? (
-              <Gallery images={g.gallery} alt={g.title} />
-            ) : (
-              <EmptyState>Photos from this gathering will be added.</EmptyState>
+            {g.gallery.length > 0 && (
+              <>
+                <h2 className="mb-4 mt-12 text-xl">Photos</h2>
+                <Gallery images={g.gallery} alt={g.title} />
+              </>
             )}
           </div>
 
@@ -246,10 +242,6 @@ const EventDetail = () => {
             </Link>
           </aside>
         </div>
-      </section>
-
-      <section className="border-t border-white/10">
-        <div className="wrap py-6 text-sm text-muted">{SITE.noRegistrationLine}</div>
       </section>
 
       <VideoModal video={activeVideo} onClose={() => setActiveVideo(null)} />

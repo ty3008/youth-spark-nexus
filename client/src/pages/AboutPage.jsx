@@ -142,7 +142,7 @@ const About = () => (
             ))}
           </ul>
           <p className="mt-6 text-muted">
-            Every gathering we have on record has its own page with the date, venue, video links when available, and photos.
+            Explore every Youth Spark Summit gathering with dates, venues, photo galleries, and session videos.
           </p>
           <Link to="/events" className="btn-ghost mt-5">
             See all gatherings
