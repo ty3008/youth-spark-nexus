@@ -55,15 +55,15 @@ export const PARTNERSHIP_DECK = [
 export const FOUNDERS = [
   {
     name: 'Kevin Kimani',
-    role: 'Co-founder',
+    role: 'Co-founder · Media Consultant',
     image: '/gatherings/founders/kevin.webp',
-    bio: 'Communications and marketing professional who builds youth leadership platforms.',
+    bio: 'Communications and marketing professional building youth leadership platforms and mentorship spaces.',
   },
   {
     name: 'Daphne Kimani',
-    role: 'Co-founder',
+    role: 'Co-founder · Certified Professional Coach',
     image: '/gatherings/founders/daphne.webp',
-    bio: 'Leadership coach, corporate trainer, and youth empowerment advocate.',
+    bio: 'Leadership & Legacy Strategist, leadership coach, corporate trainer, speaker, moderator, community development practitioner, and youth empowerment advocate.',
   },
 ];
 
