@@ -29,7 +29,7 @@ const Events = () => {
         <title>Events &amp; Gatherings — Youth Spark Summit</title>
         <meta
           name="description"
-          content="Explore past and upcoming Youth Spark Summit gatherings in Nairobi: the annual Summit, monthly Nexus, NXT Africa Forum, Reconstructive Leadership, and Let Her Conference."
+          content="Explore past and upcoming Youth Spark Summit gatherings in Nairobi: the annual Summit, monthly Nexus, NXT Africa Forum, Reconstructive Leadership, Let Her Conference, and Becoming Limitless."
         />
       </Helmet>
 

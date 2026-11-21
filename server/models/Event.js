@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const PROGRAMS = ['youth-spark-summit', 'youth-spark-nexus', 'nxt-africa-forum', 'reconstructive-leadership', 'let-her'];
+const PROGRAMS = ['youth-spark-summit', 'youth-spark-nexus', 'nxt-africa-forum', 'reconstructive-leadership', 'let-her', 'becoming-limitless'];
 
 // A gathering is something we hosted (status "held") or will host ("upcoming").
 // The public site only lists records that have both a slug and a program.

@@ -10,17 +10,17 @@ const ProgramsPage = () => (
       <title>Programs — Youth Spark Summit</title>
       <meta
         name="description"
-        content="The five Youth Spark Summit programs: the annual Summit, monthly Nexus, NXT Africa Forum, Reconstructive Leadership, and Let Her Conference."
+        content="The six Youth Spark Summit programs: the annual Summit, monthly Nexus, NXT Africa Forum, Reconstructive Leadership, Let Her Conference, and Becoming Limitless."
       />
     </Helmet>
 
-    <PageHeader crumbs={[{ label: 'Programs' }]} eyebrow="Programs" title="Five programs, one city">
+    <PageHeader crumbs={[{ label: 'Programs' }]} eyebrow="Programs" title="Six programs, one city">
       <p className="lead">All of our gatherings are hosted from Nairobi.</p>
     </PageHeader>
 
     <section id="engagements" className="section">
       <div className="wrap">
-        <ul className="grid gap-6 md:grid-cols-2">
+        <ul className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {PROGRAMS.map((p) => (
             <li key={p.slug}>
               <Link to={`/programs/${p.slug}`} className="card group flex h-full flex-col overflow-hidden transition-all duration-300 hover:-translate-y-0.5 hover:border-gold/50 hover:shadow-[0_12px_32px_rgba(0,0,0,0.45)]">

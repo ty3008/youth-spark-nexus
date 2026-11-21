@@ -12,7 +12,7 @@ export const SITE = {
   facebook: 'https://www.facebook.com/search/top?q=youth%20spark%20summit',
   facebookHandle: 'Youth Spark Summit',
   youtube: 'https://www.youtube.com/channel/UCx0MZvWSyw9nE85eJF4Dmbg',
-  noRegistrationLine: 'Browse dates, venues, and recaps across all five Nairobi programs.',
+  noRegistrationLine: 'Browse dates, venues, and recaps across all six Nairobi programs.',
 };
 
 export const VISION_MISSION = {
@@ -78,6 +78,7 @@ export const BORROWED_COVERS = {
   'youth-spark-summit-2026-the-reset': '/gatherings/summit-2026/01.webp',
   'reconstructive-leadership-creative-economy-2026': '/gatherings/extras/hangout-2.webp',
   'let-her-ladies-conference-2026': '/gatherings/let-her-2026/01.webp',
+  'becoming-limitless-mens-meeting-2026': '/gatherings/becoming-limitless-2026/01.webp',
   'nxt-africa-forum-2026': '/gatherings/nxt-2026/01.webp',
 };
 
@@ -182,6 +183,8 @@ export const RECONSTRUCTIVE_PHOTOS = [
 
 export const LET_HER_PHOTOS = Array.from({ length: 10 }, (_, i) => `/gatherings/let-her-2026/${pad(i + 1)}.webp`);
 
+export const BECOMING_LIMITLESS_PHOTOS = Array.from({ length: 9 }, (_, i) => `/gatherings/becoming-limitless-2026/${pad(i + 1)}.webp`);
+
 export const PROGRAMS = [
   {
     slug: 'youth-spark-summit',
@@ -264,6 +267,22 @@ export const PROGRAMS = [
       caption: 'Let Her Ladies Conference at Swiss Lenana Mount Hotel (18 July 2026)',
       images: LET_HER_PHOTOS,
       alt: 'Let Her Ladies Conference gathering',
+    },
+  },
+  {
+    slug: 'becoming-limitless',
+    name: 'Becoming Limitless',
+    cadence: "Men's Meeting",
+    cover: '/gatherings/becoming-limitless-2026/01.webp',
+    blurb: 'A candid men’s gathering in Nairobi focused on clarity, brotherhood, accountability, and building a lasting legacy.',
+    facts: [
+      '2026 edition held on 22 August 2026 at After40 Hotel, Biashara Street, Nairobi CBD.',
+      'Hosted by Kevin Kimani with guest speaker Dr. Wale Akinyemi.',
+    ],
+    photos: {
+      caption: 'Becoming Limitless — Men’s Meeting at After40 Hotel (22 August 2026)',
+      images: BECOMING_LIMITLESS_PHOTOS,
+      alt: 'Becoming Limitless men’s meeting',
     },
   },
 ];

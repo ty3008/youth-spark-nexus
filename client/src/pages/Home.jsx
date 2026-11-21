@@ -31,7 +31,7 @@ const Home = () => {
         <title>Youth Spark Summit — Gatherings for young leaders in Nairobi</title>
         <meta
           name="description"
-          content="Youth Spark Summit hosts the annual Summit, monthly Nexus, NXT Africa Forum, Reconstructive Leadership, and Let Her Conference in Nairobi."
+          content="Youth Spark Summit hosts the annual Summit, monthly Nexus, NXT Africa Forum, Reconstructive Leadership, Let Her Conference, and Becoming Limitless in Nairobi."
         />
       </Helmet>
 
@@ -94,7 +94,7 @@ const Home = () => {
       {/* 2. One pathway */}
       <section className="border-b border-white/10 bg-panel">
         <div className="wrap py-8 sm:py-10">
-          <p className="mb-4 text-xs font-medium uppercase tracking-[0.18em] text-muted">One movement, five rooms</p>
+          <p className="mb-4 text-xs font-medium uppercase tracking-[0.18em] text-muted">One movement, six rooms</p>
           <nav aria-label="Movement rhythm" className="flex flex-wrap items-center gap-2 sm:gap-2.5">
             {[
               ['/programs/youth-spark-summit', 'Summit'],
@@ -102,6 +102,7 @@ const Home = () => {
               ['/programs/nxt-africa-forum', 'NXT Africa'],
               ['/programs/reconstructive-leadership', 'Reconstructive'],
               ['/programs/let-her', 'Let Her'],
+              ['/programs/becoming-limitless', 'Becoming Limitless'],
             ].map(([to, label]) => (
               <Link
                 key={to}

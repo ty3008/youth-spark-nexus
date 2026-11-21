@@ -46,12 +46,12 @@ const About = () => (
       </div>
     </section>
 
-    {/* Five programs */}
+    {/* Six programs */}
     <section className="section border-t border-white/10 bg-panel">
       <div className="wrap">
         <p className="eyebrow mb-2">What we host</p>
-        <h2 className="mb-6 text-2xl sm:text-3xl">Five programs</h2>
-        <ul className="grid gap-4 md:grid-cols-2">
+        <h2 className="mb-6 text-2xl sm:text-3xl">Six programs</h2>
+        <ul className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {PROGRAMS.map((p) => (
             <li key={p.slug}>
               <Link to={`/programs/${p.slug}`} className="card group flex h-full flex-col gap-2 bg-ink p-5 transition-colors hover:border-gold">

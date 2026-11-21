@@ -182,6 +182,41 @@
     "videos": []
   },
   {
+    "slug": "becoming-limitless-mens-meeting-2026",
+    "program": "becoming-limitless",
+    "title": "Becoming Limitless — Men's Meeting",
+    "date": "2026-08-22",
+    "datePrecision": "day",
+    "time": "11:00 AM – 3:00 PM",
+    "venue": "After40 Hotel, Biashara Street, Nairobi CBD",
+    "status": "held",
+    "summary": "A free men’s conversation in Nairobi CBD around identity, clarity, brotherhood, and building a legacy worth passing on. Hosted by Kevin Kimani featuring Dr. Wale Akinyemi.",
+    "details": [
+      "Theme: You cannot choose everything you inherit. But you can choose what you become — and what you pass on.",
+      "Designed around real conversation rather than a lecture, equipping men with clarity, brotherhood, and practical tools for home, work, and future."
+    ],
+    "speakers": [
+      "Kevin Kimani",
+      "Dr. Wale Akinyemi"
+    ],
+    "poster": "/gatherings/becoming-limitless-2026/poster.webp",
+    "cover": "/gatherings/becoming-limitless-2026/01.webp",
+    "gallery": [
+      "/gatherings/becoming-limitless-2026/01.webp",
+      "/gatherings/becoming-limitless-2026/02.webp",
+      "/gatherings/becoming-limitless-2026/03.webp",
+      "/gatherings/becoming-limitless-2026/04.webp",
+      "/gatherings/becoming-limitless-2026/05.webp",
+      "/gatherings/becoming-limitless-2026/06.webp",
+      "/gatherings/becoming-limitless-2026/07.webp",
+      "/gatherings/becoming-limitless-2026/08.webp",
+      "/gatherings/becoming-limitless-2026/09.webp"
+    ],
+    "youtubeUrl": "",
+    "instagramUrl": "",
+    "videos": []
+  },
+  {
     "slug": "nxt-africa-forum-2026",
     "program": "nxt-africa-forum",
     "title": "NXT Africa Forum 2026",
