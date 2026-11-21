@@ -6,12 +6,12 @@ export const PageHeader = ({ crumbs = [], eyebrow, title, children }) => (
     <div className="wrap py-10 sm:py-14">
       {crumbs.length > 0 && (
         <nav aria-label="Breadcrumb" className="mb-4 flex flex-wrap items-center gap-1 text-sm text-muted">
-          <Link to="/" className="inline-flex min-h-[32px] items-center hover:text-gold">Home</Link>
+          <Link to="/" className="inline-flex min-h-[44px] items-center hover:text-gold">Home</Link>
           {crumbs.map((c) => (
             <span key={c.label} className="inline-flex items-center gap-1">
               <ChevronRight size={14} aria-hidden="true" />
               {c.to ? (
-                <Link to={c.to} className="inline-flex min-h-[32px] items-center hover:text-gold">{c.label}</Link>
+                <Link to={c.to} className="inline-flex min-h-[44px] items-center hover:text-gold">{c.label}</Link>
               ) : (
                 <span aria-current="page" className="text-fg">{c.label}</span>
               )}

@@ -5,6 +5,7 @@ import { GatheringsProvider } from './lib/GatheringsContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
+import BackToTop from './components/BackToTop';
 import Home from './pages/Home';
 
 const AboutPage = lazy(() => import('./pages/AboutPage'));
@@ -59,6 +60,7 @@ const Shell = () => {
         </Suspense>
       </main>
       {!isAdmin && <Footer />}
+      {!isAdmin && <BackToTop />}
     </div>
   );
 };

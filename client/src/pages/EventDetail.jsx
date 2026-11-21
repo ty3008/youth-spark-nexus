@@ -40,9 +40,9 @@ const EventDetail = () => {
       <section className="border-b border-white/10">
         <div className="wrap py-10 sm:py-14">
           <nav aria-label="Breadcrumb" className="mb-4 flex flex-wrap items-center gap-1 text-sm text-muted">
-            <Link to="/" className="inline-flex min-h-[32px] items-center hover:text-gold">Home</Link>
+            <Link to="/" className="inline-flex min-h-[44px] items-center hover:text-gold">Home</Link>
             <ChevronRight size={14} aria-hidden="true" />
-            <Link to="/events" className="inline-flex min-h-[32px] items-center hover:text-gold">Events</Link>
+            <Link to="/events" className="inline-flex min-h-[44px] items-center hover:text-gold">Events</Link>
             <ChevronRight size={14} aria-hidden="true" />
             <span aria-current="page" className="text-fg">{g.title}</span>
           </nav>

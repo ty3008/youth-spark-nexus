@@ -46,7 +46,7 @@ const ProgramsPage = () => (
                       ))}
                     </ul>
                   )}
-                  <span className="inline-flex min-h-[32px] items-center gap-1 pt-2 text-sm font-medium text-gold">
+                  <span className="mt-auto inline-flex min-h-[44px] items-center gap-1.5 pt-2 text-sm font-medium text-gold">
                     Open program <ArrowRight size={16} aria-hidden="true" />
                   </span>
                 </div>

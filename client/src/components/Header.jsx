@@ -38,9 +38,14 @@ const Header = () => {
 
   useEffect(() => {
     if (!open) return undefined;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
     const onKey = (e) => e.key === 'Escape' && setOpen(false);
     window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener('keydown', onKey);
+    };
   }, [open]);
 
   return (
@@ -114,53 +119,60 @@ const Header = () => {
       </div>
 
       {open && (
-        <nav id="mobile-nav" className="border-t border-white/10 bg-ink md:hidden" aria-label="Main">
-          <div className="wrap flex flex-col gap-1 py-4">
-            {NAV.map((item) => (
-              <NavLink key={item.to} to={item.to} end={item.end} className={mobileTabClass} onClick={() => setOpen(false)}>
-                <span>{item.label}</span>
-              </NavLink>
-            ))}
-            <div className="mt-3 space-y-2.5 border-t border-white/10 pt-3">
-              <a
-                href={SITE.whatsapp}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => setOpen(false)}
-                className="btn-gold w-full"
-              >
-                <WhatsAppIcon size={18} /> Join WhatsApp community
-              </a>
-              <a
-                href={SITE.whatsappDirect}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => setOpen(false)}
-                className="btn-ghost w-full"
-              >
-                <WhatsAppIcon size={18} className="text-gold" /> Reach us on WhatsApp
-              </a>
-              <div className="grid grid-cols-4 gap-2 pt-1">
-                {MOBILE_SOCIALS.map((s) => {
-                  const IconComponent = s.icon;
-                  return (
-                    <a
-                      key={s.label}
-                      href={s.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => setOpen(false)}
-                      aria-label={s.label}
-                      className="inline-flex min-h-[48px] items-center justify-center rounded-xl border border-white/10 bg-panel text-fg transition-colors hover:border-gold hover:text-gold"
-                    >
-                      <IconComponent size={20} />
-                    </a>
-                  );
-                })}
+        <>
+          <div
+            className="fixed inset-x-0 bottom-0 top-[73px] z-30 bg-black/70 backdrop-blur-sm md:hidden"
+            aria-hidden="true"
+            onClick={() => setOpen(false)}
+          />
+          <nav id="mobile-nav" className="relative z-40 max-h-[calc(100svh-73px)] overflow-y-auto border-t border-white/10 bg-ink md:hidden" aria-label="Main">
+            <div className="wrap flex flex-col gap-1 py-4">
+              {NAV.map((item) => (
+                <NavLink key={item.to} to={item.to} end={item.end} className={mobileTabClass} onClick={() => setOpen(false)}>
+                  <span>{item.label}</span>
+                </NavLink>
+              ))}
+              <div className="mt-3 space-y-2.5 border-t border-white/10 pt-3">
+                <a
+                  href={SITE.whatsapp}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setOpen(false)}
+                  className="btn-gold w-full"
+                >
+                  <WhatsAppIcon size={18} /> Join WhatsApp community
+                </a>
+                <a
+                  href={SITE.whatsappDirect}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setOpen(false)}
+                  className="btn-ghost w-full"
+                >
+                  <WhatsAppIcon size={18} className="text-gold" /> Reach us on WhatsApp
+                </a>
+                <div className="grid grid-cols-4 gap-2 pt-1">
+                  {MOBILE_SOCIALS.map((s) => {
+                    const IconComponent = s.icon;
+                    return (
+                      <a
+                        key={s.label}
+                        href={s.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => setOpen(false)}
+                        aria-label={s.label}
+                        className="inline-flex min-h-[48px] items-center justify-center rounded-xl border border-white/10 bg-panel text-fg transition-colors hover:border-gold hover:text-gold"
+                      >
+                        <IconComponent size={20} />
+                      </a>
+                    );
+                  })}
+                </div>
               </div>
             </div>
-          </div>
-        </nav>
+          </nav>
+        </>
       )}
     </header>
   );

@@ -96,6 +96,23 @@ const Events = () => {
               </button>
             ))}
           </div>
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-xs font-medium text-muted">
+              Showing {visibleItems.length} of {items.length} {items.length === 1 ? 'gathering' : 'gatherings'}
+            </span>
+            {hasFilters && (
+              <button
+                type="button"
+                onClick={() => {
+                  setYearFilter('all');
+                  setProgramFilter('all');
+                }}
+                className="inline-flex min-h-[44px] items-center rounded-lg px-2.5 text-xs font-medium text-gold underline underline-offset-4 hover:text-gold-dark"
+              >
+                Clear filters
+              </button>
+            )}
+          </div>
         </div>
       </PageHeader>
 
